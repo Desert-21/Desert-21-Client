@@ -1,0 +1,14 @@
+h1 {
+	color: rgb(255, 0, 0);
+	text-shadow: 5px 5px #000000;
+	text-decoration-style: solid;
+	text-align: center;
+	text-decoration-style: dashed;
+  font-size: 23vh;
+	width: 100%;
+	position: static;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+

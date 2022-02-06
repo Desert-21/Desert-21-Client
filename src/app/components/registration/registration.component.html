@@ -1,0 +1,181 @@
+<div class="background">
+  <app-title></app-title>
+  <div class="main-container">
+    <div *ngIf="!isSucceeded" class="form-container p-3">
+      <h4>REGISTER</h4>
+      <form [formGroup]="registerForm">
+        <div class="form-group">
+          <label for="nickname">Nickname</label>
+          <div class="input-group">
+            <input
+              [ngClass]="{
+                'is-valid': registerForm.get('nickname').errors === null
+              }"
+              type="text"
+              class="form-control"
+              formControlName="nickname"
+              id="nickname"
+              aria-describedby="nicknameHelp"
+              placeholder="Enter you nickname"
+            />
+            <div class="input-group-append">
+              <span
+                class="input-group-text"
+                id="basic-addon2"
+                placement="right"
+                ngbTooltip="Enter here any unoccupied name that you see fit. Other players will see you and know you by your nickname!"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-info-circle-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <use xlink:href="#info-fill" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <input
+              [ngClass]="{
+                'is-valid': registerForm.get('email').errors === null
+              }"
+              required
+              email
+              type="email"
+              formControlName="email"
+              class="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+            />
+            <div class="input-group-append">
+              <span
+                class="input-group-text"
+                id="basic-addon2"
+                placement="right"
+                ngbTooltip="Enter here your email, that will be used to activate your account. Don't worry! We are not going to share it with anyone else and we won't send you crap!"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-info-circle-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <use xlink:href="#info-fill" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input
+              [ngClass]="{
+                'is-valid': registerForm.get('password').errors === null
+              }"
+              type="password"
+              formControlName="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter password"
+            />
+            <div class="input-group-append">
+              <span
+                class="input-group-text"
+                id="basic-addon2"
+                placement="right"
+                ngbTooltip="Enter here your password. It should have at least 8 characters, containing at least one digit, one capital letter and one lowercase latter."
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-info-circle-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <use xlink:href="#info-fill" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm password</label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Enter password again"
+              [ngClass]="{
+                'is-valid':
+                  registerForm.get('confirmPassword')?.errors
+                    ?.confirmPasswordValidator === null
+              }"
+            />
+            <div class="input-group-append">
+              <span
+                class="input-group-text"
+                id="basic-addon2"
+                placement="right"
+                ngbTooltip="Enter your password one more time, just to make sure."
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-info-circle-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <use xlink:href="#info-fill" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            (click)="onRegister()"
+            [disabled]="!registerForm.valid || isLoading"
+            type="submit"
+            class="btn btn-primary"
+          >
+            REGISTER
+            <span
+              *ngIf="isLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
+          <a routerLink="/login" class="right-floated">Back to log in</a>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="isSucceeded" class="form-container p-3">
+      <h4>Success!</h4>
+      <p>
+        Nice one, <b>{{ requestModel.nickname }}</b
+        >! We have sent you an activation link right on your email address:
+        <b>{{ requestModel.email }}</b
+        >. Once you click on it, your account will be activated and you will be
+        able to log in. Have fun!
+      </p>
+      <a routerLink="/login" class="right-floated">Back to log in</a>
+    </div>
+  </div>
+</div>

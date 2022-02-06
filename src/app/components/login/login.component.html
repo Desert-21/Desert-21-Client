@@ -1,0 +1,54 @@
+<div class="background">
+  <app-title></app-title>
+
+  <div class="main-container">
+    <div class="form-container p-3">
+      <h4>LOG IN</h4>
+      <form>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            [(ngModel)]="formModel.email"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            [(ngModel)]="formModel.password"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+          />
+          <a routerLink="/registration">Forgot password?</a>
+        </div>
+        <div>
+          <button
+            (click)="login()"
+            [disabled]="isDisabled()"
+            type="submit"
+            class="btn btn-primary"
+          >
+            LOG IN
+            <span
+              *ngIf="isLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
+          <a routerLink="/registration" class="right-floated"
+            >Create an account</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
