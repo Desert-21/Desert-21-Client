@@ -1,0 +1,21 @@
+<div class="board-background">
+  <div class="row no-gutters" *ngFor="let row of fields; let i = index">
+    <div class="col-sm fields" *ngFor="let cell of row; let j = index">
+      <div class="bordered cell unselectable" [ngStyle]="{ position: 'relative' }">
+        <img [src]="fieldToImagePath(cell)" class="unfocusable img-fluid unselectable"/>
+        <div>
+          <!-- <div *ngIf="isSomethingThere(i, j)">
+                                <img appPairSelector [row]=i [col]=j (click) = "select(i, j)" [src] = "getSource(i, j)" class = "img-fluid unselectable" alt = "Responsive image"/>
+                            </div>
+                            <div *ngIf="!isSomethingThere(i, j)">
+                                <img appPairSelector [row]=i [col]=j (click) = "select(i, j)" [src] = "'assets/game-graphics/blank.png'" class = "img-fluid unselectable" alt = "Responsive image"/>
+                            </div> -->
+        </div>
+        <!-- <div appUnitContent [row] = "i" [col] = "j" [innerHTML] = "getLabel(i, j)">
+                            {{i}} {{j}}
+                        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--Grid column-->

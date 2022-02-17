@@ -41,3 +41,14 @@ body {
 .right-floated {
   float: right;
 }
+
+.unselectable{
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+}
+
+.desert21-font {
+	text-decoration-style: dashed;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

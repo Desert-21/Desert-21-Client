@@ -14,6 +14,16 @@ import { HttpAddressInterceptor } from './interceptors/http-address-interceptor'
 import { ActivateCodeComponent } from './components/activate-code/activate-code.component';
 import { BearerTokenService } from './services/bearer-token.service';
 import { MenuComponent } from './components/menu/menu.component';
+import { GameViewComponent } from './components/game-view/game-view.component';
+import { AreasComponent } from './components/game-view/areas/areas.component';
+import { HeaderComponent } from './components/game-view/header/header.component';
+import { SmallTitleComponent } from './components/game-view/header/small-title/small-title.component';
+import { TurnTimerButtonComponent } from './components/game-view/header/turn-timer-button/turn-timer-button.component';
+import { ResourcesComponent } from './components/game-view/header/resources/resources.component';
+import { ButtonsPanelComponent } from './components/game-view/header/buttons-panel/buttons-panel.component';
+import { TurnCounterComponent } from './components/game-view/header/turn-counter/turn-counter.component';
+import { PlayersNicknamesComponent } from './components/game-view/header/players-nicknames/players-nicknames.component';
+import { HttpTokenInterceptor } from './interceptors/token-interceptor';
 
 @NgModule({
   declarations: [
@@ -24,6 +34,15 @@ import { MenuComponent } from './components/menu/menu.component';
     IconsComponent,
     ActivateCodeComponent,
     MenuComponent,
+    GameViewComponent,
+    AreasComponent,
+    HeaderComponent,
+    SmallTitleComponent,
+    TurnTimerButtonComponent,
+    ResourcesComponent,
+    ButtonsPanelComponent,
+    TurnCounterComponent,
+    PlayersNicknamesComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +56,11 @@ import { MenuComponent } from './components/menu/menu.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpAddressInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
       multi: true,
     },
     BearerTokenService,
