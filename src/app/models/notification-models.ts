@@ -3,7 +3,12 @@ export type AppNofication<T> = {
   content: T;
 };
 
-export type NotificationHandler<T> = {
+export interface NotificationHandler<T> {
   type: string;
   handle: (arg: T) => void;
+};
+
+export type StartGameNotification = {
+  currentPlayerId: string;
+  timeout: string;
 };

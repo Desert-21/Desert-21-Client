@@ -10,6 +10,7 @@ export class GameStateService {
 
   constructor(private http: HttpClient) { }
 
+  private isFetched: boolean = false;
   private gameState: Game = null;
   private gameStateSub = new Subject<Game>();
 
@@ -22,13 +23,27 @@ export class GameStateService {
       this.gameStateSub.next(this.gameState);
       return;
     }
+    if (this.isFetched) {
+      return;
+    }
     this.fetchGameState();
   }
 
-  private fetchGameState(): void {
+  fetchGameState(): void {
+    this.isFetched = true;
     this.http.get<Game>('/gameGenerator').subscribe(resp => {
       this.gameState = resp;
       this.gameStateSub.next(resp);
-    })
+      this.isFetched = false;
+    });
+  }
+
+  currentState(): Game | null {
+    return this.gameState;
+  }
+
+  updateGameState(game: Game): void {
+    this.gameState = game;
+    this.gameStateSub.next(game);
   }
 }

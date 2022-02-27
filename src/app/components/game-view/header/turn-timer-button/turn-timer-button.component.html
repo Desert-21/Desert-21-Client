@@ -1,17 +1,30 @@
 <div class="timer-container">
-  <div class="btn-group" role="group" aria-label="Basic example">
+  <div class="btn-group row" role="group" aria-label="Basic example">
     <button
       type="button"
-      class="btn btn-outline-light disabled desert21-font timer"
+      class="btn btn-outline-light disabled desert21-font timer col-6"
       disabled
     >
-    <div>
-      00:10
-    </div>
+      <div>
+        {{ timeDisplay }}
+      </div>
     </button>
-    <button type="button" class="btn btn-success next-turn desert21-font">
-      <div>Opponents</div>
-      <div>turn</div>
+    <button
+      *ngIf="isMyTurn !== false"
+      (click)="notifyAboutGameReadiness()"
+      type="button"
+      class="btn btn-success next-turn desert21-font col-6"
+    >
+      <div>{{ buttonDisplay }}</div>
+    </button>
+    <button
+      *ngIf="isMyTurn === false"
+      (click)="notifyAboutGameReadiness()"
+      type="button"
+      class="btn btn-secondary disabled next-turn desert21-font col-6"
+      [disabled]="isMyTurn === false"
+    >
+      <div>{{ buttonDisplay }}</div>
     </button>
   </div>
 </div>

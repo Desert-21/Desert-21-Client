@@ -22,6 +22,7 @@ export class WebSocketAPI {
   _connect() {
     let ws = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = () => {};
     const _this = this;
     _this.stompClient.connect(
       {},
@@ -63,10 +64,10 @@ export class WebSocketAPI {
   }
 
   onMessageReceived(message: any) {
-    let body = message.body as AppNofication<any>;
+    let body = JSON.parse(message.body)[0] as AppNofication<any>;
     this.messageHandlers.filter(handler => handler.type === body.type)
     .forEach(handler => {
-      handler.handle(body);
+      handler.handle(body.content);
     });
   }
 }
