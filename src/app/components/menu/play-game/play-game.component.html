@@ -1,0 +1,44 @@
+<div class="narrow-container">
+  <div>
+    <h2>Starting a new game</h2>
+
+    <p>
+      Click on the button below to search for anopponent and start a new game. A
+      single game will last around 40 - 60 minutes. Sometimes it happens, that
+      your opponent does not suck that much and the game lasts a bit longer.
+      Please, make sure you won't need to go out or something. It's supper
+      annoying for you opponent. I know he is an idiot, but give him just a bit
+      of respect this one time :)
+    </p>
+    <p>
+      The game is about conqueriung opponents home base and not letting you
+      opponents conquer yours. Easy, right? Wrong, this sh*t is even worse than
+      chess! You have to maintain control over many fields on the board,
+      distributed army, a laboratory with game changing upgrades, building
+      upgrades, rocket attacks and opponent offending you parents out of
+      desperation! Pure strategy, that will leave you sleepless. Press that
+      button below if you are ready :)
+    </p>
+
+    <button
+      (click)="addToTheQueue()"
+      class="btn btn-outline-primary"
+      [disabled]="isAddToQueueDisabled"
+    >
+      ADD ME TO THE QUEUE
+      <span
+        *ngIf="isAddToQueueLoading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+
+    <div *ngIf="isInTheQueue">
+      <h4 class="mt-5">You are in the queue, waiting for opponent</h4>
+      <h6 class="mt-3 desert21-font">Total time spent in the queue: {{timeString}}</h6>
+
+      <button (click)="cancelQueue()" class="btn btn-outline-danger">Cancel</button>
+    </div>
+  </div>
+</div>

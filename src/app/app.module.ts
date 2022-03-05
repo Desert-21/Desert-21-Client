@@ -24,6 +24,10 @@ import { ButtonsPanelComponent } from './components/game-view/header/buttons-pan
 import { TurnCounterComponent } from './components/game-view/header/turn-counter/turn-counter.component';
 import { PlayersNicknamesComponent } from './components/game-view/header/players-nicknames/players-nicknames.component';
 import { HttpTokenInterceptor } from './interceptors/token-interceptor';
+import { PlayGameComponent } from './components/menu/play-game/play-game.component';
+import { HomeComponent } from './components/menu/home/home.component';
+import { HowToPlayComponent } from './components/menu/how-to-play/how-to-play.component';
+import { AccountComponent } from './components/menu/account/account.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { HttpTokenInterceptor } from './interceptors/token-interceptor';
     ResourcesComponent,
     ButtonsPanelComponent,
     TurnCounterComponent,
-    PlayersNicknamesComponent
+    PlayersNicknamesComponent,
+    PlayGameComponent,
+    HomeComponent,
+    HowToPlayComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,10 @@ export const millisecondsTo = (date: Date) => {
   return date.getTime() - new Date().getTime();
 }
 
+export const millisecondsFrom = (date: Date) => {
+  return new Date().getTime() - date.getTime();
+}
+
 const formatWith0 = (num: number): string => {
   if (num < 10) {
     return `0${num}`;
