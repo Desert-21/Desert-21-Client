@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BearerTokenService } from './bearer-token.service';
+import { NextTurnHandlerService } from './notification-handlers/next-turn-handler.service';
 import { StartGameHandlerService } from './notification-handlers/start-game-handler.service';
 import { UserInfoService } from './user-info.service';
 import { WebSocketAPI } from './websocket-api';
@@ -11,6 +12,7 @@ export class NotificationsService {
   constructor(
     private tokenService: BearerTokenService,
     private userInfoService: UserInfoService,
+    private nextTurnHandler: NextTurnHandlerService,
     private startGameHandler: StartGameHandlerService
   ) {}
 
@@ -25,7 +27,7 @@ export class NotificationsService {
       this.webSocketApi = new WebSocketAPI(
         id,
         this.tokenService.getToken(),
-        [this.startGameHandler]
+        [this.nextTurnHandler, this.startGameHandler]
       );
       this.webSocketApi._connect();
     });

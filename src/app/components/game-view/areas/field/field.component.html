@@ -1,0 +1,12 @@
+<div
+  (click)="onFieldSelect()"
+  class="bordered cell unselectable"
+  [ngClass]="currentClasses"
+  appEnlighter
+  [class.currentSelection]="isSelected"
+>
+  <img
+    [src]="fieldToImagePath(field)"
+    class="unfocusable img-fluid unselectable"
+  />
+</div>

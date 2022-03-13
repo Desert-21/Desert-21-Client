@@ -1,0 +1,74 @@
+
+.cell {
+  height: calc(90vh/11);
+  width: calc(90vh/11);
+}
+
+.bordered {
+  border: #000000;
+  border-width: 3px;
+  border-style: solid;
+  background-color: rgba(100, 100, 100, 0.0);
+  cursor: pointer;
+}
+
+.unfocusable{
+  pointer-events: none;
+}
+
+.owned {
+  background-color: red;
+}
+
+.top-friendly {
+  border-top: #a6ff00;
+  border-top-width: 3px;
+  border-top-style: solid;
+}
+
+.bottom-friendly {
+  border-bottom: #a6ff00;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+}
+
+.left-friendly {
+  border-left: #a6ff00;
+  border-left-width: 3px;
+  border-left-style: solid;
+}
+
+.right-friendly {
+  border-right: #a6ff00;
+  border-right-width: 3px;
+  border-right-style: solid;
+}
+
+.top-enemy {
+  border-top: #ee3800;
+  border-top-width: 3px;
+  border-top-style: solid;
+}
+
+.bottom-enemy {
+  border-bottom: #ee3800;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+}
+
+.left-enemy {
+  border-left: #ee3800;
+  border-left-width: 3px;
+  border-left-style: solid;
+}
+
+.right-enemy {
+  border-right: #ee3800;
+  border-right-width: 3px;
+  border-right-style: solid;
+}
+
+.currentSelection {
+  background: rgb(255,226,0);
+  background: radial-gradient(circle, rgba(255,226,0,1) 0%, rgba(183,95,0,1) 0%, rgba(130,0,0,1) 50%, rgba(237,219,0,1) 100%, rgba(254,255,0,1) 100%);
+}

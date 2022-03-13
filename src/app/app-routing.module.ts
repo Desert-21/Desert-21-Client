@@ -21,7 +21,7 @@ const routes: Routes = [
     { path: 'play-game', component: PlayGameComponent },
     { path: 'account', component: AccountComponent }
   ]},
-  { path: 'game', component: GameViewComponent }
+  { path: 'game/:gameId', component: GameViewComponent }
 ];
 
 @NgModule({

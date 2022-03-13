@@ -6,7 +6,7 @@
     border: #000000;
     border-width: 3px;
     border-style: solid;
-    background-color: rgba(100, 100, 100, 0.0);
+    /* background-color: rgba(100, 100, 100, 0.0); */
 }
 
 .error-message{

@@ -34,7 +34,7 @@ export class TurnTimerButtonComponent implements OnInit {
   ngOnInit(): void {
     this.userInfoService
       .getUsersDataUpdates()
-      .pipe(combineLatestWith(this.gameStateService.getGameStateUpdates()))
+      .pipe(combineLatestWith(this.gameStateService.getStateUpdates()))
       .subscribe((pair) => {
         const userInfo = pair[0];
         const state = pair[1];
@@ -50,7 +50,7 @@ export class TurnTimerButtonComponent implements OnInit {
         this.buttonDisplay = this.getButtonText(state.stateManager.gameState);
         this.gameId = state.id;
       });
-    this.gameStateService.requestGameState();
+    this.gameStateService.requestState();
     this.userInfoService.requestUsersData();
     this.tickTheTime();
   }

@@ -24,7 +24,7 @@ export class PlayersNicknamesComponent implements OnInit {
   ngOnInit(): void {
     this.usersService
       .getUsersDataUpdates()
-      .pipe(combineLatestWith(this.gameService.getGameStateUpdates()))
+      .pipe(combineLatestWith(this.gameService.getStateUpdates()))
       .subscribe((pair) => {
         let usersData: UsersData = pair[0];
         let gameData: Game = pair[1];
@@ -35,6 +35,6 @@ export class PlayersNicknamesComponent implements OnInit {
         this.nickname2 = nicknames[1];
       });
     this.usersService.requestUsersData();
-    this.gameService.requestGameState();
+    this.gameService.requestState();
   }
 }

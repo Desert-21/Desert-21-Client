@@ -28,6 +28,9 @@ import { PlayGameComponent } from './components/menu/play-game/play-game.compone
 import { HomeComponent } from './components/menu/home/home.component';
 import { HowToPlayComponent } from './components/menu/how-to-play/how-to-play.component';
 import { AccountComponent } from './components/menu/account/account.component';
+import { FieldStylingDirective } from './directives/field-styling.directive';
+import { FieldComponent } from './components/game-view/areas/field/field.component';
+import { EnlighterDirective } from './directives/enlighter.directive';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,10 @@ import { AccountComponent } from './components/menu/account/account.component';
     PlayGameComponent,
     HomeComponent,
     HowToPlayComponent,
-    AccountComponent
+    AccountComponent,
+    FieldStylingDirective,
+    FieldComponent,
+    EnlighterDirective
   ],
   imports: [
     BrowserModule,

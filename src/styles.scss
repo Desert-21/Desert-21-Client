@@ -1,16 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
 html,
 body {
   height: 100%;
 }
 
-
 .background {
-  background-image: url('/assets/menu-background.jpg');
+  background-image: url("/assets/menu-background.jpg");
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -20,7 +19,6 @@ body {
   flex-direction: column;
   align-items: center;
 }
-
 
 .form-container {
   height: fit-content;
@@ -42,17 +40,29 @@ body {
   float: right;
 }
 
-.unselectable{
+.unselectable {
   user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
 }
 
 .desert21-font {
-	text-decoration-style: dashed;
-	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  text-decoration-style: dashed;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .full-width {
   width: 100%;
+}
+
+.enlightment {
+  border-color: rgb(0, 128, 255) !important;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.selecting {
+  border-color: rgb(255, 251, 0) !important;
+  border-style: solid;
+  border-width: 2px;
 }

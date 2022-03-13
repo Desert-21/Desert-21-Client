@@ -19,7 +19,6 @@ export class AreasComponent implements OnInit {
   numbers: Array<number>;
 
   constructor(private http: HttpClient, private gameService: GameStateService){
-    gameService.getGameStateUpdates();
     this.numbers = [0,1,2,3,4,5,6,7,8,9,10]
   }
 
@@ -49,8 +48,8 @@ export class AreasComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFields();
-    this.gameService.getGameStateUpdates().subscribe(resp => this.fields = resp.fields);
-    this.gameService.requestGameState();
+    this.gameService.getStateUpdates().subscribe(resp => this.fields = resp.fields);
+    this.gameService.requestState();
   }
 
   fieldToImagePath(field: Field): string {
@@ -124,6 +123,10 @@ export class AreasComponent implements OnInit {
         return "?";
 
     }
+  }
+
+  trackBy(index: any, item: any) {
+    return index;
   }
 
 }
