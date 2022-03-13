@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { combineLatestWith } from 'rxjs';
 import { Game } from 'src/app/models/game-models';
 import { UsersData } from 'src/app/models/profile-models.';
-import { GameStateService } from 'src/app/services/game-state.service';
-import { UserInfoService } from 'src/app/services/user-info.service';
+import { GameStateService } from 'src/app/services/http/game-state.service';
+import { UserInfoService } from 'src/app/services/http/user-info.service';
 
 @Component({
   selector: 'app-players-nicknames',
@@ -23,7 +23,7 @@ export class PlayersNicknamesComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersService
-      .getUsersDataUpdates()
+      .getStateUpdates()
       .pipe(combineLatestWith(this.gameService.getStateUpdates()))
       .subscribe((pair) => {
         let usersData: UsersData = pair[0];
@@ -34,7 +34,7 @@ export class PlayersNicknamesComponent implements OnInit {
         this.nickname1 = nicknames[0];
         this.nickname2 = nicknames[1];
       });
-    this.usersService.requestUsersData();
+    this.usersService.requestState();
     this.gameService.requestState();
   }
 }

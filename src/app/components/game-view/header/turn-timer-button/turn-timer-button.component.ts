@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { combineLatestWith } from 'rxjs';
-import { GameStateService } from 'src/app/services/game-state.service';
-import { UserInfoService } from 'src/app/services/user-info.service';
+import { GameStateService } from 'src/app/services/http/game-state.service';
+import { UserInfoService } from 'src/app/services/http/user-info.service';
 import {
   formatSecondsToTimeString,
   millisecondsTo,
@@ -33,7 +33,7 @@ export class TurnTimerButtonComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfoService
-      .getUsersDataUpdates()
+      .getStateUpdates()
       .pipe(combineLatestWith(this.gameStateService.getStateUpdates()))
       .subscribe((pair) => {
         const userInfo = pair[0];
@@ -51,7 +51,7 @@ export class TurnTimerButtonComponent implements OnInit {
         this.gameId = state.id;
       });
     this.gameStateService.requestState();
-    this.userInfoService.requestUsersData();
+    this.userInfoService.requestState();
     this.tickTheTime();
   }
 

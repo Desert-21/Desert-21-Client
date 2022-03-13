@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, combineLatestWith, map } from 'rxjs';
 import { Game, ResourceSet } from 'src/app/models/game-models';
 import { UsersData } from 'src/app/models/profile-models.';
-import { GameStateService } from 'src/app/services/game-state.service';
-import { UserInfoService } from 'src/app/services/user-info.service';
+import { GameStateService } from 'src/app/services/http/game-state.service';
+import { UserInfoService } from 'src/app/services/http/user-info.service';
 
 @Component({
   selector: 'app-resources',
@@ -25,7 +25,7 @@ export class ResourcesComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersService
-      .getUsersDataUpdates()
+      .getStateUpdates()
       .pipe(combineLatestWith(this.gameService.getStateUpdates()))
       .subscribe((pair) => {
         let usersData: UsersData = pair[0];
@@ -34,7 +34,7 @@ export class ResourcesComponent implements OnInit {
         this.resourceSet = player?.resources;
       });
 
-    this.usersService.requestUsersData();
+    this.usersService.requestState();
     this.gameService.requestState();
   }
 }

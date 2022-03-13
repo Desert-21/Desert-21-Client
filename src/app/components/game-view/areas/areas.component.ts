@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ElementRef, Renderer2, HostListener } from '@angular/core';
-import { GameStateService } from 'src/app/services/game-state.service';
+import { GameStateService } from 'src/app/services/http/game-state.service';
 import { Game, Field } from '../../../models/game-models';
 
 @Component({

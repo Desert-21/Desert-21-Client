@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Game } from 'src/app/models/game-models';
 import { NotificationHandler, NextTurnNotification } from 'src/app/models/notification-models';
-import { GameStateService } from '../game-state.service';
+import { GameStateService } from '../http/game-state.service';
 
 @Injectable({
   providedIn: 'root'

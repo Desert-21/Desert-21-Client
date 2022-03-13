@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BearerTokenService } from './bearer-token.service';
 import { NextTurnHandlerService } from './notification-handlers/next-turn-handler.service';
 import { StartGameHandlerService } from './notification-handlers/start-game-handler.service';
-import { UserInfoService } from './user-info.service';
+import { UserInfoService } from './http/user-info.service';
 import { WebSocketAPI } from './websocket-api';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class NotificationsService {
     if (this.webSocketApi !== null) {
       return;
     }
-    this.userInfoService.getUsersDataUpdates().subscribe((info) => {
+    this.userInfoService.getStateUpdates().subscribe((info) => {
       let id = info.id;
       this.webSocketApi = new WebSocketAPI(
         id,
@@ -31,6 +31,6 @@ export class NotificationsService {
       );
       this.webSocketApi._connect();
     });
-    this.userInfoService.requestUsersData();
+    this.userInfoService.requestState();
   }
 }

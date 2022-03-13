@@ -1,8 +1,8 @@
 import { AfterViewChecked, AfterViewInit, Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { combineLatestWith } from 'rxjs';
 import { Field } from '../models/game-models';
-import { GameStateService } from '../services/game-state.service';
-import { UserInfoService } from '../services/user-info.service';
+import { GameStateService } from '../services/http/game-state.service';
+import { UserInfoService } from '../services/http/user-info.service';
 
 @Directive({
   selector: '[appFieldStyling]',
@@ -28,7 +28,7 @@ export class FieldStylingDirective implements AfterViewChecked {
   ngAfterViewChecked(): void {
     this.gameStateService.getStateUpdates().pipe(
       combineLatestWith(
-        this.userInfoService.getUsersDataUpdates()
+        this.userInfoService.getStateUpdates()
       )
     ).subscribe(gameWithUsersData => {
       const game = gameWithUsersData[0];

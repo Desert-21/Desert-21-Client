@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { combineLatestWith } from 'rxjs';
 import { Field } from 'src/app/models/game-models';
-import { GameStateService } from 'src/app/services/game-state.service';
+import { GameStateService } from 'src/app/services/http/game-state.service';
 import { SelectedFieldService } from 'src/app/services/selected-field.service';
-import { UserInfoService } from 'src/app/services/user-info.service';
+import { UserInfoService } from 'src/app/services/http/user-info.service';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
 
 @Component({
@@ -33,7 +33,7 @@ export class FieldComponent implements OnInit {
   ngOnInit(): void {
     this.gameStateService
       .getStateUpdates()
-      .pipe(combineLatestWith(this.userInfoService.getUsersDataUpdates()))
+      .pipe(combineLatestWith(this.userInfoService.getStateUpdates()))
       .subscribe((gameWithUsersData) => {
         const game = gameWithUsersData[0];
         const usersData = gameWithUsersData[1];
@@ -127,6 +127,5 @@ export class FieldComponent implements OnInit {
     } else {
       this.selectedFieldService.setField(this.row, this.col);
     }
-
   }
 }

@@ -1,9 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
-import { timeStamp } from 'console';
 import { Observable, Subject } from 'rxjs';
 import { Field } from '../models/game-models';
 import { FieldSelection } from '../models/game-utility-models';
-import { GameStateService } from './game-state.service';
+import { GameStateService } from './http/game-state.service';
 
 @Injectable({
   providedIn: 'root'
