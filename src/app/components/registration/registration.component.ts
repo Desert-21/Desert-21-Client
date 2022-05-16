@@ -18,8 +18,8 @@ export class RegistrationComponent implements OnInit {
     password: ''
   };
 
-  isLoading: boolean = false;
-  isSucceeded: boolean = false;
+  isLoading = false;
+  isSucceeded = false;
 
   registerForm: FormGroup;
 
@@ -33,7 +33,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRegister(): void {
-    let v = this.registerForm.value;
+    const v = this.registerForm.value;
     this.requestModel = {
       nickname: v.nickname,
       email: v.email,
@@ -47,6 +47,6 @@ export class RegistrationComponent implements OnInit {
     err => {
       alert(err.error);
       this.isLoading = false;
-    })
+    });
   }
 }

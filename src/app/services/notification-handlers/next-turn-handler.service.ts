@@ -10,7 +10,7 @@ export class NextTurnHandlerService implements NotificationHandler<NextTurnNotif
 
   constructor(private gameStateService: GameStateService) { }
 
-  type: string = 'NEXT_TURN';
+  type = 'NEXT_TURN';
 
   handle(notification: NextTurnNotification): void {
     const currentState = this.gameStateService.getCurrentState();
@@ -22,7 +22,7 @@ export class NextTurnHandlerService implements NotificationHandler<NextTurnNotif
         timeout: notification.timeout,
         gameState: 'AWAITING',
       }
-    }
+    };
     this.gameStateService.updateState(newGameState);
   }
 }

@@ -18,17 +18,17 @@ export class FieldComponent implements OnInit {
     private selectedFieldService: SelectedFieldService
   ) {}
 
-  @Input() row: number = -1;
-  @Input() col: number = -1;
+  @Input() row = -1;
+  @Input() col = -1;
 
   @Input() field: Field;
   fields: Array<Array<Field>> = [[]];
 
-  currentClasses: string = '';
+  currentClasses = '';
 
-  usersId: string = '';
+  usersId = '';
 
-  isSelected: boolean = false;
+  isSelected = false;
 
   ngOnInit(): void {
     this.gameStateService
@@ -43,11 +43,11 @@ export class FieldComponent implements OnInit {
         this.currentClasses = this.getStyling();
       });
     this.selectedFieldService.getSelectedFieldUpdates().subscribe(field => {
-      this.isSelected = this.row === field.row && this.col === field.col
+      this.isSelected = this.row === field.row && this.col === field.col;
     });
   }
 
-  getStyling() {
+  getStyling(): string {
     const ownerId = this.field?.ownerId;
     const isOwned = ownerId === this.usersId;
     if (ownerId === null) {
@@ -69,7 +69,7 @@ export class FieldComponent implements OnInit {
     }, '');
   }
 
-  getBorderClassParts(ownerId: string) {
+  getBorderClassParts(ownerId: string): Array<string> {
     const classes = [
       this.getClassIfFieldBelongsTo(
         'top',
@@ -91,7 +91,7 @@ export class FieldComponent implements OnInit {
     return classes;
   }
 
-  getClassIfFieldBelongsTo(className: string, field: Field) {
+  getClassIfFieldBelongsTo(className: string, field: Field): string {
     const ownerId = this.field?.ownerId;
     if (field === null) {
       return className;
@@ -103,7 +103,7 @@ export class FieldComponent implements OnInit {
   }
 
   fieldToImagePath(field: Field): string {
-    let type = field?.building?.type;
+    const type = field?.building?.type;
     switch (type) {
       case 'METAL_FACTORY':
         return '/assets/metal.png';
@@ -121,7 +121,7 @@ export class FieldComponent implements OnInit {
     return '/assets/blank.png';
   }
 
-  onFieldSelect() {
+  onFieldSelect(): void {
     if (this.selectedFieldService.isCurrentSelection(this.row, this.col)) {
       this.selectedFieldService.clearSelection();
     } else {

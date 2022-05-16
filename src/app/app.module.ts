@@ -31,6 +31,9 @@ import { AccountComponent } from './components/menu/account/account.component';
 import { FieldStylingDirective } from './directives/field-styling.directive';
 import { FieldComponent } from './components/game-view/areas/field/field.component';
 import { EnlighterDirective } from './directives/enlighter.directive';
+import { RightPanelComponent } from './components/game-view/right-panel/right-panel.component';
+import { LeftPanelComponent } from './components/game-view/left-panel/left-panel.component';
+import { BuildingPreviewComponent } from './components/game-view/right-panel/building-preview/building-preview.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { EnlighterDirective } from './directives/enlighter.directive';
     AccountComponent,
     FieldStylingDirective,
     FieldComponent,
-    EnlighterDirective
+    EnlighterDirective,
+    RightPanelComponent,
+    LeftPanelComponent,
+    BuildingPreviewComponent
   ],
   imports: [
     BrowserModule,

@@ -18,17 +18,17 @@ export class PlayersNicknamesComponent implements OnInit {
 
   ownedNickname: string = null;
 
-  nickname1: string = '';
-  nickname2: string = '';
+  nickname1 = '';
+  nickname2 = '';
 
   ngOnInit(): void {
     this.usersService
       .getStateUpdates()
       .pipe(combineLatestWith(this.gameService.getStateUpdates()))
       .subscribe((pair) => {
-        let usersData: UsersData = pair[0];
-        let gameData: Game = pair[1];
-        let nicknames = gameData.players
+        const usersData: UsersData = pair[0];
+        const gameData: Game = pair[1];
+        const nicknames = gameData.players
           .map((p) => p.nickname)
           .map((n) => (n === usersData.nickname ? `${n} (You)` : n));
         this.nickname1 = nicknames[0];

@@ -7,11 +7,9 @@ import { GameStateService } from './http/game-state.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SelectedFieldService implements OnInit {
+export class SelectedFieldService {
 
-  constructor(private gameStateService: GameStateService) { }
-
-  ngOnInit(): void {
+  constructor(private gameStateService: GameStateService) {
     this.gameStateService.getStateUpdates().subscribe(state => {
       const field = state.fields[this.currentRow][this.currentCol];
       this.pushNextField(field);
@@ -26,7 +24,7 @@ export class SelectedFieldService implements OnInit {
     return this.sub.asObservable();
   }
 
-  setField(row: number, col: number) {
+  setField(row: number, col: number): void {
     this.currentRow = row;
     this.currentCol = col;
     const state = this.gameStateService.getCurrentState();
@@ -36,13 +34,13 @@ export class SelectedFieldService implements OnInit {
     }
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.currentRow = null;
     this.currentCol = null;
     this.pushNextField(null);
   }
 
-  private pushNextField(field: Field) {
+  private pushNextField(field: Field): void {
     this.sub.next({
       row: this.currentRow,
       col: this.currentCol,
@@ -50,7 +48,7 @@ export class SelectedFieldService implements OnInit {
     });
   }
 
-  isCurrentSelection(row: number, col: number) {
+  isCurrentSelection(row: number, col: number): boolean {
     return this.currentRow === row && this.currentCol === col;
   }
 }

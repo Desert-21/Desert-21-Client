@@ -14,14 +14,14 @@ import {
   styleUrls: ['./play-game.component.scss'],
 })
 export class PlayGameComponent implements OnInit {
-  isAddToQueueLoading: boolean = false;
-  isAddToQueueDisabled: boolean = false;
+  isAddToQueueLoading = false;
+  isAddToQueueDisabled = false;
 
-  isCancelQueueLoading: boolean = false;
+  isCancelQueueLoading = false;
 
-  isInTheQueue: boolean = false;
+  isInTheQueue = false;
   timeOfEnteringQueue: Date | null = null;
-  timeString: string = '00:00';
+  timeString = '00:00';
   interval: any;
 
   constructor(
@@ -38,10 +38,10 @@ export class PlayGameComponent implements OnInit {
         this.isCancelQueueLoading = false;
         this.router.navigate(['game', id]);
       }
-    })
+    });
   }
 
-  addToTheQueue() {
+  addToTheQueue(): void {
     this.isAddToQueueLoading = true;
     this.isAddToQueueDisabled = true;
     this.http.post('/queue', {}).subscribe({
@@ -49,7 +49,7 @@ export class PlayGameComponent implements OnInit {
         this.isInTheQueue = true;
         this.timeOfEnteringQueue = new Date();
         this.interval = setInterval(() => this.updateTimer(), 1000);
-        //trigger stuff
+        // trigger stuff
       },
       error: (err) => {
         this.isAddToQueueDisabled = false;
@@ -60,7 +60,7 @@ export class PlayGameComponent implements OnInit {
     });
   }
 
-  cancelQueue() {
+  cancelQueue(): void {
     this.isCancelQueueLoading = true;
     this.http.post('/queue/cancel', {}).subscribe({
       next: (resp) => {
@@ -73,7 +73,7 @@ export class PlayGameComponent implements OnInit {
     });
   }
 
-  updateTimer() {
+  updateTimer(): void {
     const ms = millisecondsFrom(this.timeOfEnteringQueue);
     const seconds = Math.floor(ms / 1000);
     this.timeString = formatSecondsToTimeString(seconds);

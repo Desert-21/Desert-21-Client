@@ -28,9 +28,9 @@ export class ResourcesComponent implements OnInit {
       .getStateUpdates()
       .pipe(combineLatestWith(this.gameService.getStateUpdates()))
       .subscribe((pair) => {
-        let usersData: UsersData = pair[0];
-        let gameData: Game = pair[1];
-        let player = gameData.players.filter((p) => p.id === usersData.id)[0];
+        const usersData: UsersData = pair[0];
+        const gameData: Game = pair[1];
+        const player = gameData.players.filter((p) => p.id === usersData.id)[0];
         this.resourceSet = player?.resources;
       });
 

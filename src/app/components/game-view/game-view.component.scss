@@ -1,4 +1,5 @@
 $header-height: 8vh;
+$main-panel-width: 100vh - $header-height;
 
 .game-container {
   position: absolute;
@@ -19,17 +20,20 @@ $header-height: 8vh;
 }
 
 .main-panel-container {
+  border-top: 4px solid rgb(255, 183, 101);;
   height: 100vh - $header-height;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  background-color: darkgray;
+  // background-color: rgb(255, 183, 101);
+  background: linear-gradient(180deg, rgba(82,115,105,1) 0%, rgba(30,30,34,1) 100%);
 }
 
 .side-panel {
   height: 100vh - $header-height - 1vh;
-  background-color: aqua;
-  color: aqua;
-  flex-grow: 1;
+  flex-basis: calc(50vw - 46vh);
+  flex-grow: 0;
+  background: rgb(82,115,105);
+  background: linear-gradient(180deg, rgba(82,115,105,1) 0%, rgba(30,30,34,1) 100%);
 }

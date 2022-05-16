@@ -18,18 +18,20 @@ export class NotificationsService {
 
   webSocketApi: WebSocketAPI | null = null;
 
-  requireServerNotifications() {
+  requireServerNotifications(): void {
     if (this.webSocketApi !== null) {
       return;
     }
     this.userInfoService.getStateUpdates().subscribe((info) => {
-      let id = info.id;
-      this.webSocketApi = new WebSocketAPI(
-        id,
-        this.tokenService.getToken(),
-        [this.nextTurnHandler, this.startGameHandler]
-      );
-      this.webSocketApi._connect();
+      const id = info.id;
+      if (this.webSocketApi === null || this.webSocketApi.userId !== id) {
+        this.webSocketApi = new WebSocketAPI(
+          id,
+          this.tokenService.getToken(),
+          [this.nextTurnHandler, this.startGameHandler]
+        );
+        this.webSocketApi._connect();
+      }
     });
     this.userInfoService.requestState();
   }

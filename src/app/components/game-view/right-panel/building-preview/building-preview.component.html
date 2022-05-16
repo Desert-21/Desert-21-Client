@@ -1,0 +1,9 @@
+<div class="text-description">
+  <h3>{{ownershipPrefix}} {{buildingName}}</h3>
+  <h5 *ngIf="!isEmpty">Level {{level}}</h5>
+  <p>{{buildingDescription}}</p>
+</div>
+<div class="image-container text-center">
+  <img class="img-fluid" [src]="buildingImage"/>
+</div>
+

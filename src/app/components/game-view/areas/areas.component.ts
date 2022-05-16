@@ -10,16 +10,16 @@ import { Game, Field } from '../../../models/game-models';
 })
 export class AreasComponent implements OnInit {
 
-  myColor: string = "rgba(0, 255, 0, 1.0)";
-  player1Color: string = "rgba(255, 255, 0, 0.3)";
-  player2Color: string = "rgba(255, 70, 0, 0.3)";
-  player3Color: string = "rgba(210, 70, 140, 0.3)";
-  player4Color: string = "rgba(180, 0, 0, 0.3)";
+  myColor = 'rgba(0, 255, 0, 1.0)';
+  player1Color = 'rgba(255, 255, 0, 0.3)';
+  player2Color = 'rgba(255, 70, 0, 0.3)';
+  player3Color = 'rgba(210, 70, 140, 0.3)';
+  player4Color = 'rgba(180, 0, 0, 0.3)';
 
   numbers: Array<number>;
 
   constructor(private http: HttpClient, private gameService: GameStateService){
-    this.numbers = [0,1,2,3,4,5,6,7,8,9,10]
+    this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   }
 
   fields: Array<Array<Field>>;
@@ -29,7 +29,7 @@ export class AreasComponent implements OnInit {
     for (let i = 0; i < 11; i++){
       this.fields.push([]);
       for (let j = 0; j < 11; j++){
-        let field: Field = {
+        const field: Field = {
           building: {
             type: 'EMPTY_FIELD',
             level: 0,
@@ -40,7 +40,7 @@ export class AreasComponent implements OnInit {
             tanks: 0,
             cannons: 0,
           }
-        }
+        };
         this.fields[i].push(field);
       }
     }
@@ -53,8 +53,8 @@ export class AreasComponent implements OnInit {
   }
 
   fieldToImagePath(field: Field): string {
-    let type = field.building.type;
-    switch(type) {
+    const type = field.building.type;
+    switch (type) {
       case 'METAL_FACTORY':
         return '/assets/metal.png';
       case 'BUILDING_MATERIALS_FACTORY':
@@ -73,11 +73,11 @@ export class AreasComponent implements OnInit {
   }
 
 
-  isLinkableVertically(row, col){
+  isLinkableVertically(row, col): boolean {
     return row < 10;
   }
 
-  isLinkableHorizontally(row, col){
+  isLinkableHorizontally(row, col): boolean {
     return col < 10;
   }
 
@@ -85,8 +85,8 @@ export class AreasComponent implements OnInit {
   //   return this.infoService.areaUnits[row][col].MAIN_BUILDING != null;
   // }
 
-  getBackground(){
-    return "url('assets/game-graphics/game-background.jpg')";
+  getBackground(): string {
+    return 'url(\'assets/game-graphics/game-background.jpg\')';
   }
 
   // getSource(row: number, col: number){
@@ -105,27 +105,27 @@ export class AreasComponent implements OnInit {
   //   }
   // }
 
-  transformLabel(label: string){
+  transformLabel(label: string): string{
     switch (label){
-      case "TOWER":
+      case 'TOWER':
         return '<button type = "button">aa</button>';
-      case "MAIN_TOWER":
-        return "H";
-      case "ROCKET":
-        return "R";
-      case "BIG_METAL":
-        return "M";
-      case "BIG_BUILDING_MATERIALS":
-        return "B";
-      case "BIG_ELECTRICITY":
-        return "E";
+      case 'MAIN_TOWER':
+        return 'H';
+      case 'ROCKET':
+        return 'R';
+      case 'BIG_METAL':
+        return 'M';
+      case 'BIG_BUILDING_MATERIALS':
+        return 'B';
+      case 'BIG_ELECTRICITY':
+        return 'E';
       default:
-        return "?";
+        return '?';
 
     }
   }
 
-  trackBy(index: any, item: any) {
+  trackBy(index: any, item: any): number {
     return index;
   }
 

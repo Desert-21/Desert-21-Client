@@ -7,7 +7,7 @@ const BEARER_TOKEN_LOCATION = 'desert-21-token';
 })
 export class BearerTokenService {
 
-  saveToken(token: string) {
+  saveToken(token: string): void {
     localStorage.setItem(BEARER_TOKEN_LOCATION, token);
   }
 

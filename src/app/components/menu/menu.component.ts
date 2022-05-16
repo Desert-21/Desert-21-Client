@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
     this.notificationsService.requireServerNotifications();
   }
 
-  logOut() {
+  logOut(): void {
     this.tokenService.saveToken('');
     this.router.navigate(['login']);
   }
