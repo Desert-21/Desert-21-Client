@@ -27,14 +27,13 @@ export class GameViewComponent implements OnInit {
     this.notificationsService.requireServerNotifications();
 
     this.route.params.subscribe((params) => {
-      var gameId = params['gameId'];
+      const gameId = params.gameId;
       this.gameIdService.saveId(gameId);
 
       this.gameStateService.requestState();
     });
 
     this.gameBalanceService.getStateUpdates().subscribe(resp => {
-      console.log(resp);
     });
     this.gameBalanceService.requestState();
 

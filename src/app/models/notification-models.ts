@@ -6,7 +6,7 @@ export type AppNofication<T> = {
 export interface NotificationHandler<T> {
   type: string;
   handle: (arg: T) => void;
-};
+}
 
 export type NextTurnNotification = {
   currentPlayerId: string;

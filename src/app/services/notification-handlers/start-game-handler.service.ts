@@ -9,7 +9,7 @@ export class StartGameHandlerService implements NotificationHandler<StartGameNot
 
   constructor() { }
 
-  type: string = 'START_GAME';
+  type = 'START_GAME';
 
   startGameSub = new Subject<string>();
 

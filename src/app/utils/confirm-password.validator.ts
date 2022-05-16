@@ -4,8 +4,8 @@ export const ConfirmPasswordValidator = (formGroup: FormGroup) => {
   if (!formGroup) {
     return;
   }
-  let control = formGroup?.controls['password'];
-  let matchingControl = formGroup.controls['confirmPassword'];
+  const control = formGroup?.controls.password;
+  const matchingControl = formGroup.controls.confirmPassword;
   if (
     matchingControl?.errors &&
     !matchingControl?.errors?.confirmPasswordValidator

@@ -15,14 +15,13 @@ export class FieldStylingDirective implements AfterViewChecked {
     private userInfoService: UserInfoService,
   ) {}
 
-  @Input() row: number = -1;
-  @Input() col: number = -1;
+  @Input() row = -1;
+  @Input() col = -1;
 
   field: Field;
 
-  @HostListener('mouseenter', ['$event']) onEnter( e: MouseEvent ) {
-    console.log('mouseenter');
-    this.renderer.addClass(this.ref.nativeElement, 'owned')
+  @HostListener('mouseenter', ['$event']) onEnter( e: MouseEvent ): void {
+    this.renderer.addClass(this.ref.nativeElement, 'owned');
   }
 
   ngAfterViewChecked(): void {
@@ -36,11 +35,11 @@ export class FieldStylingDirective implements AfterViewChecked {
       const usersId = usersData.id;
       this.field = game.fields[this.row][this.col];
       const isOwned = this.field.ownerId === usersId;
-      console.log('INVOKING!')
+      console.log('INVOKING!');
       this.renderer.addClass(this.ref.nativeElement, 'owned');
       if (isOwned) {
         this.renderer.setStyle(this.ref.nativeElement, 'color', 'blue');
       }
-    })
+    });
   }
 }

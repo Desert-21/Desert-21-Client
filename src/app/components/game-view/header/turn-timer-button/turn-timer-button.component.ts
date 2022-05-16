@@ -17,9 +17,9 @@ import {
 })
 export class TurnTimerButtonComponent implements OnInit {
   timeOfNextTurn: Date = new Date();
-  timeDisplay: string = '00:00';
+  timeDisplay = '00:00';
 
-  buttonDisplay: string = '...';
+  buttonDisplay = '...';
 
   isMyTurn: boolean | null = null;
 
@@ -55,11 +55,9 @@ export class TurnTimerButtonComponent implements OnInit {
     this.tickTheTime();
   }
 
-  notifyAboutGameReadiness() {
-    console.log('OK!');
-    this.http.post("/gameReadiness", this.gameId).subscribe(resp => {
-      console.log(resp);
-    })
+  notifyAboutGameReadiness(): void {
+    this.http.post('/gameReadiness', this.gameId).subscribe(resp => {
+    });
   }
 
   private dateToRemainingTimeString(): string {

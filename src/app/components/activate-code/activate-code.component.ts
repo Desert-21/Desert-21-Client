@@ -10,15 +10,15 @@ import { ActivateCodeRequest } from './activate-code-types';
 })
 export class ActivateCodeComponent implements OnInit {
 
-  isLoading: boolean = true;
-  isSucceeded: boolean = false;
+  isLoading = true;
+  isSucceeded = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const code = params['activationCode'];
-      const email = params['email'];
+      const code = params.activationCode;
+      const email = params.email;
       const request: ActivateCodeRequest = {
         email,
         activationCode: code
@@ -31,9 +31,9 @@ export class ActivateCodeComponent implements OnInit {
         alert(err.error);
         this.isLoading = false;
         this.isSucceeded = false;
-      })
+      });
       console.log(code);
-    })
+    });
   }
 
 }

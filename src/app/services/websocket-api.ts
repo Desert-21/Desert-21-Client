@@ -19,52 +19,49 @@ export class WebSocketAPI {
     this.messageHandlers = messageHandlers;
   }
 
-  _connect() {
-    let ws = new SockJS(this.webSocketEndPoint);
+  _connect(): void {
+    const ws = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = () => {};
-    const _this = this;
-    _this.stompClient.connect(
+    const that = this;
+    that.stompClient.connect(
       {},
-      function (frame) {
-        _this.stompClient.subscribe(
-          _this.topic,
-          function (sdkEvent) {
-            _this.onMessageReceived(sdkEvent);
+      frame => {
+        that.stompClient.subscribe(
+          that.topic,
+          sdkEvent => {
+            that.onMessageReceived(sdkEvent);
           },
           {
-            Authorization: _this.token,
+            Authorization: that.token,
           }
         );
-        //_this.stompClient.reconnect_delay = 2000;
+        // _this.stompClient.reconnect_delay = 2000;
       },
       this.errorCallBack
     );
   }
 
-  _disconnect() {
+  _disconnect(): void {
     if (this.stompClient !== null) {
       this.stompClient.disconnect();
     }
   }
 
   // on error, schedule a reconnection attempt
-  errorCallBack(error) {
+  errorCallBack(error): void {
     setTimeout(() => {
       this._connect();
     }, 5000);
   }
 
-  /**
-   * Send message to sever via web socket
-   * @param {*} message
-   */
-  _send(message) {
+  _send(message): void {
     this.stompClient.send('/app/hello', {}, JSON.stringify(message));
   }
 
-  onMessageReceived(message: any) {
-    let body = JSON.parse(message.body)[0] as AppNofication<any>;
+  onMessageReceived(message: any): void {
+    const body = JSON.parse(message.body) as AppNofication<any>;
+    console.log(body);
     this.messageHandlers.filter(handler => handler.type === body.type)
     .forEach(handler => {
       handler.handle(body.content);

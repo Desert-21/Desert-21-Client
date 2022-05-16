@@ -10,7 +10,7 @@ import { LoginRequest } from './login-types';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  isLoading: boolean = false;
+  isLoading = false;
 
   formModel: LoginRequest = {
     email: '',
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login() {
+  login(): void {
     this.isLoading = true;
     this.http
       .post<HttpResponse<any>>('/login', this.formModel, {
@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (resp) => {
           this.isLoading = false;
-          let headers = resp.headers;
-          let token = headers.get('Authorization');
+          const headers = resp.headers;
+          const token = headers.get('Authorization');
           this.tokenService.saveToken(token);
           this.router.navigate(['menu']);
         },

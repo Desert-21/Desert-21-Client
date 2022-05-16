@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-const GAME_ID_LOCATION = "desert-21-game-id";
+const GAME_ID_LOCATION = 'desert-21-game-id';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameIdService {
 
-  saveId(id: string) {
+  saveId(id: string): void {
     localStorage.setItem(GAME_ID_LOCATION, id);
   }
 
