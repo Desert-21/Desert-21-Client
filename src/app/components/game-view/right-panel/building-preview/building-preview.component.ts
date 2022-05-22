@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatestWith } from 'rxjs';
 import { FieldSelection } from 'src/app/models/game-utility-models';
-import { UsersData } from 'src/app/models/profile-models.';
-import { GameStateService } from 'src/app/services/http/game-state.service';
-import { UserInfoService } from 'src/app/services/http/user-info.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
 

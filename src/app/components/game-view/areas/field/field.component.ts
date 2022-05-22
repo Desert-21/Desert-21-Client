@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { combineLatestWith } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { Field } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
@@ -33,17 +33,17 @@ export class FieldComponent implements OnInit {
   isSelected = false;
 
   ngOnInit(): void {
-    this.gameStateService
-      .getStateUpdates()
-      .pipe(combineLatestWith(this.userInfoService.getStateUpdates()))
-      .subscribe((gameWithUsersData) => {
-        const game = gameWithUsersData[0];
-        const usersData = gameWithUsersData[1];
-        this.usersId = usersData.id;
-        this.fields = game.fields;
-        this.field = game?.fields[this.row][this.col];
-        this.currentClasses = this.getStyling();
-      });
+    combineLatest([
+      this.gameStateService.getStateUpdates(),
+      this.userInfoService.getStateUpdates(),
+    ]).subscribe((gameWithUsersData) => {
+      const game = gameWithUsersData[0];
+      const usersData = gameWithUsersData[1];
+      this.usersId = usersData.id;
+      this.fields = game.fields;
+      this.field = game?.fields[this.row][this.col];
+      this.currentClasses = this.getStyling();
+    });
     this.selectedFieldService.getStateUpdates().subscribe((field) => {
       if (field === null) {
         this.isSelected = false;
