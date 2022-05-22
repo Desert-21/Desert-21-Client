@@ -1,0 +1,32 @@
+.wrapper {
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-top: 24px;
+}
+
+button {
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.button-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: large;
+}
+
+.button-content-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: large;
+  color: yellow;
+
+  img {
+    margin-left: 8px;
+  }
+}

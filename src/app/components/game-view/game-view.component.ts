@@ -32,10 +32,6 @@ export class GameViewComponent implements OnInit {
 
       this.gameStateService.requestState();
     });
-
-    this.gameBalanceService.getStateUpdates().subscribe(resp => {
-    });
     this.gameBalanceService.requestState();
-
   }
 }

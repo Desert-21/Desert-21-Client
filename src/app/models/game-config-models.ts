@@ -1,6 +1,69 @@
 export type GameBalanceConfig = {
   buildings: AllBuildingsBalance;
   combat: AllCombatBalance;
+  general: GeneralUpgrades;
+  upgrades: AllUpgradesBalance;
+};
+
+export type GeneralUpgrades = {
+  fogOfWar1: number;
+  fogOfWar2: number;
+  productionPerField: number;
+  startingResources: number;
+};
+
+export type AllUpgradesBalance = {
+  combat: CombatBranch;
+  control: ControlBranch;
+  production: ProductionBranch;
+};
+
+export type CombatBranch = Branch & {
+  combatBranchConfig: CombatBranchConfig;
+};
+
+export type CombatBranchConfig = {
+  advancedTacticsPowerBonusPerReferencePower: number;
+  advancedTacticsReferencePower: number;
+  improvedCannonsBombardingPowerFraction: number;
+  improvedDroidsBaseAtTowerDefenceBonus: number;
+  improvedDroidsBaseDefenceBonus: number;
+  improvedTanksPowerBonus: number;
+  reusablePartsUnitsFractionSaved: number;
+};
+
+export type ControlBranch = Branch & {
+  controlBranchConfig: ControlBranchConfig;
+};
+
+export type ControlBranchConfig = {
+  goldDiggersProductionPerFieldBonus: number;
+  scarabScannersPowerDecreaseRatio: number;
+  towerCreatorMaxTowersBuilt: number;
+};
+
+export type ProductionBranch = Branch & {
+  productionBranchConfig: ProductionBranchConfig;
+};
+
+export type ProductionBranchConfig = {
+  factoryBuildingMaxFactoriesBuilt: number;
+  homeSweetHomeProductionBonus: number;
+  moreBuildingMaterialsProductionRelativeBonus: number;
+  moreBuildingMaterialsProductionStaticBonus: number;
+  moreElectricityProductionRelativeBonus: number;
+  moreElectricityProductionStaticBonus: number;
+  moreMetalProductionRelativeBonus: number;
+  moreMetalProductionStaticBonus: number;
+  productionAiIncreasePerTurn: number;
+  productionManagersProductionBonus: number;
+};
+
+export type Branch = {
+  baseUpgrade: string;
+  firstTierUpgrades: Array<string>;
+  secondTierUpgrades: Array<string>;
+  superUpgrade: string;
 };
 
 export type AllBuildingsBalance = {
@@ -15,7 +78,6 @@ export type AllCombatBalance = {
   tanks: CombatUnitConfig;
   cannons: CombatUnitConfig;
 };
-
 
 export type LeveledValue = {
   level1: number;
@@ -55,6 +117,3 @@ export type CombatUnitConfig = {
   mediumProduction: number;
   massProduction: number;
 };
-
-
-

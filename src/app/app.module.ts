@@ -34,6 +34,7 @@ import { EnlighterDirective } from './directives/enlighter.directive';
 import { RightPanelComponent } from './components/game-view/right-panel/right-panel.component';
 import { LeftPanelComponent } from './components/game-view/left-panel/left-panel.component';
 import { BuildingPreviewComponent } from './components/game-view/right-panel/building-preview/building-preview.component';
+import { UpgradeBuildingButtonComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-building-button.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { BuildingPreviewComponent } from './components/game-view/right-panel/bui
     EnlighterDirective,
     RightPanelComponent,
     LeftPanelComponent,
-    BuildingPreviewComponent
+    BuildingPreviewComponent,
+    UpgradeBuildingButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -18,9 +18,18 @@ export type Army = {
 };
 
 export type Building = {
-  type: string;
+  type: BuildingType;
   level: number;
 };
+
+export type BuildingType =
+  | 'METAL_FACTORY'
+  | 'BUILDING_MATERIALS_FACTORY'
+  | 'ELECTRICITY_FACTORY'
+  | 'TOWER'
+  | 'ROCKET_LAUNCHER'
+  | 'HOME_BASE'
+  | 'EMPTY_FIELD';
 
 export type Player = {
   id: string;
