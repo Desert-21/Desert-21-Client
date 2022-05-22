@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { combineLatestWith } from 'rxjs';
 import { Field } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
-import { SelectedFieldService } from 'src/app/services/selected-field.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
+import { LocationSelectionService } from 'src/app/services/rx-logic/location-selection.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
 
 @Component({
@@ -15,7 +16,8 @@ export class FieldComponent implements OnInit {
   constructor(
     private gameStateService: GameStateService,
     private userInfoService: UserInfoService,
-    private selectedFieldService: SelectedFieldService
+    private selectedFieldService: SelectedFieldService,
+    private selectedLocationService: LocationSelectionService
   ) {}
 
   @Input() row = -1;
@@ -42,8 +44,12 @@ export class FieldComponent implements OnInit {
         this.field = game?.fields[this.row][this.col];
         this.currentClasses = this.getStyling();
       });
-    this.selectedFieldService.getSelectedFieldUpdates().subscribe(field => {
-      this.isSelected = this.row === field.row && this.col === field.col;
+    this.selectedFieldService.getStateUpdates().subscribe((field) => {
+      if (field === null) {
+        this.isSelected = false;
+      } else {
+        this.isSelected = this.row === field.row && this.col === field.col;
+      }
     });
   }
 
@@ -122,10 +128,13 @@ export class FieldComponent implements OnInit {
   }
 
   onFieldSelect(): void {
-    if (this.selectedFieldService.isCurrentSelection(this.row, this.col)) {
-      this.selectedFieldService.clearSelection();
+    if (this.selectedLocationService.isCurrentSelection(this.row, this.col)) {
+      this.selectedLocationService.setLocation(null);
     } else {
-      this.selectedFieldService.setField(this.row, this.col);
+      this.selectedLocationService.setLocation({
+        row: this.row,
+        col: this.col,
+      });
     }
   }
 }

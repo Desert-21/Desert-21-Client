@@ -7,8 +7,8 @@ export type Game = {
 
 export type Field = {
   building: Building;
-  ownerId: string,
-  army: Army
+  ownerId: string;
+  army: Army;
 };
 
 export type Army = {
@@ -38,4 +38,9 @@ export type StateManager = {
   gameState: string;
   timeout: string;
   currentPlayerId?: string;
+};
+
+export type BoardLocation = {
+  row: number;
+  col: number;
 };

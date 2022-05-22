@@ -36,19 +36,19 @@ export class LoginComponent implements OnInit {
       .post<HttpResponse<any>>('/login', this.formModel, {
         observe: 'response',
       })
-      .subscribe(
-        (resp) => {
+      .subscribe({
+        next: (resp) => {
           this.isLoading = false;
           const headers = resp.headers;
           const token = headers.get('Authorization');
           this.tokenService.saveToken(token);
           this.router.navigate(['menu']);
         },
-        (err) => {
+        error: (err) => {
           alert('Login failed. Make sure your CAPS LOCK is down.');
           this.isLoading = false;
-        }
-      );
+        },
+      });
   }
 
   isDisabled(): boolean {

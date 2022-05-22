@@ -4,7 +4,7 @@ import { FieldSelection } from 'src/app/models/game-utility-models';
 import { UsersData } from 'src/app/models/profile-models.';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
-import { SelectedFieldService } from 'src/app/services/selected-field.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
 
 @Component({
@@ -14,8 +14,6 @@ import { underscoreToRegular } from 'src/app/utils/text-utils';
 })
 export class BuildingPreviewComponent implements OnInit {
   constructor(
-    private gameStateService: GameStateService,
-    private userInfoService: UserInfoService,
     private selectedFieldService: SelectedFieldService
   ) {}
 
@@ -27,41 +25,38 @@ export class BuildingPreviewComponent implements OnInit {
   isEmpty = true;
 
   ngOnInit(): void {
-    this.gameStateService
+    this.selectedFieldService
       .getStateUpdates()
-      .pipe(
-        combineLatestWith(
-          this.userInfoService.getStateUpdates(),
-          this.selectedFieldService.getSelectedFieldUpdates()
-        )
-      )
-      .subscribe((gameStateWithUserInfo) => {
-        const gameState = gameStateWithUserInfo[0];
-        const userInfo = gameStateWithUserInfo[1];
-        const selectedField = gameStateWithUserInfo[2];
-
-        const building = selectedField.field.building;
+      .subscribe((selectedFieldInfo) => {
+        if (selectedFieldInfo === null) {
+          this.buildingName = '';
+          this.buildingDescription = '';
+          this.buildingImage = 'assets/buildings/unknownBuilding.png';
+          this.ownershipPrefix = '';
+          this.level = null;
+          this.isEmpty = true;
+          return;
+        }
+        const selectedField = selectedFieldInfo.field;
+        const building = selectedField.building;
         this.buildingName = underscoreToRegular(building.type);
         this.buildingDescription = this.getBuildingDescription(building.type);
         this.buildingImage = this.getBuildingImageSource(building.type);
-        this.ownershipPrefix = this.getOwnershipPrefix(userInfo, selectedField);
+        this.ownershipPrefix = this.getOwnershipPrefix(selectedFieldInfo);
         this.level = building?.level;
         this.isEmpty = building?.type === 'EMPTY_FIELD';
       });
-    this.gameStateService.requestState();
-    this.userInfoService.requestState();
+    this.selectedFieldService.requestState();
   }
 
-  private getOwnershipPrefix(userInfo: UsersData, selectedField: FieldSelection): string {
-    const ownerId = selectedField.field.ownerId;
-    if (ownerId === null) {
-      return 'Unoccupied';
-    }
-    const id = userInfo.id;
-    if (ownerId === id) {
+  private getOwnershipPrefix(selectedField: FieldSelection): string {
+    if (selectedField.isOwned) {
       return 'Your';
     }
-    return 'Enemy';
+    if (selectedField.isEnemy) {
+      return 'Enemy';
+    }
+    return 'Unoccupied';
   }
 
   private getBuildingDescription(type: string): string {
@@ -75,7 +70,7 @@ export class BuildingPreviewComponent implements OnInit {
       case 'TOWER':
         return 'Towers can be used to produce an army and they additionally offer some defending bonuses, making them much harder to conquer than regular buildings.';
       case 'HOME_BASE':
-       return 'Home bases allow for producing army and offer protection for defenders just like towers do, but they also produce small fixed amount of metal, building materials and electricity.';
+        return 'Home bases allow for producing army and offer protection for defenders just like towers do, but they also produce small fixed amount of metal, building materials and electricity.';
       case 'ROCKET_LAUNCHER':
         return 'Rocket launchers allow for firing rockets at opponent and cousing serious damage to their army.';
       default:
@@ -94,7 +89,7 @@ export class BuildingPreviewComponent implements OnInit {
       case 'TOWER':
         return 'assets/buildings/tower.png';
       case 'HOME_BASE':
-       return 'assets/buildings/tower.png';
+        return 'assets/buildings/tower.png';
       case 'ROCKET_LAUNCHER':
         return 'assets/buildings/rocket.png';
       default:
