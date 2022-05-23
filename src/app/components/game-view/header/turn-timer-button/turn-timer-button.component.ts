@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { PlayersAction } from 'src/app/models/actions';
+import { GameTurnRequest } from 'src/app/models/game-utility-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import {
   formatSecondsToTimeString,
   millisecondsTo,
   parseDate,
-  timeStringToTotalSeconds
+  timeStringToTotalSeconds,
 } from 'src/app/utils/date-utils';
 
 @Component({
@@ -25,26 +28,36 @@ export class TurnTimerButtonComponent implements OnInit {
 
   gameId: string | null = null;
 
+  currentActions: Array<PlayersAction<any>> = [];
+
+  currentOnClick: () => void = () => {};
+
   constructor(
     private gameStateService: GameStateService,
     private userInfoService: UserInfoService,
     private http: HttpClient,
-    private gameContextService: GameContextService
+    private gameContextService: GameContextService,
+    private currentActionsService: CurrentActionsService
   ) {}
 
   ngOnInit(): void {
     this.gameContextService.getStateUpdates().subscribe((context) => {
       const game = context.game;
-      const stateManager = game.stateManager;
-      const currentPlayerId = stateManager.currentPlayerId;
+      const { currentPlayerId, gameState, timeout } = game.stateManager;
+
       if (currentPlayerId === null) {
         this.isMyTurn = null;
       } else {
         this.isMyTurn = currentPlayerId === context.player.id;
       }
-      this.timeOfNextTurn = parseDate(stateManager.timeout);
-      this.buttonDisplay = this.getButtonText(stateManager.gameState);
-      this.gameId = game.id;
+      this.timeOfNextTurn = parseDate(timeout);
+      this.buttonDisplay = this.getButtonText(gameState);
+      this.gameId = game.gameId;
+      console.log(game);
+
+      this.currentActions = context.currentActions;
+
+      this.currentOnClick = this.getCurrentOnClick(this.isMyTurn, gameState);
     });
     this.gameContextService.requestState();
     this.tickTheTime();
@@ -52,6 +65,28 @@ export class TurnTimerButtonComponent implements OnInit {
 
   notifyAboutGameReadiness(): void {
     this.http.post('/gameReadiness', this.gameId).subscribe((resp) => {});
+  }
+
+  endTurn(): void {
+    const actionRequests = this.currentActions.map((a) => a.toActionAPIBody());
+    const gameTurnRequest: GameTurnRequest = {
+      gameId: this.gameId,
+      actions: actionRequests,
+    };
+    this.http.post('/games/turns', gameTurnRequest).subscribe((resp) => {
+      console.log(resp);
+      this.currentActionsService.clearActions();
+    });
+  }
+
+  private getCurrentOnClick(isMyTurn: boolean, gameState: string): () => void {
+    if (gameState === 'AWAITING' && isMyTurn) {
+      return this.endTurn;
+    }
+    if (gameState === 'WAITING_TO_START') {
+      return this.notifyAboutGameReadiness;
+    }
+    return () => {};
   }
 
   private dateToRemainingTimeString(): string {

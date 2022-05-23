@@ -1,0 +1,27 @@
+.action-container {
+  margin-left: 8px;
+  margin-right: 8px;
+  background-color: lightgray;
+  padding: 4px;
+
+  > div {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+h5 {
+  font-weight: bolder;
+}
+
+.view-button {
+  color: black;
+}
+
+.top-right-panel {
+  display: flex;
+  align-items: center;
+}

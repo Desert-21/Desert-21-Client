@@ -1,5 +1,10 @@
 <div *ngIf="isBuildingUpgradable" class="wrapper">
-  <button class="btn-success">
+  <button
+    (click)="upgradeBuilding()"
+    [disabled]="isUpgradingLocked"
+    [class.btn-success]="!isUpgradingLocked"
+    [class.btn-secondary]="isUpgradingLocked"
+  >
     <div class="button-content">
       <div class="desert21-font">UPGRADE</div>
       <div class="button-content-right desert21-font">

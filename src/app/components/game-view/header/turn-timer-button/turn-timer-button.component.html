@@ -11,7 +11,7 @@
     </button>
     <button
       *ngIf="isMyTurn !== false"
-      (click)="notifyAboutGameReadiness()"
+      (click)="currentOnClick()"
       type="button"
       class="btn btn-success next-turn desert21-font col-6"
     >
@@ -19,10 +19,9 @@
     </button>
     <button
       *ngIf="isMyTurn === false"
-      (click)="notifyAboutGameReadiness()"
       type="button"
       class="btn btn-secondary disabled next-turn desert21-font col-6"
-      [disabled]="isMyTurn === false"
+      [disabled]="true"
     >
       <div>{{ buttonDisplay }}</div>
     </button>

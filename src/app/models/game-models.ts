@@ -1,5 +1,5 @@
 export type Game = {
-  id: string;
+  gameId: string;
   players: Array<Player>;
   fields: Array<Array<Field>>;
   stateManager: StateManager;

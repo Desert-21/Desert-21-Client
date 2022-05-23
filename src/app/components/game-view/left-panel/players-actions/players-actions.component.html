@@ -1,0 +1,9 @@
+<div class="queue-container">
+  <h5 class="text-center desert21-font">Actions queue</h5>
+  <div *ngIf="actions.length === 0">Queue is empty!</div>
+  <div *ngIf="actions.length !== 0">
+    <div *ngFor="let action of actions">
+      <app-action-entry [action]="action"></app-action-entry>
+    </div>
+  </div>
+</div>

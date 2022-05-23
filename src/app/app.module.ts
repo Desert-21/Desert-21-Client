@@ -35,6 +35,8 @@ import { RightPanelComponent } from './components/game-view/right-panel/right-pa
 import { LeftPanelComponent } from './components/game-view/left-panel/left-panel.component';
 import { BuildingPreviewComponent } from './components/game-view/right-panel/building-preview/building-preview.component';
 import { UpgradeBuildingButtonComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-building-button.component';
+import { PlayersActionsComponent } from './components/game-view/left-panel/players-actions/players-actions.component';
+import { ActionEntryComponent } from './components/game-view/left-panel/players-actions/action-entry/action-entry.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { UpgradeBuildingButtonComponent } from './components/game-view/right-pan
     RightPanelComponent,
     LeftPanelComponent,
     BuildingPreviewComponent,
-    UpgradeBuildingButtonComponent
+    UpgradeBuildingButtonComponent,
+    PlayersActionsComponent,
+    ActionEntryComponent
   ],
   imports: [
     BrowserModule,

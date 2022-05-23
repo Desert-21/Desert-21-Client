@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import {
+  PlayersAction,
+  UpgradeAction,
+  UpgradeActionContent,
+} from 'src/app/models/actions';
+import {
   AllBuildingsBalance,
   LeveledValue,
 } from 'src/app/models/game-config-models';
-import { Building } from 'src/app/models/game-models';
+import { BoardLocation, Building } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
+import { AvailableResourcesService } from 'src/app/services/rx-logic/available-resources.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 
@@ -15,24 +22,34 @@ import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.s
   styleUrls: ['./upgrade-building-button.component.scss'],
 })
 export class UpgradeBuildingButtonComponent implements OnInit {
-  isBuildingUpgradable = false;
+  isBuildingUpgradable = false; // too high level already, not owned
+  isUpgradingLocked = true; // not enough resources, already upgrading
   buildingCost = 0;
+  location: BoardLocation | null = null;
 
   constructor(
     private gameContextService: GameContextService,
-    private selectedFieldService: SelectedFieldService
+    private selectedFieldService: SelectedFieldService,
+    private currentActionsService: CurrentActionsService,
+    private availableResourcesService: AvailableResourcesService
   ) {}
 
   ngOnInit(): void {
     combineLatest([
       this.gameContextService.getStateUpdates(),
       this.selectedFieldService.getStateUpdates(),
+      this.availableResourcesService.getStateUpdates()
     ]).subscribe((combined) => {
-      const [gameContext, selectedFieldInfo] = combined;
+      const [gameContext, selectedFieldInfo, availableResources] = combined;
       if (selectedFieldInfo === null) {
         this.isBuildingUpgradable = false;
+        this.location = null;
         return;
       }
+
+      const { row, col } = selectedFieldInfo;
+      this.location = { row, col };
+
       const {
         isOwned,
         field: { building },
@@ -41,12 +58,36 @@ export class UpgradeBuildingButtonComponent implements OnInit {
       this.isBuildingUpgradable =
         isOwned && this.isUpgradable(gameContext, building);
 
+      const isAlreadyUpgrading = this.isBuildingAlreadyUpgrading(
+        gameContext.currentActions
+      );
+
       if (this.isBuildingUpgradable) {
         this.buildingCost = this.getBuildingCost(gameContext, building);
       }
+
+      const canAfford = availableResources.buildingMaterials >= this.buildingCost;
+
+      if (this.isBuildingUpgradable) {
+        this.isUpgradingLocked = isAlreadyUpgrading || !canAfford;
+      }
+
     });
     this.gameContextService.requestState();
     this.selectedFieldService.requestState();
+  }
+
+  private isBuildingAlreadyUpgrading(
+    actions: Array<PlayersAction<any>>
+  ): boolean {
+    return actions
+      .filter((a) => a.getType() === 'UPGRADE')
+      .map((a) => a.getContent() as UpgradeActionContent)
+      .some(
+        (a) =>
+          a.location.row === this.location.row &&
+          a.location.col === this.location.col
+      );
   }
 
   private getBuildingCost(
@@ -122,5 +163,10 @@ export class UpgradeBuildingButtonComponent implements OnInit {
       default:
         return 0;
     }
+  }
+
+  upgradeBuilding(): void {
+    const action = new UpgradeAction(this.buildingCost, this.location);
+    this.currentActionsService.pushAction(action);
   }
 }

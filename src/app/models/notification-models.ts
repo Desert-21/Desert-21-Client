@@ -1,4 +1,4 @@
-export type AppNofication<T> = {
+export type AppNotification<T> = {
   type: string;
   content: T;
 };
@@ -15,4 +15,8 @@ export type NextTurnNotification = {
 
 export type StartGameNotification = {
   gameId: string;
+};
+
+export type ResolutionPhaseNotification = {
+  timeout: Date, notifications: Array<AppNotification<any>>
 };

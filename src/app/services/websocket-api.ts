@@ -1,7 +1,7 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { environment } from 'src/environments/environment';
-import { AppNofication, NotificationHandler } from '../models/notification-models';
+import { AppNotification, NotificationHandler } from '../models/notification-models';
 
 export class WebSocketAPI {
   messageHandlers: Array<NotificationHandler<any>> = [];
@@ -60,7 +60,7 @@ export class WebSocketAPI {
   }
 
   onMessageReceived(message: any): void {
-    const body = JSON.parse(message.body) as AppNofication<any>;
+    const body = JSON.parse(message.body) as AppNotification<any>;
     console.log(body);
     this.messageHandlers.filter(handler => handler.type === body.type)
     .forEach(handler => {
