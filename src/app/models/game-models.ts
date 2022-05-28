@@ -31,6 +31,13 @@ export type BuildingType =
   | 'HOME_BASE'
   | 'EMPTY_FIELD';
 
+export type FactoryType =
+  | 'METAL_FACTORY'
+  | 'BUILDING_MATERIALS_FACTORY'
+  | 'ELECTRICITY_FACTORY';
+
+export type TowerType = 'TOWER' | 'HOME_BASE';
+
 export type Player = {
   id: string;
   nickname: string;

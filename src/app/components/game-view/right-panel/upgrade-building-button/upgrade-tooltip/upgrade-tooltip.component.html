@@ -1,0 +1,10 @@
+<app-tower-tooltip
+  *ngIf="isTower()"
+  [building]="building"
+  [balance]="balance"
+></app-tower-tooltip>
+<app-factory-tooltip
+  *ngIf="isFactory()"
+  [building]="building"
+  [balance]="balance"
+></app-factory-tooltip>

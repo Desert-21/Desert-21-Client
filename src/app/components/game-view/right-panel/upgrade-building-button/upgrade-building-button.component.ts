@@ -7,6 +7,7 @@ import {
 } from 'src/app/models/actions';
 import {
   AllBuildingsBalance,
+  GameBalanceConfig,
   LeveledValue,
 } from 'src/app/models/game-config-models';
 import { BoardLocation, Building } from 'src/app/models/game-models';
@@ -15,6 +16,7 @@ import { AvailableResourcesService } from 'src/app/services/rx-logic/available-r
 import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { buildingToConfig } from 'src/app/utils/balance-utils';
 
 @Component({
   selector: 'app-upgrade-building-button',
@@ -26,6 +28,8 @@ export class UpgradeBuildingButtonComponent implements OnInit {
   isUpgradingLocked = true; // not enough resources, already upgrading
   buildingCost = 0;
   location: BoardLocation | null = null;
+  building: Building | null = null;
+  balance: GameBalanceConfig | null = null;
 
   constructor(
     private gameContextService: GameContextService,
@@ -41,9 +45,11 @@ export class UpgradeBuildingButtonComponent implements OnInit {
       this.availableResourcesService.getStateUpdates()
     ]).subscribe((combined) => {
       const [gameContext, selectedFieldInfo, availableResources] = combined;
+      this.balance = gameContext.balance;
       if (selectedFieldInfo === null) {
         this.isBuildingUpgradable = false;
         this.location = null;
+        this.building = null;
         return;
       }
 
@@ -54,6 +60,8 @@ export class UpgradeBuildingButtonComponent implements OnInit {
         isOwned,
         field: { building },
       } = selectedFieldInfo;
+
+      this.building = building;
 
       this.isBuildingUpgradable =
         isOwned && this.isUpgradable(gameContext, building);
@@ -95,7 +103,7 @@ export class UpgradeBuildingButtonComponent implements OnInit {
     building: Building
   ): number {
     const balance = gameContext.balance.buildings;
-    const config = this.buildingToConfig(balance, building);
+    const config = buildingToConfig(balance, building);
     const leveledCost = config.cost as LeveledValue | undefined;
     if (leveledCost === undefined) {
       return 0;
@@ -104,29 +112,9 @@ export class UpgradeBuildingButtonComponent implements OnInit {
     return this.getCostAtLevel(nextLevel, leveledCost);
   }
 
-  private buildingToConfig(
-    buildingsBalance: AllBuildingsBalance,
-    building: Building
-  ): any {
-    switch (building.type) {
-      case 'TOWER':
-        return buildingsBalance.tower;
-      case 'ROCKET_LAUNCHER':
-        return buildingsBalance.rocketLauncher;
-      case 'HOME_BASE':
-        return buildingsBalance.homeBase;
-      case 'METAL_FACTORY':
-      case 'BUILDING_MATERIALS_FACTORY':
-      case 'ELECTRICITY_FACTORY':
-        return buildingsBalance.factory;
-      default:
-        return null;
-    }
-  }
-
   private isUpgradable(gameContext: GameContext, building: Building): boolean {
     const balance = gameContext.balance.buildings;
-    const config = this.buildingToConfig(balance, building);
+    const config = buildingToConfig(balance, building);
     if (config === null) {
       return false;
     }

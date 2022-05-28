@@ -10,7 +10,7 @@
       </div>
     </button>
     <button
-      *ngIf="isMyTurn !== false"
+      *ngIf="!isButtonDisabled"
       (click)="currentOnClick()"
       type="button"
       class="btn btn-success next-turn desert21-font col-6"
@@ -18,10 +18,10 @@
       <div>{{ buttonDisplay }}</div>
     </button>
     <button
-      *ngIf="isMyTurn === false"
+      *ngIf="isButtonDisabled"
       type="button"
       class="btn btn-secondary disabled next-turn desert21-font col-6"
-      [disabled]="true"
+      disabled
     >
       <div>{{ buttonDisplay }}</div>
     </button>

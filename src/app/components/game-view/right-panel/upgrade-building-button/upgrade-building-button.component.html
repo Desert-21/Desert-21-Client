@@ -4,6 +4,8 @@
     [disabled]="isUpgradingLocked"
     [class.btn-success]="!isUpgradingLocked"
     [class.btn-secondary]="isUpgradingLocked"
+    [ngbTooltip]="tipContent"
+    placement="left"
   >
     <div class="button-content">
       <div class="desert21-font">UPGRADE</div>
@@ -13,3 +15,9 @@
     </div>
   </button>
 </div>
+<ng-template #tipContent
+  ><app-upgrade-tooltip
+    [balance]="balance"
+    [building]="building"
+  ></app-upgrade-tooltip
+></ng-template>

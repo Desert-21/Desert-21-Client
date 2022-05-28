@@ -24,7 +24,7 @@ export class TurnTimerButtonComponent implements OnInit {
 
   buttonDisplay = '...';
 
-  isMyTurn: boolean | null = null;
+  isButtonDisabled = false;
 
   gameId: string | null = null;
 
@@ -44,20 +44,18 @@ export class TurnTimerButtonComponent implements OnInit {
     this.gameContextService.getStateUpdates().subscribe((context) => {
       const game = context.game;
       const { currentPlayerId, gameState, timeout } = game.stateManager;
+      const isMyTurn =
+        currentPlayerId === null ? null : currentPlayerId === context.player.id;
 
-      if (currentPlayerId === null) {
-        this.isMyTurn = null;
-      } else {
-        this.isMyTurn = currentPlayerId === context.player.id;
-      }
       this.timeOfNextTurn = parseDate(timeout);
-      this.buttonDisplay = this.getButtonText(gameState);
+      this.buttonDisplay = this.getButtonText(gameState, isMyTurn);
       this.gameId = game.gameId;
-      console.log(game);
 
       this.currentActions = context.currentActions;
 
-      this.currentOnClick = this.getCurrentOnClick(this.isMyTurn, gameState);
+      this.currentOnClick = this.getCurrentOnClick(isMyTurn, gameState);
+
+      this.isButtonDisabled = this.getIsButtonDisabled(gameState, isMyTurn);
     });
     this.gameContextService.requestState();
     this.tickTheTime();
@@ -74,7 +72,6 @@ export class TurnTimerButtonComponent implements OnInit {
       actions: actionRequests,
     };
     this.http.post('/games/turns', gameTurnRequest).subscribe((resp) => {
-      console.log(resp);
       this.currentActionsService.clearActions();
     });
   }
@@ -117,14 +114,20 @@ export class TurnTimerButtonComponent implements OnInit {
     return millisecondsToEndOfTurn - nextRemainingMilliseconds - 200;
   }
 
-  private getButtonText(state: string): string {
+  private getButtonText(state: string, isMyTurn: boolean): string {
     switch (state) {
       case 'WAITING_TO_START':
         return 'Ready!';
       case 'AWAITING':
-        return this.isMyTurn ? 'End Turn' : 'Opponents Turn';
+        return isMyTurn ? 'End Turn' : 'Opponents Turn';
+      case 'RESOLVED':
+        return 'Wait...';
       default:
         return 'UNKNOWN!';
     }
+  }
+
+  private getIsButtonDisabled(state: string, isMyTurn: boolean): boolean {
+    return state !== 'WAITING_TO_START' && !(state === 'AWAITING' && isMyTurn);
   }
 }

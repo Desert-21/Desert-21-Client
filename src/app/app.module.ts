@@ -37,6 +37,10 @@ import { BuildingPreviewComponent } from './components/game-view/right-panel/bui
 import { UpgradeBuildingButtonComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-building-button.component';
 import { PlayersActionsComponent } from './components/game-view/left-panel/players-actions/players-actions.component';
 import { ActionEntryComponent } from './components/game-view/left-panel/players-actions/action-entry/action-entry.component';
+import { GameModalComponent } from './components/common/game-modal/game-modal.component';
+import { UpgradeTooltipComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-tooltip/upgrade-tooltip.component';
+import { FactoryTooltipComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-tooltip/factory-tooltip/factory-tooltip.component';
+import { TowerTooltipComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-tooltip/tower-tooltip/tower-tooltip.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +72,11 @@ import { ActionEntryComponent } from './components/game-view/left-panel/players-
     BuildingPreviewComponent,
     UpgradeBuildingButtonComponent,
     PlayersActionsComponent,
-    ActionEntryComponent
+    ActionEntryComponent,
+    GameModalComponent,
+    UpgradeTooltipComponent,
+    FactoryTooltipComponent,
+    TowerTooltipComponent
   ],
   imports: [
     BrowserModule,
