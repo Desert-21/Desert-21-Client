@@ -10,8 +10,15 @@ import {
   GameBalanceConfig,
   LeveledValue,
 } from 'src/app/models/game-config-models';
-import { BoardLocation, Building } from 'src/app/models/game-models';
-import { GameContext } from 'src/app/models/game-utility-models';
+import {
+  BoardLocation,
+  Building,
+  ResourceSet,
+} from 'src/app/models/game-models';
+import {
+  FieldSelection,
+  GameContext,
+} from 'src/app/models/game-utility-models';
 import { AvailableResourcesService } from 'src/app/services/rx-logic/available-resources.service';
 import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
@@ -31,6 +38,8 @@ export class UpgradeBuildingButtonComponent implements OnInit {
   building: Building | null = null;
   balance: GameBalanceConfig | null = null;
 
+  shouldShowTooltip = false;
+
   constructor(
     private gameContextService: GameContextService,
     private selectedFieldService: SelectedFieldService,
@@ -42,59 +51,81 @@ export class UpgradeBuildingButtonComponent implements OnInit {
     combineLatest([
       this.gameContextService.getStateUpdates(),
       this.selectedFieldService.getStateUpdates(),
-      this.availableResourcesService.getStateUpdates()
+      this.availableResourcesService.getStateUpdates(),
     ]).subscribe((combined) => {
       const [gameContext, selectedFieldInfo, availableResources] = combined;
-      this.balance = gameContext.balance;
-      if (selectedFieldInfo === null) {
-        this.isBuildingUpgradable = false;
-        this.location = null;
-        this.building = null;
-        return;
-      }
-
-      const { row, col } = selectedFieldInfo;
-      this.location = { row, col };
-
-      const {
-        isOwned,
-        field: { building },
-      } = selectedFieldInfo;
-
-      this.building = building;
-
-      this.isBuildingUpgradable =
-        isOwned && this.isUpgradable(gameContext, building);
-
-      const isAlreadyUpgrading = this.isBuildingAlreadyUpgrading(
-        gameContext.currentActions
-      );
-
-      if (this.isBuildingUpgradable) {
-        this.buildingCost = this.getBuildingCost(gameContext, building);
-      }
-
-      const canAfford = availableResources.buildingMaterials >= this.buildingCost;
-
-      if (this.isBuildingUpgradable) {
-        this.isUpgradingLocked = isAlreadyUpgrading || !canAfford;
-      }
-
+      this.reactToRxUpdate(gameContext, selectedFieldInfo, availableResources);
     });
     this.gameContextService.requestState();
     this.selectedFieldService.requestState();
+    this.availableResourcesService.requestState();
+  }
+
+  private reactToRxUpdate(
+    gameContext: GameContext,
+    selectedFieldInfo: FieldSelection,
+    availableResources: ResourceSet
+  ): void {
+    this.balance = gameContext.balance;
+
+    if (gameContext === null || selectedFieldInfo === null) {
+      this.resetDefaults();
+      return;
+    }
+
+    const { row, col } = selectedFieldInfo;
+    this.location = { row, col };
+
+    const {
+      isOwned,
+      field: { building },
+    } = selectedFieldInfo;
+
+    this.building = building;
+
+    this.isBuildingUpgradable =
+      isOwned && this.isUpgradable(gameContext, building);
+
+    if (this.isBuildingUpgradable) {
+      this.buildingCost = this.getBuildingCost(gameContext, building);
+    }
+
+    const isAlreadyUpgrading = this.isBuildingAlreadyUpgrading(
+      gameContext.currentActions,
+      { row, col }
+    );
+    const canAfford = availableResources.buildingMaterials >= this.buildingCost;
+    if (this.isBuildingUpgradable) {
+      this.isUpgradingLocked = isAlreadyUpgrading || !canAfford;
+    }
+
+    this.shouldShowTooltip = this.shouldShowTheTooltip(
+      this.isBuildingUpgradable,
+      this.isUpgradingLocked,
+      isAlreadyUpgrading
+    );
+  }
+
+  private resetDefaults(): void {
+    this.isBuildingUpgradable = false;
+    this.location = null;
+    this.building = null;
+    this.isUpgradingLocked = true; // not enough resources, already upgrading
+    this.buildingCost = 0;
+    this.balance = null;
+    this.shouldShowTooltip = false;
   }
 
   private isBuildingAlreadyUpgrading(
-    actions: Array<PlayersAction<any>>
+    actions: Array<PlayersAction<any>>,
+    location: BoardLocation
   ): boolean {
     return actions
       .filter((a) => a.getType() === 'UPGRADE')
       .map((a) => a.getContent() as UpgradeActionContent)
       .some(
         (a) =>
-          a.location.row === this.location.row &&
-          a.location.col === this.location.col
+          a.location.row === location.row && a.location.col === location.col
       );
   }
 
@@ -156,5 +187,19 @@ export class UpgradeBuildingButtonComponent implements OnInit {
   upgradeBuilding(): void {
     const action = new UpgradeAction(this.buildingCost, this.location);
     this.currentActionsService.pushAction(action);
+  }
+
+  shouldShowTheTooltip(
+    isUpgradable: boolean,
+    isUpgradingLocked: boolean,
+    isAlreadyUpgrading: boolean
+  ): boolean {
+    if (isUpgradable && !isUpgradingLocked) {
+      return true;
+    }
+    if (isUpgradingLocked && !isAlreadyUpgrading) {
+      return true;
+    }
+    return false;
   }
 }

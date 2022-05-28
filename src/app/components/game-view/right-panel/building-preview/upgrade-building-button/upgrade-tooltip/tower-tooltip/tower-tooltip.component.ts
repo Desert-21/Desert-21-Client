@@ -50,9 +50,11 @@ export class TowerTooltipComponent implements OnInit, OnChanges {
     this.fromLevel = this.building.level;
     this.toLevel = this.fromLevel + 1;
 
-    this.setBaseDefenceAndUnitBonus(type);
+    this.setBaseDefenceAndUnitBonus(type, this.balance, this.fromLevel);
 
-    this.unitUnlockSentencePart = this.getUnitUnlockSentencePart();
+    this.unitUnlockSentencePart = this.getUnitUnlockSentencePart(
+      this.building.level
+    );
   }
 
   getTowerName(type: TowerType): string {
@@ -64,12 +66,16 @@ export class TowerTooltipComponent implements OnInit, OnChanges {
     }
   }
 
-  setBaseDefenceAndUnitBonus(type: TowerType): void {
-    const buildingsConfig = this.balance.buildings;
+  setBaseDefenceAndUnitBonus(
+    type: TowerType,
+    balance: GameBalanceConfig,
+    buildingLevel: number
+  ): void {
+    const buildingsConfig = balance.buildings;
     const config: TowerConfig =
       type === 'TOWER' ? buildingsConfig.tower : buildingsConfig.homeBase;
     const { baseProtection, unitBonus } = config;
-    switch (this.building.level) {
+    switch (buildingLevel) {
       case 1:
         this.fromBaseDefence = baseProtection.level1;
         this.toBaseDefence = baseProtection.level2;
@@ -98,8 +104,8 @@ export class TowerTooltipComponent implements OnInit, OnChanges {
     this.toUnitBonus = Math.round(this.toUnitBonus * 100);
   }
 
-  getUnitUnlockSentencePart(): string {
-    switch (this.building.level) {
+  getUnitUnlockSentencePart(buildingLevel: number): string {
+    switch (buildingLevel) {
       case 1:
         return 'unlock tanks production, ';
       case 2:

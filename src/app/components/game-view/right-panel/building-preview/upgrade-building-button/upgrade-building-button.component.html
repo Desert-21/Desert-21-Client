@@ -1,0 +1,23 @@
+<div *ngIf="isBuildingUpgradable" class="wrapper">
+  <span [ngbTooltip]="shouldShowTooltip ? tipContent : null" placement="left">
+    <button
+      (click)="upgradeBuilding()"
+      [disabled]="isUpgradingLocked"
+      [class.btn-success]="!isUpgradingLocked"
+      [class.btn-secondary]="isUpgradingLocked"
+    >
+      <div class="button-content">
+        <div class="desert21-font">UPGRADE</div>
+        <div class="button-content-right desert21-font">
+          ( {{ buildingCost }} ) <img src="/assets/buildingMaterials2.png" />
+        </div>
+      </div>
+    </button>
+  </span>
+</div>
+<ng-template #tipContent
+  ><app-upgrade-tooltip
+    [balance]="balance"
+    [building]="building"
+  ></app-upgrade-tooltip
+></ng-template>

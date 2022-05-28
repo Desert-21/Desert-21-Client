@@ -34,13 +34,13 @@ import { EnlighterDirective } from './directives/enlighter.directive';
 import { RightPanelComponent } from './components/game-view/right-panel/right-panel.component';
 import { LeftPanelComponent } from './components/game-view/left-panel/left-panel.component';
 import { BuildingPreviewComponent } from './components/game-view/right-panel/building-preview/building-preview.component';
-import { UpgradeBuildingButtonComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-building-button.component';
+import { UpgradeBuildingButtonComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-building-button.component';
 import { PlayersActionsComponent } from './components/game-view/left-panel/players-actions/players-actions.component';
 import { ActionEntryComponent } from './components/game-view/left-panel/players-actions/action-entry/action-entry.component';
 import { GameModalComponent } from './components/common/game-modal/game-modal.component';
-import { UpgradeTooltipComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-tooltip/upgrade-tooltip.component';
-import { FactoryTooltipComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-tooltip/factory-tooltip/factory-tooltip.component';
-import { TowerTooltipComponent } from './components/game-view/right-panel/upgrade-building-button/upgrade-tooltip/tower-tooltip/tower-tooltip.component';
+import { UpgradeTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/upgrade-tooltip.component';
+import { FactoryTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/factory-tooltip/factory-tooltip.component';
+import { TowerTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/tower-tooltip/tower-tooltip.component';
 
 @NgModule({
   declarations: [

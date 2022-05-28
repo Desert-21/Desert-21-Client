@@ -18,6 +18,8 @@ export class UpgradeTooltipComponent implements OnInit, OnChanges {
   @Input() building: Building | null;
 
   buildingType: BuildingType = 'EMPTY_FIELD';
+  isFactory = false;
+  isTower = false;
 
   constructor() {}
 
@@ -25,17 +27,19 @@ export class UpgradeTooltipComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.buildingType = this.building.type;
+    this.isFactory = this.getIsFactory(this.buildingType);
+    this.isTower = this.getIsTower(this.buildingType);
   }
 
-  isFactory(): boolean {
+  getIsFactory(buildingType: BuildingType): boolean {
     return (
-      this.buildingType === 'METAL_FACTORY' ||
-      this.buildingType === 'BUILDING_MATERIALS_FACTORY' ||
-      this.buildingType === 'ELECTRICITY_FACTORY'
+      buildingType === 'METAL_FACTORY' ||
+      buildingType === 'BUILDING_MATERIALS_FACTORY' ||
+      buildingType === 'ELECTRICITY_FACTORY'
     );
   }
 
-  isTower(): boolean {
-    return this.buildingType === 'HOME_BASE' || this.buildingType === 'TOWER';
+  getIsTower(buildingType: BuildingType): boolean {
+    return buildingType === 'HOME_BASE' || buildingType === 'TOWER';
   }
 }
