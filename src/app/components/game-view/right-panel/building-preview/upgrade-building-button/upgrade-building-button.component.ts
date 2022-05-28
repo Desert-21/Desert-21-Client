@@ -6,7 +6,6 @@ import {
   UpgradeActionContent,
 } from 'src/app/models/actions';
 import {
-  AllBuildingsBalance,
   GameBalanceConfig,
   LeveledValue,
 } from 'src/app/models/game-config-models';
