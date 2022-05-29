@@ -41,6 +41,8 @@ import { GameModalComponent } from './components/common/game-modal/game-modal.co
 import { UpgradeTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/upgrade-tooltip.component';
 import { FactoryTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/factory-tooltip/factory-tooltip.component';
 import { TowerTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/tower-tooltip/tower-tooltip.component';
+import { ArmyPreviewComponent } from './components/game-view/right-panel/army-preview/army-preview.component';
+import { TrainArmyButtonSectionComponent } from './components/game-view/right-panel/army-preview/train-army-button-section/train-army-button-section.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { TowerTooltipComponent } from './components/game-view/right-panel/buildi
     GameModalComponent,
     UpgradeTooltipComponent,
     FactoryTooltipComponent,
-    TowerTooltipComponent
+    TowerTooltipComponent,
+    ArmyPreviewComponent,
+    TrainArmyButtonSectionComponent
   ],
   imports: [
     BrowserModule,

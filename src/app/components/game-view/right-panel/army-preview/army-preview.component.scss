@@ -1,0 +1,21 @@
+.wrapper {
+  height: 35vh;
+}
+
+.images-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.image-wrapper {
+  height: 10vh;
+  width: 10vh;
+}
+
+.units-amount {
+  color: white;
+  font-weight: bold;
+  position: relative;
+  bottom: 25px;
+  left: 10px;
+}
