@@ -1,0 +1,72 @@
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  button {
+    width: 80%;
+  }
+}
+
+:host ::ng-deep .popover {
+  background-color: black;
+}
+
+:host ::ng-deep .arrow::after {
+  background-color: transparent !important;
+  border-left-color: black;
+  color: black !important;
+}
+
+.popover-content-wrapper {
+  height: 26vh;
+  width: 19vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.row-wrapper {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-wrapper {
+  height: 8vh;
+  width: 6vh;
+  border: 2px solid gray;
+
+  > img {
+    height: 6vh;
+    width: 6vh;
+  }
+
+  > span {
+    overflow-y: hidden;
+    position: relative;
+    bottom: 20px;
+    left: 4px;
+    color: greenyellow;
+
+  }
+
+  > div {
+    padding: 1px;
+    margin-top: -20px;
+    width: 6vh;
+    height: 1.8vh;
+    color: white;
+    font-size: smaller;
+    display: flex;
+    justify-content: flex-end;
+
+    > img {
+      height: 1.5vh;
+      width: 1.5vh;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  }
+}

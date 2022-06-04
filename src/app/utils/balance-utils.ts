@@ -1,5 +1,9 @@
-import { AllBuildingsBalance } from '../models/game-config-models';
-import { Building } from '../models/game-models';
+import {
+  AllBuildingsBalance,
+  AllCombatBalance,
+  CombatUnitConfig,
+} from '../models/game-config-models';
+import { Building, UnitType } from '../models/game-models';
 
 export const buildingToConfig = (
   buildingsBalance: AllBuildingsBalance,
@@ -18,5 +22,19 @@ export const buildingToConfig = (
       return buildingsBalance.factory;
     default:
       return null;
+  }
+};
+
+export const unitTypeToConfig = (
+  combatBalance: AllCombatBalance,
+  unitType: UnitType
+): CombatUnitConfig => {
+  switch (unitType) {
+    case 'DROID':
+      return combatBalance.droids;
+    case 'TANK':
+      return combatBalance.tanks;
+    case 'CANNON':
+      return combatBalance.cannons;
   }
 };

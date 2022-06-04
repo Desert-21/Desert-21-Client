@@ -42,7 +42,9 @@ import { UpgradeTooltipComponent } from './components/game-view/right-panel/buil
 import { FactoryTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/factory-tooltip/factory-tooltip.component';
 import { TowerTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/tower-tooltip/tower-tooltip.component';
 import { ArmyPreviewComponent } from './components/game-view/right-panel/army-preview/army-preview.component';
-import { TrainArmyButtonSectionComponent } from './components/game-view/right-panel/army-preview/train-army-button-section/train-army-button-section.component';
+import { TrainArmyButtonSectionComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-button-section/train-army-button-section.component';
+import { TrainArmySectionComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-section.component';
+import { TrainArmyQueueComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-queue/train-army-queue.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,9 @@ import { TrainArmyButtonSectionComponent } from './components/game-view/right-pa
     FactoryTooltipComponent,
     TowerTooltipComponent,
     ArmyPreviewComponent,
-    TrainArmyButtonSectionComponent
+    TrainArmyButtonSectionComponent,
+    TrainArmySectionComponent,
+    TrainArmyQueueComponent
   ],
   imports: [
     BrowserModule,

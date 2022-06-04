@@ -121,7 +121,7 @@ export class UpgradeBuildingButtonComponent implements OnInit {
   ): boolean {
     return actions
       .filter((a) => a.getType() === 'UPGRADE')
-      .map((a) => a.getContent() as UpgradeActionContent)
+      .map((a) => a.toActionAPIBody() as UpgradeActionContent)
       .some(
         (a) =>
           a.location.row === location.row && a.location.col === location.col

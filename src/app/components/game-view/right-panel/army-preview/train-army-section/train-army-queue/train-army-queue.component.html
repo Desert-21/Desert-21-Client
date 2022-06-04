@@ -1,0 +1,29 @@
+<div class="queue-wrapper">
+  <div>
+    <div class="title desert21-font">Training in progress</div>
+    <div *ngIf="turnsToExecute === 0" class="subtitle desert21-font">
+      Finished at the end of this turn
+    </div>
+    <div
+      *ngIf="turnsToExecute === 1 || turnsToExecute === 2"
+      class="subtitle desert21-font"
+    >
+      Finished in next turn
+    </div>
+    <div
+      *ngIf="turnsToExecute === 3 || turnsToExecute === 4"
+      class="subtitle desert21-font"
+    >
+      Finished in 2 turns
+    </div>
+  </div>
+  <div class="image-wrapper">
+    <img *ngIf="unitType === 'DROID'" src="/assets/mechs/droid-full.png" />
+    <img *ngIf="unitType === 'TANK'" src="/assets/mechs/tank-full.png" />
+    <img *ngIf="unitType === 'CANNON'" src="/assets/mechs/cannon-full.png" />
+    <div class="spinner-border text-primary inner-spinner" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <span class="inner-amount">{{ amount }}</span>
+  </div>
+</div>

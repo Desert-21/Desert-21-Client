@@ -50,3 +50,11 @@ export const getArmyRanges = (
     isUnknown: false,
   };
 };
+
+export const calculateArmyPower = (
+  army: Army,
+  balance: GameBalanceConfig,
+  isDefending: boolean
+): number => {
+  return army.droids + army.tanks + army.cannons; // todo write real logic
+};

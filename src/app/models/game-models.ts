@@ -3,6 +3,7 @@ export type Game = {
   players: Array<Player>;
   fields: Array<Array<Field>>;
   stateManager: StateManager;
+  events: Array<GameEvent>;
 };
 
 export type Field = {
@@ -16,6 +17,9 @@ export type Army = {
   tanks: number;
   cannons: number;
 };
+
+export type UnitType = 'DROID' | 'TANK' | 'CANNON';
+export type TrainingMode = 'SMALL_PRODUCTION' | 'MEDIUM_PRODUCTION' | 'MASS_PRODUCTION';
 
 export type Building = {
   type: BuildingType;
@@ -60,3 +64,23 @@ export type BoardLocation = {
   row: number;
   col: number;
 };
+
+export type GameEvent = {
+  type: EventType;
+  content: TrainingEventContent; // todo: | other | oher (might be unnecessary)
+};
+
+export type TrainingEventContent = {
+  turnsToExecute: number,
+  location: BoardLocation,
+  unitType: UnitType,
+  amount: number;
+};
+
+export type EventType = | 'LAB_EVENT'
+| 'BUILD'
+| 'UPGRADE'
+| 'TRAINING'
+| 'MOVE_UNITS'
+| 'ATTACK'
+| 'FIRE_ROCKET';

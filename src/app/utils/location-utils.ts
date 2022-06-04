@@ -22,13 +22,17 @@ export const isLocationValid = (row: number, col: number) => {
 export const getFogOfWarLevel = (
   location: BoardLocation,
   fields: Array<Array<Field>>,
-  playerId: string,
+  playerId: string
 ): number => {
-  const hasLevel1 = getLevel1DistancedFields(location, fields).some(field => field.ownerId === playerId);
+  const hasLevel1 = getLevel1DistancedFields(location, fields).some(
+    (field) => field.ownerId === playerId
+  );
   if (hasLevel1) {
     return 1;
   }
-  const hasLevel2 = getLevel2DistancedFields(location, fields).some(field => field.ownerId === playerId);
+  const hasLevel2 = getLevel2DistancedFields(location, fields).some(
+    (field) => field.ownerId === playerId
+  );
   if (hasLevel2) {
     return 2;
   }
@@ -63,4 +67,11 @@ export const getLevel2DistancedFields = (
   ]
     .filter((loc) => isLocationValid(loc.row, loc.col))
     .map((loc) => findByFieldLocation(loc.row, loc.col, fields));
+};
+
+export const areLocationsEqual = (
+  loc1: BoardLocation,
+  loc2: BoardLocation
+): boolean => {
+  return loc1.row === loc2.row && loc1.col === loc2.col;
 };

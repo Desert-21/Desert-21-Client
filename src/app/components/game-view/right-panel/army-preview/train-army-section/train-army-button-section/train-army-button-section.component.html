@@ -1,0 +1,27 @@
+<div class="button-wrapper">
+  <button
+    class="btn-warning"
+    [ngbPopover]="trainPopover"
+    placement="left"
+    popoverClass="my-custom-class"
+  >
+    <b>Train units</b>
+  </button>
+</div>
+<ng-template #trainPopover>
+  <div class="popover-content-wrapper">
+    <div
+      *ngFor="let trainingOption of enrichedTrainingOptions"
+      appEnlighter
+      class="image-wrapper"
+      (click)="saveArmyTraining(trainingOption)"
+    >
+      <img class="img-fluid" [src]="trainingOption.imageSource" />
+      <span>{{ trainingOption.amount }}</span>
+      <div>
+        {{ trainingOption.cost
+        }}<img class="img-fluid" src="/assets/metal2.png" />
+      </div>
+    </div>
+  </div>
+</ng-template>

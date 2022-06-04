@@ -1,11 +1,15 @@
-import { BoardLocation, ResourceSet } from './game-models';
+import {
+  BoardLocation,
+  ResourceSet,
+  TrainingMode,
+  UnitType,
+} from './game-models';
 
 export abstract class PlayersAction<ActionContent> {
   abstract getType(): ActionType;
-  abstract getContent(): ActionContent;
   abstract getCost(): ResourceSet;
 
-  protected abstract toActionAPIRequestBody(): any;
+  protected abstract toActionAPIRequestBody(): ActionContent;
 
   toActionAPIBody(): any {
     return {
@@ -42,12 +46,6 @@ export class UpgradeAction extends PlayersAction<UpgradeActionContent> {
     };
   }
 
-  getContent(): UpgradeActionContent {
-    return {
-      location: this.location,
-    };
-  }
-
   getType(): ActionType {
     return 'UPGRADE';
   }
@@ -59,6 +57,51 @@ export class UpgradeAction extends PlayersAction<UpgradeActionContent> {
   }
 }
 
+export class TrainAction extends PlayersAction<TrainActionContent> {
+  location: BoardLocation;
+  metalCost: number;
+  unitType: UnitType;
+  trainingMode: TrainingMode;
+  amount: number;
+
+  constructor(
+    location: BoardLocation,
+    metalCost: number,
+    unitType: UnitType,
+    trainingMode: TrainingMode,
+    amount: number
+  ) {
+    super();
+    this.location = location;
+    this.metalCost = metalCost;
+    this.unitType = unitType;
+    this.trainingMode = trainingMode;
+    this.amount = amount;
+  }
+
+  getType(): ActionType {
+    return 'TRAIN';
+  }
+
+  getCost(): ResourceSet {
+    return { metal: this.metalCost, buildingMaterials: 0, electricity: 0 };
+  }
+
+  protected toActionAPIRequestBody(): TrainActionContent {
+    return {
+      location: this.location,
+      unitType: this.unitType,
+      trainingMode: this.trainingMode,
+    };
+  }
+}
+
 export type UpgradeActionContent = {
   location: BoardLocation;
+};
+
+export type TrainActionContent = {
+  location: BoardLocation;
+  unitType: UnitType;
+  trainingMode: TrainingMode;
 };
