@@ -17,6 +17,7 @@ import {
   styleUrls: ['./army-preview.component.scss'],
 })
 export class ArmyPreviewComponent implements OnInit {
+  fieldSelectionEmpty = true;
   currentState: ArmyPreviewState | null = null;
   shouldShowImages: [boolean, boolean, boolean, boolean] = [
     false,
@@ -41,6 +42,11 @@ export class ArmyPreviewComponent implements OnInit {
       this.gameContextService.getStateUpdates(),
     ]).subscribe((data) => {
       const [fieldSelection, context] = data;
+      if (fieldSelection === null) {
+        this.fieldSelectionEmpty = true;
+        return;
+      }
+      this.fieldSelectionEmpty = false;
       this.currentState = this.getCurrentState(fieldSelection);
       this.shouldShowImages = this.currentState.getVisibleImages(false); // todo: change!
       const { row, col } = fieldSelection;

@@ -1,22 +1,28 @@
 <div class="game-panel wrapper">
-  <h5 class="text-center desert21-font">
-    {{ ownershipPrefix }} {{ buildingName }}
-    <span *ngIf="!isEmpty">(lv. {{ level }})</span>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      fill="currentColor"
-      class="bi bi-info-circle-fill ml-2"
-      viewBox="0 0 16 16"
-      placement="bottom-right"
-      ngbTooltip={{buildingDescription}}
-    >
-      <use xlink:href="#info-fill" />
-    </svg>
-  </h5>
-  <div class="image-container text-center">
-    <img class="img-fluid" [src]="buildingImage" />
+  <div *ngIf="!fieldSelectionEmpty">
+    <h5 class="text-center desert21-font">
+      {{ ownershipPrefix }} {{ buildingName }}
+      <span *ngIf="!isEmpty">(lv. {{ level }})</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="currentColor"
+        class="bi bi-info-circle-fill ml-2"
+        viewBox="0 0 16 16"
+        placement="bottom-right"
+        ngbTooltip="{{ buildingDescription }}"
+      >
+        <use xlink:href="#info-fill" />
+      </svg>
+    </h5>
+    <div class="image-container text-center">
+      <img class="img-fluid" [src]="buildingImage" />
+    </div>
+    <app-upgrade-building-button></app-upgrade-building-button>
   </div>
-  <app-upgrade-building-button></app-upgrade-building-button>
+  <div *ngIf="fieldSelectionEmpty" class="empty-game-panel desert21-font">
+    Select a field on the board to view here some details about its building!
+    <img src="/assets/buildings/unknownBuilding.png" />
+  </div>
 </div>

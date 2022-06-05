@@ -13,6 +13,7 @@ export class BuildingPreviewComponent implements OnInit {
     private selectedFieldService: SelectedFieldService
   ) {}
 
+  fieldSelectionEmpty = true;
   buildingName = 'Loading...';
   buildingDescription = '';
   buildingImage = 'assets/buildings/unknownBuilding.png';
@@ -25,6 +26,7 @@ export class BuildingPreviewComponent implements OnInit {
       .getStateUpdates()
       .subscribe((selectedFieldInfo) => {
         if (selectedFieldInfo === null) {
+          this.fieldSelectionEmpty = true;
           this.buildingName = '';
           this.buildingDescription = '';
           this.buildingImage = 'assets/buildings/unknownBuilding.png';
@@ -33,6 +35,7 @@ export class BuildingPreviewComponent implements OnInit {
           this.isEmpty = true;
           return;
         }
+        this.fieldSelectionEmpty = false;
         const selectedField = selectedFieldInfo.field;
         const building = selectedField.building;
         this.buildingName = underscoreToRegular(building.type);

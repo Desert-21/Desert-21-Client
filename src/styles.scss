@@ -82,5 +82,24 @@ body {
   }
 }
 
+.empty-game-panel {
+  height: 100%;
+  width: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20%;
+  padding-right: 20%;
+  font-size: larger;
+  flex-direction: column;
+
+  img {
+    margin-top: 2vh;
+    height: 12vh;
+    width: 12vh;
+  }
+}
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

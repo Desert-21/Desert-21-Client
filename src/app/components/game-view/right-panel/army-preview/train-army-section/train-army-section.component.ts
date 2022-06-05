@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { TrainAction } from 'src/app/models/actions';
-import { CombatUnitConfig } from 'src/app/models/game-config-models';
 import { TrainingEventContent } from 'src/app/models/game-models';
 import {
   FieldSelection,
@@ -37,6 +36,9 @@ export class TrainArmySectionComponent implements OnInit {
       this.selectedFieldService.getStateUpdates(),
     ]).subscribe((updates) => {
       const [context, fieldInfo] = updates;
+      if (fieldInfo === null) {
+        return;
+      }
       this.resetVisibility();
       if (!fieldInfo.isEnemy && !fieldInfo.isOwned) {
         this.showScarabInfo = true;
