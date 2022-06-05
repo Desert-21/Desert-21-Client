@@ -10,10 +10,14 @@ import {
   TrainingMode,
   UnitType,
 } from 'src/app/models/game-models';
-import { GameContext } from 'src/app/models/game-utility-models';
+import {
+  FieldSelection,
+  GameContext,
+} from 'src/app/models/game-utility-models';
 import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { canTrainUnits } from 'src/app/utils/army-utils';
 
 type TrainingOption = {
   unitType: UnitType;
@@ -24,6 +28,7 @@ type EnrichedTrainingOption = TrainingOption & {
   amount: number;
   cost: number;
   imageSource: string;
+  isAvailable: boolean;
 };
 
 const trainingOptions: Array<TrainingOption> = [
@@ -62,12 +67,14 @@ export class TrainArmyButtonSectionComponent implements OnInit {
     ]).subscribe((updates) => {
       const [context, fieldInfo] = updates;
 
-      if (fieldInfo !== null) {
-        this.location = { row: fieldInfo.row, col: fieldInfo.col };
+      if (fieldInfo === null) {
+        return;
       }
 
+      this.location = { row: fieldInfo.row, col: fieldInfo.col };
+
       this.enrichedTrainingOptions = trainingOptions.map((o) =>
-        this.enrichTrainingOption(o, context)
+        this.enrichTrainingOption(o, context, fieldInfo)
       );
     });
 
@@ -76,6 +83,9 @@ export class TrainArmyButtonSectionComponent implements OnInit {
   }
 
   saveArmyTraining(option: EnrichedTrainingOption): void {
+    if (!option.isAvailable) {
+      return;
+    }
     const action = new TrainAction(
       this.location,
       option.cost,
@@ -88,18 +98,27 @@ export class TrainArmyButtonSectionComponent implements OnInit {
 
   private enrichTrainingOption(
     option: TrainingOption,
-    context: GameContext
+    context: GameContext,
+    fieldSelection: FieldSelection
   ): EnrichedTrainingOption {
     const combatConfig = context.balance.combat;
     const config = this.getUnitConfig(combatConfig, option.unitType);
     const amount = this.getProducedAmount(config, option.trainingMode);
     const cost = amount * config.cost;
     const imageSource = this.getImageSource(option.unitType);
+
+    const isAvailable = canTrainUnits(
+      context.player,
+      fieldSelection.field.building,
+      option.trainingMode,
+      option.unitType
+    );
     return {
       ...option,
       amount,
       cost,
       imageSource,
+      isAvailable,
     };
   }
 

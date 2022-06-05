@@ -13,7 +13,9 @@
     <div
       *ngFor="let trainingOption of enrichedTrainingOptions"
       appEnlighter
+      [isEnlighterEnabled]="trainingOption.isAvailable"
       class="image-wrapper"
+      [ngClass]="{darkened: !trainingOption.isAvailable}"
       (click)="saveArmyTraining(trainingOption)"
     >
       <img class="img-fluid" [src]="trainingOption.imageSource" />

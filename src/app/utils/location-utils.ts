@@ -75,3 +75,10 @@ export const areLocationsEqual = (
 ): boolean => {
   return loc1.row === loc2.row && loc1.col === loc2.col;
 };
+
+export const flattenFields = (fields: Array<Array<Field>>): Array<Field> => {
+  return fields.reduce((prev, next) => {
+    prev.push(...next);
+    return prev;
+  }, []);
+};

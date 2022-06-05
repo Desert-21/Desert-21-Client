@@ -8,6 +8,7 @@ import { GameBalanceService } from 'src/app/services/http/game-balance.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
 import { WebSocketAPI } from 'src/app/services/websocket-api';
+import { MaxPowerService } from 'src/app/services/rx-logic/max-power.service';
 
 @Component({
   selector: 'app-game-view',
@@ -21,7 +22,8 @@ export class GameViewComponent implements OnInit {
     private http: HttpClient,
     private gameIdService: GameIdService,
     private gameStateService: GameStateService,
-    private gameBalanceService: GameBalanceService
+    private gameBalanceService: GameBalanceService,
+    private maxPowerService: MaxPowerService
   ) {}
   ngOnInit(): void {
     this.notificationsService.requireServerNotifications();
@@ -32,6 +34,7 @@ export class GameViewComponent implements OnInit {
 
       this.gameStateService.requestState();
     });
+    this.maxPowerService.requestState();
     this.gameBalanceService.requestState();
   }
 }

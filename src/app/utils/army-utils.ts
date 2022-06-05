@@ -1,5 +1,12 @@
 import { GameBalanceConfig } from '../models/game-config-models';
-import { Army } from '../models/game-models';
+import {
+  Army,
+  Building,
+  Player,
+  TrainingMode,
+  UnitType,
+} from '../models/game-models';
+import { isDefensive } from './building-utils';
 
 export const getFogOfWarCoefficient = (
   fogOfWarLevel: number,
@@ -49,4 +56,48 @@ export const getArmyRanges = (
     maxArmy,
     isUnknown: false,
   };
+};
+
+export const canTrainUnits = (
+  player: Player,
+  building: Building,
+  trainingMode: TrainingMode,
+  unitType: UnitType
+): boolean => {
+  return (
+    canTrainInMode(player, trainingMode) && canTrainUnitType(building, unitType)
+  );
+};
+
+export const canTrainInMode = (
+  player: Player,
+  trainingMode: TrainingMode
+): boolean => {
+  const upgrades = player.upgrades;
+  switch (trainingMode) {
+    case 'SMALL_PRODUCTION':
+      return true;
+    case 'MEDIUM_PRODUCTION':
+      return upgrades.includes('MEDIUM_PRODUCTION');
+    case 'MASS_PRODUCTION':
+      return upgrades.includes('MASS_PRODUCTION');
+  }
+};
+
+export const canTrainUnitType = (
+  building: Building,
+  unitType: UnitType
+): boolean => {
+  const { level } = building;
+  if (!isDefensive(building)) {
+    return false;
+  }
+  switch (unitType) {
+    case 'DROID':
+      return true;
+    case 'TANK':
+      return level >= 2;
+    case 'CANNON':
+      return level >= 3;
+  }
 };
