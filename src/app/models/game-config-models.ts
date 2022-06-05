@@ -38,6 +38,7 @@ export type ControlBranch = Branch & {
 
 export type ControlBranchConfig = {
   goldDiggersProductionPerFieldBonus: number;
+  factoryTurretTowerLevel: number;
   scarabScannersPowerDecreaseRatio: number;
   towerCreatorMaxTowersBuilt: number;
 };

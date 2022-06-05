@@ -24,10 +24,10 @@ export type ArmyRange = {
 export const getArmyRanges = (
   fogOfWarLevel: number,
   balance: GameBalanceConfig,
-  army: Army
+  army: Army | null
 ): ArmyRange => {
   const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance);
-  if (coefficient === null) {
+  if (coefficient === null || army === null) {
     return {
       minArmy: { droids: 0, tanks: 0, cannons: 0 },
       maxArmy: { droids: 0, tanks: 0, cannons: 0 },
@@ -49,12 +49,4 @@ export const getArmyRanges = (
     maxArmy,
     isUnknown: false,
   };
-};
-
-export const calculateArmyPower = (
-  army: Army,
-  balance: GameBalanceConfig,
-  isDefending: boolean
-): number => {
-  return army.droids + army.tanks + army.cannons; // todo write real logic
 };

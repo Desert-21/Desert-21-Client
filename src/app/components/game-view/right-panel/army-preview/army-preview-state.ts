@@ -1,6 +1,15 @@
 import { GameBalanceConfig } from 'src/app/models/game-config-models';
-import { Army, BoardLocation } from 'src/app/models/game-models';
-import { GameContext } from 'src/app/models/game-utility-models';
+import {
+  Army,
+  BoardLocation,
+  Building,
+  Player,
+} from 'src/app/models/game-models';
+import {
+  FieldSelection,
+  GameContext,
+} from 'src/app/models/game-utility-models';
+import { calculateArmyPower } from 'src/app/utils/army-power-calculator';
 import { getArmyRanges } from 'src/app/utils/army-utils';
 import { getFogOfWarLevel } from 'src/app/utils/location-utils';
 
@@ -15,6 +24,16 @@ export type ArmyPreviewState = {
     gameContext: GameContext,
     location: BoardLocation
   ): ArmyDescription;
+  getArmyPowerDescription(
+    army: Army, // base army
+    gameContext: GameContext,
+    selectedFieldInfo: FieldSelection
+  ): ArmyPowerDescription;
+};
+
+export type ArmyPowerDescription = {
+  defendingPower: string;
+  attackingPower: string;
 };
 
 // represents army as a string, may be converted number or a range
@@ -42,6 +61,30 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
       droids: army.droids.toString(),
       tanks: army.tanks.toString(),
       cannons: army.cannons.toString(),
+    };
+  },
+  getArmyPowerDescription(
+    army: Army,
+    gameContext: GameContext,
+    selectedFieldInfo: FieldSelection
+  ): ArmyPowerDescription {
+    const defendingPower = calculateArmyPower(
+      army,
+      gameContext.balance,
+      gameContext.player,
+      selectedFieldInfo.field.building,
+      true
+    );
+    const attackingPower = calculateArmyPower(
+      army,
+      gameContext.balance,
+      gameContext.player,
+      selectedFieldInfo.field.building,
+      false
+    );
+    return {
+      defendingPower: defendingPower.toString(),
+      attackingPower: attackingPower.toString(),
     };
   },
 };
@@ -85,6 +128,62 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       cannons: `${minArmy.cannons} - ${maxArmy.cannons}`,
     };
   },
+  getArmyPowerDescription(
+    army: Army,
+    gameContext: GameContext,
+    selectedFieldInfo: FieldSelection
+  ): ArmyPowerDescription {
+    const { row, col } = selectedFieldInfo;
+    const fogOfWar = getFogOfWarLevel(
+      { row, col },
+      gameContext.game.fields,
+      gameContext.opponent.id
+    );
+    console.log(fogOfWar, army, gameContext);
+    const { minArmy, maxArmy, isUnknown } = getArmyRanges(
+      fogOfWar,
+      gameContext.balance,
+      army
+    );
+    if (isUnknown) {
+      return {
+        defendingPower: '???',
+        attackingPower: '???',
+      };
+    }
+    const minAttackingArmyPower = calculateArmyPower(
+      minArmy,
+      gameContext.balance,
+      gameContext.opponent,
+      selectedFieldInfo.field.building,
+      false
+    );
+    const maxAttackingArmyPower = calculateArmyPower(
+      maxArmy,
+      gameContext.balance,
+      gameContext.opponent,
+      selectedFieldInfo.field.building,
+      false
+    );
+    const minDefendingArmyPower = calculateArmyPower(
+      minArmy,
+      gameContext.balance,
+      gameContext.opponent,
+      selectedFieldInfo.field.building,
+      true
+    );
+    const maxDefendingArmyPower = calculateArmyPower(
+      maxArmy,
+      gameContext.balance,
+      gameContext.opponent,
+      selectedFieldInfo.field.building,
+      true
+    );
+    return {
+      attackingPower: `${minAttackingArmyPower} - ${maxAttackingArmyPower}`,
+      defendingPower: `${minDefendingArmyPower} - ${maxDefendingArmyPower}`,
+    };
+  },
 };
 
 export const DesertArmyPreviewState: ArmyPreviewState = {
@@ -105,6 +204,16 @@ export const DesertArmyPreviewState: ArmyPreviewState = {
       droids: '0',
       tanks: '0',
       cannons: '0',
+    };
+  },
+  getArmyPowerDescription(
+    army: Army,
+    gameContext: GameContext,
+    selectedFieldInfo: FieldSelection
+  ): ArmyPowerDescription {
+    return {
+      defendingPower: '100-140',
+      attackingPower: '0',
     };
   },
 };

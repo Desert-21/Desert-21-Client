@@ -19,7 +19,10 @@ export type Army = {
 };
 
 export type UnitType = 'DROID' | 'TANK' | 'CANNON';
-export type TrainingMode = 'SMALL_PRODUCTION' | 'MEDIUM_PRODUCTION' | 'MASS_PRODUCTION';
+export type TrainingMode =
+  | 'SMALL_PRODUCTION'
+  | 'MEDIUM_PRODUCTION'
+  | 'MASS_PRODUCTION';
 
 export type Building = {
   type: BuildingType;
@@ -46,6 +49,7 @@ export type Player = {
   id: string;
   nickname: string;
   resources: ResourceSet;
+  upgrades: Array<LabUpgrade>;
 };
 
 export type ResourceSet = {
@@ -71,16 +75,45 @@ export type GameEvent = {
 };
 
 export type TrainingEventContent = {
-  turnsToExecute: number,
-  location: BoardLocation,
-  unitType: UnitType,
+  turnsToExecute: number;
+  location: BoardLocation;
+  unitType: UnitType;
   amount: number;
 };
 
-export type EventType = | 'LAB_EVENT'
-| 'BUILD'
-| 'UPGRADE'
-| 'TRAINING'
-| 'MOVE_UNITS'
-| 'ATTACK'
-| 'FIRE_ROCKET';
+export type EventType =
+  | 'LAB_EVENT'
+  | 'BUILD'
+  | 'UPGRADE'
+  | 'TRAINING'
+  | 'MOVE_UNITS'
+  | 'ATTACK'
+  | 'FIRE_ROCKET';
+
+export type LabUpgrade =
+  // COMBAT
+  | 'REUSABLE_PARTS'
+  | 'MEDIUM_PRODUCTION'
+  | 'IMPROVED_DROIDS'
+  | 'IMPROVED_TANKS'
+  | 'MASS_PRODUCTION'
+  | 'IMPROVED_CANNONS'
+  | 'ADVANCED_TACTICS'
+
+  // CONTROL
+  | 'SCARAB_SCANNERS'
+  | 'KING_OF_DESERT'
+  | 'FACTORY_TURRET'
+  | 'GOLD_DIGGERS'
+  | 'TOWER_CREATOR'
+  | 'THE_GREAT_FORTRESS'
+  | 'SUPER_SONIC_ROCKETS'
+
+  // PRODUCTION
+  | 'HOME_SWEET_HOME'
+  | 'MORE_METAL'
+  | 'MORE_BUILDING_MATERIALS'
+  | 'MORE_ELECTRICITY'
+  | 'PRODUCTION_MANAGERS'
+  | 'FACTORY_BUILDERS'
+  | 'PRODUCTION_AI';

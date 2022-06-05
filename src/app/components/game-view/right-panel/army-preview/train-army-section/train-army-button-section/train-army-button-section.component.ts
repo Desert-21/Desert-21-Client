@@ -62,7 +62,9 @@ export class TrainArmyButtonSectionComponent implements OnInit {
     ]).subscribe((updates) => {
       const [context, fieldInfo] = updates;
 
-      this.location = { row: fieldInfo.row, col: fieldInfo.col };
+      if (fieldInfo !== null) {
+        this.location = { row: fieldInfo.row, col: fieldInfo.col };
+      }
 
       this.enrichedTrainingOptions = trainingOptions.map((o) =>
         this.enrichTrainingOption(o, context)

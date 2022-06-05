@@ -9,6 +9,7 @@ import {
   DesertArmyPreviewState,
   ArmyPreviewState,
   ArmyDescription,
+  ArmyPowerDescription,
 } from './army-preview-state';
 @Component({
   selector: 'app-army-preview',
@@ -24,6 +25,10 @@ export class ArmyPreviewComponent implements OnInit {
     false,
   ];
   armyDescription: ArmyDescription = { droids: '?', tanks: '?', cannons: '?' };
+  armyPowerDescription: ArmyPowerDescription = {
+    defendingPower: '???',
+    attackingPower: '???',
+  };
 
   constructor(
     private selectedFieldService: SelectedFieldService,
@@ -46,6 +51,11 @@ export class ArmyPreviewComponent implements OnInit {
           row,
           col,
         }
+      );
+      this.armyPowerDescription = this.currentState.getArmyPowerDescription(
+        fieldSelection.field.army,
+        context,
+        fieldSelection
       );
     });
   }
