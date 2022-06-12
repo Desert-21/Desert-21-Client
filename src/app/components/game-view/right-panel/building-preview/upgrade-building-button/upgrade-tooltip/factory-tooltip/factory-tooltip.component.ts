@@ -69,7 +69,6 @@ export class FactoryTooltipComponent implements OnInit, OnChanges {
   setFromAndToProduction(buildingLevel: number): void {
     const factoryBalance = this.balance.buildings.factory;
     const productionBalance = factoryBalance.production;
-    console.log(productionBalance, this.building.level);
     switch (buildingLevel) {
       case 1:
         this.fromProduction = productionBalance.level1;

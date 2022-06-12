@@ -45,6 +45,10 @@ import { ArmyPreviewComponent } from './components/game-view/right-panel/army-pr
 import { TrainArmyButtonSectionComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-button-section/train-army-button-section.component';
 import { TrainArmySectionComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-section.component';
 import { TrainArmyQueueComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-queue/train-army-queue.component';
+import { DragAndDropFieldsSelectionService } from './services/rx-logic/drag-and-drop-fields-selection.service';
+import { DragAndDropSelectionDirective } from './directives/drag-and-drop-selection.directive';
+import { DragAndDropCancelableDirective } from './directives/drag-and-drop-cancelable.directive';
+import { ShortestPathCalculatorService } from './services/rx-logic/shortest-path-calculator.service';
 
 @NgModule({
   declarations: [
@@ -84,7 +88,9 @@ import { TrainArmyQueueComponent } from './components/game-view/right-panel/army
     ArmyPreviewComponent,
     TrainArmyButtonSectionComponent,
     TrainArmySectionComponent,
-    TrainArmyQueueComponent
+    TrainArmyQueueComponent,
+    DragAndDropSelectionDirective,
+    DragAndDropCancelableDirective
   ],
   imports: [
     BrowserModule,
@@ -106,6 +112,8 @@ import { TrainArmyQueueComponent } from './components/game-view/right-panel/army
       multi: true,
     },
     BearerTokenService,
+    DragAndDropFieldsSelectionService,
+    ShortestPathCalculatorService,
   ],
 
   bootstrap: [AppComponent],

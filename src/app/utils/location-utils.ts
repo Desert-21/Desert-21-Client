@@ -39,6 +39,19 @@ export const getFogOfWarLevel = (
   return 3;
 };
 
+export const getLevel1DistancedLocations = (
+  location: BoardLocation
+): Array<BoardLocation> => {
+  const { row, col } = location;
+  const potentialLocations: Array<BoardLocation> = [
+    { row: row + 1, col },
+    { row: row - 1, col: location.col },
+    { row, col: col - 1 },
+    { row, col: col + 1 },
+  ];
+  return potentialLocations.filter((loc) => isLocationValid(loc.row, loc.col));
+};
+
 export const getLevel1DistancedFields = (
   location: BoardLocation,
   fields: Array<Array<Field>>
@@ -81,4 +94,13 @@ export const flattenFields = (fields: Array<Array<Field>>): Array<Field> => {
     prev.push(...next);
     return prev;
   }, []);
+};
+
+export const getGeometricDistanceBetween = (
+  loc1: BoardLocation,
+  loc2: BoardLocation
+): number => {
+  const xDiff = Math.abs(loc1.col - loc2.col);
+  const yDiff = Math.abs(loc1.row - loc2.row);
+  return xDiff + yDiff;
 };

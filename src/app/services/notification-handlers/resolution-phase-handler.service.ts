@@ -17,6 +17,5 @@ export class ResolutionPhaseHandlerService
 
   handle(arg: ResolutionPhaseNotification): void {
     this.gameStateService.fetchState(); // forcing state fetch
-    console.log(arg);
   }
 }

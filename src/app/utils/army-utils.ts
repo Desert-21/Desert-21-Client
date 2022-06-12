@@ -1,4 +1,7 @@
-import { GameBalanceConfig } from '../models/game-config-models';
+import {
+  AllCombatBalance,
+  GameBalanceConfig,
+} from '../models/game-config-models';
 import {
   Army,
   Building,
@@ -100,4 +103,23 @@ export const canTrainUnitType = (
     case 'CANNON':
       return level >= 3;
   }
+};
+
+export const getFastestUnitsSpeed = (
+  army: Army | null,
+  balanceConfig: AllCombatBalance
+): number => {
+  if (army === null) {
+    return 0;
+  }
+  const optionalDroidsBalance = army.droids > 0 ? balanceConfig.droids : null;
+  const optionalTanksBalance = army.tanks > 0 ? balanceConfig.tanks : null;
+  const optionalCannonsBalance =
+    army.cannons > 0 ? balanceConfig.cannons : null;
+  return [optionalDroidsBalance, optionalTanksBalance, optionalCannonsBalance]
+    .filter((balance) => balance !== null)
+    .map((balance) => balance.fieldsTraveledPerTurn)
+    .reduce((prev, next) => {
+      return next > prev ? next : prev;
+    }, 0);
 };

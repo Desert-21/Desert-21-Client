@@ -139,7 +139,6 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       gameContext.game.fields,
       gameContext.opponent.id
     );
-    console.log(fogOfWar, army, gameContext);
     const { minArmy, maxArmy, isUnknown } = getArmyRanges(
       fogOfWar,
       gameContext.balance,

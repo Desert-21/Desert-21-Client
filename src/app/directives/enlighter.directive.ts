@@ -27,13 +27,13 @@ export class EnlighterDirective {
     }
   }
 
-  @HostListener('mousedown', ['$event']) onMouseUp(e: MouseEvent): void {
+  @HostListener('mousedown', ['$event']) onMouseDown(e: MouseEvent): void {
     if (this.isEnlighterEnabled) {
       this.select();
     }
   }
 
-  @HostListener('mouseup', ['$event']) onMouseDown(e: MouseEvent): void {
+  @HostListener('mouseup', ['$event']) onMouseUp(e: MouseEvent): void {
     if (this.isEnlighterEnabled) {
       this.unselect();
     }

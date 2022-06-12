@@ -1,6 +1,12 @@
-<div class="board-background">
-  <div class="row no-gutters" *ngFor="let row of fields; let i = index; trackBy: trackBy">
-    <div class="col-sm fields" *ngFor="let cell of row; let j = index; trackBy: trackBy">
+<div class="board-background" appDragAndDropCancelable>
+  <div
+    class="row no-gutters"
+    *ngFor="let row of fields; let i = index; trackBy: trackBy"
+  >
+    <div
+      class="col-sm fields"
+      *ngFor="let cell of row; let j = index; trackBy: trackBy"
+    >
       <!-- <div [appFieldStyling] [row]="i" [col]="j" class="bordered cell unselectable" [ngStyle]="{ position: 'relative' }">
         <img [src]="fieldToImagePath(cell)" class="unfocusable img-fluid unselectable"/>
       </div> -->

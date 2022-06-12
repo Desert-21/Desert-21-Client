@@ -32,7 +32,6 @@ export class ActivateCodeComponent implements OnInit {
         this.isLoading = false;
         this.isSucceeded = false;
       });
-      console.log(code);
     });
   }
 

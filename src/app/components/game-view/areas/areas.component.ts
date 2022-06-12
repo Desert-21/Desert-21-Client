@@ -1,15 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ElementRef, Renderer2, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Renderer2,
+  HostListener,
+} from '@angular/core';
 import { GameStateService } from 'src/app/services/http/game-state.service';
+import { ShortestPathCalculatorService } from 'src/app/services/rx-logic/shortest-path-calculator.service';
 import { Game, Field } from '../../../models/game-models';
 
 @Component({
   selector: 'app-areas',
   templateUrl: './areas.component.html',
-  styleUrls: ['./areas.component.css']
+  styleUrls: ['./areas.component.css'],
 })
 export class AreasComponent implements OnInit {
-
   myColor = 'rgba(0, 255, 0, 1.0)';
   player1Color = 'rgba(255, 255, 0, 0.3)';
   player2Color = 'rgba(255, 70, 0, 0.3)';
@@ -18,17 +24,23 @@ export class AreasComponent implements OnInit {
 
   numbers: Array<number>;
 
-  constructor(private http: HttpClient, private gameService: GameStateService){
+  constructor(
+    private http: HttpClient,
+    private gameService: GameStateService,
+    private shortestPathCalculator: ShortestPathCalculatorService
+  ) {
     this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    this.shortestPathCalculator.getStateUpdates().subscribe(a => console.log(a));
   }
 
   fields: Array<Array<Field>>;
 
   initFields(): void {
     this.fields = [];
-    for (let i = 0; i < 11; i++){
+    for (let i = 0; i < 11; i++) {
       this.fields.push([]);
-      for (let j = 0; j < 11; j++){
+      for (let j = 0; j < 11; j++) {
         const field: Field = {
           building: {
             type: 'EMPTY_FIELD',
@@ -39,7 +51,7 @@ export class AreasComponent implements OnInit {
             droids: 0,
             tanks: 0,
             cannons: 0,
-          }
+          },
         };
         this.fields[i].push(field);
       }
@@ -48,7 +60,9 @@ export class AreasComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFields();
-    this.gameService.getStateUpdates().subscribe(resp => this.fields = resp.fields);
+    this.gameService
+      .getStateUpdates()
+      .subscribe((resp) => (this.fields = resp.fields));
     this.gameService.requestState();
   }
 
@@ -67,11 +81,9 @@ export class AreasComponent implements OnInit {
         return '/assets/rocket.png';
       case 'TOWER':
         return '/assets/tower.png';
-
     }
     return '/assets/blank.png';
   }
-
 
   isLinkableVertically(row, col): boolean {
     return row < 10;
@@ -105,8 +117,8 @@ export class AreasComponent implements OnInit {
   //   }
   // }
 
-  transformLabel(label: string): string{
-    switch (label){
+  transformLabel(label: string): string {
+    switch (label) {
       case 'TOWER':
         return '<button type = "button">aa</button>';
       case 'MAIN_TOWER':
@@ -121,12 +133,10 @@ export class AreasComponent implements OnInit {
         return 'E';
       default:
         return '?';
-
     }
   }
 
   trackBy(index: any, item: any): number {
     return index;
   }
-
 }
