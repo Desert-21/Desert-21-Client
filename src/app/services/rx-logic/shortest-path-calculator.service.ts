@@ -39,14 +39,14 @@ export class ShortestPathCalculatorService extends ResourceProcessor<Array<Board
       GameContext
     ];
     if (selectedLocations === null || selectedLocations.from === null || selectedLocations.to === null) {
-      return this.previous;
+      return null;
     }
     const strategies = this.chooseStrategiesForShortestPath(
       selectedLocations,
       context
     );
     if (strategies === null) {
-      return this.previous;
+      return null;
     }
     const newPath = strategies.reduce((prev, next) => {
       return prev === null

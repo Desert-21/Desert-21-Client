@@ -7,10 +7,18 @@
       class="col-sm fields"
       *ngFor="let cell of row; let j = index; trackBy: trackBy"
     >
-      <!-- <div [appFieldStyling] [row]="i" [col]="j" class="bordered cell unselectable" [ngStyle]="{ position: 'relative' }">
-        <img [src]="fieldToImagePath(cell)" class="unfocusable img-fluid unselectable"/>
-      </div> -->
       <app-field [field]="cell" [row]="i" [col]="j"></app-field>
+
+      <img
+        *ngIf="fieldLinking.vertical[i][j]"
+        class="link-vertical unfocusable unselectable"
+        src="/assets/link-vertical.png"
+      />
+      <img
+        *ngIf="fieldLinking.horizontal[i][j]"
+        class="link-horizontal unfocusable unselectable"
+        src="/assets/link-horizontal.png"
+      />
     </div>
   </div>
 </div>

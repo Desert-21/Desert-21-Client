@@ -1,19 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  Renderer2,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameStateService } from 'src/app/services/http/game-state.service';
-import { ShortestPathCalculatorService } from 'src/app/services/rx-logic/shortest-path-calculator.service';
-import { Game, Field } from '../../../models/game-models';
+import {
+  FieldLinking,
+  FieldLinkingService,
+} from 'src/app/services/rx-logic/field-linking.service';
+import { generateEmptyTable } from 'src/app/utils/location-utils';
+import { Field } from '../../../models/game-models';
 
 @Component({
   selector: 'app-areas',
   templateUrl: './areas.component.html',
-  styleUrls: ['./areas.component.css'],
+  styleUrls: ['./areas.component.scss'],
 })
 export class AreasComponent implements OnInit {
   myColor = 'rgba(0, 255, 0, 1.0)';
@@ -24,14 +22,17 @@ export class AreasComponent implements OnInit {
 
   numbers: Array<number>;
 
+  fieldLinking: FieldLinking = {
+    horizontal: generateEmptyTable(11, 11),
+    vertical: generateEmptyTable(11, 11),
+  };
+
   constructor(
     private http: HttpClient,
     private gameService: GameStateService,
-    private shortestPathCalculator: ShortestPathCalculatorService
+    private fieldLinkingService: FieldLinkingService
   ) {
     this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    this.shortestPathCalculator.getStateUpdates().subscribe(a => console.log(a));
   }
 
   fields: Array<Array<Field>>;
@@ -64,6 +65,10 @@ export class AreasComponent implements OnInit {
       .getStateUpdates()
       .subscribe((resp) => (this.fields = resp.fields));
     this.gameService.requestState();
+    this.fieldLinkingService.getStateUpdates().subscribe((linking) => {
+      this.fieldLinking = linking;
+    });
+    this.fieldLinkingService.requestState();
   }
 
   fieldToImagePath(field: Field): string {

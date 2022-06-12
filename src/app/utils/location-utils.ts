@@ -104,3 +104,18 @@ export const getGeometricDistanceBetween = (
   const yDiff = Math.abs(loc1.row - loc2.row);
   return xDiff + yDiff;
 };
+
+
+export const generateEmptyTable = (
+  rows: number,
+  cols: number
+): Array<Array<boolean>> => {
+  const acc = [];
+  for (let i = 0; i < rows; i++) {
+    acc.push([]);
+    for (let j = 0; j < cols; j++) {
+      acc[i].push(false);
+    }
+  }
+  return acc;
+};
