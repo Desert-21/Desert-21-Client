@@ -20,6 +20,10 @@ export class MoveUnitsComponent implements OnInit {
 
   path: Array<BoardLocation> = [];
 
+  isConfirmEnabled = false;
+
+  @Input() modal: any;
+
   constructor(
     private fromFieldArmyService: FromFieldArmyService,
     private toFieldArmyService: ToFieldArmyService,
@@ -50,10 +54,13 @@ export class MoveUnitsComponent implements OnInit {
       tanks: this.toFieldArmy.tanks + army.tanks,
       cannons: this.toFieldArmy.cannons + army.cannons,
     };
+    this.isConfirmEnabled =
+      army.droids > 0 || army.tanks > 0 || army.cannons > 0;
   }
 
   onConfirm(): void {
     const action = new MoveUnitsAction(this.path, this.toMove);
     this.currentActionsService.pushAction(action);
+    this.modal.close('');
   }
 }

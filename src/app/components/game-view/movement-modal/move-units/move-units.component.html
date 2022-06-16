@@ -16,3 +16,13 @@
     ></app-army-destination-preview>
   </div>
 </div>
+<div class="mt-4 text-right">
+  <button
+    type="button"
+    class="btn btn-light"
+    (click)="onConfirm()"
+    [disabled]="!isConfirmEnabled"
+  >
+    Move units
+  </button>
+</div>

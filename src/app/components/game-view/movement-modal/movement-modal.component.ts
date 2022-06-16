@@ -1,10 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   ModalActionType,
   MovementModalAvailableActionsService,
 } from 'src/app/services/rx-logic/movement-modal-available-actions.service';
-import { MoveUnitsComponent } from './move-units/move-units.component';
 
 @Component({
   selector: 'app-movement-modal',
@@ -22,10 +20,8 @@ export class MovementModalComponent implements OnInit {
 
   @Input() modal: any;
 
-  @ViewChild('moveUnits') moveUnitsComponent: MoveUnitsComponent;
-
   constructor(
-    private availableActionService: MovementModalAvailableActionsService,
+    private availableActionService: MovementModalAvailableActionsService
   ) {}
 
   ngOnInit(): void {
@@ -42,10 +38,5 @@ export class MovementModalComponent implements OnInit {
 
   selectActionType(actionType: ModalActionType): void {
     this.currentActionType = actionType;
-  }
-
-  onMoveUnitsConfirm(): void {
-    this.moveUnitsComponent.onConfirm();
-    this.modal.close('');
   }
 }

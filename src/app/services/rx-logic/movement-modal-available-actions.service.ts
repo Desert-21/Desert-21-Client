@@ -7,6 +7,7 @@ import { BoardLocation, Field, Player } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
 import { getFastestUnitsSpeed } from 'src/app/utils/army-utils';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
+import { DoubleFieldSelection, DoubleFieldSelectionService } from './double-field-selection.service';
 import { GameContextService } from './game-context.service';
 import { LastShortestPathCalculationService } from './last-shortest-path-calculation.service';
 import { ResourceProcessor } from './resource-processor';
@@ -25,55 +26,50 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
 > {
   constructor(
     private gameContextService: GameContextService,
-    private lastShortestPathCalculationService: LastShortestPathCalculationService
+    private fieldSelectionService: DoubleFieldSelectionService
   ) {
-    super([gameContextService, lastShortestPathCalculationService]);
+    super([gameContextService, fieldSelectionService]);
   }
 
   protected processData(dataElements: any[]): ModalActionType[] {
-    const [context, path] = dataElements as [GameContext, Array<BoardLocation>];
-    if (path === null || path.length < 2) {
+    const [context, fieldSelection] = dataElements as [GameContext, DoubleFieldSelection];
+    if (fieldSelection === null) {
       return [];
     }
-    const fields = context.game.fields;
-    const firstLoc = path[0];
-    const lastLoc = path[path.length - 1];
-    const fromField = findByFieldLocation(firstLoc.row, firstLoc.col, fields);
-    const toField = findByFieldLocation(lastLoc.row, lastLoc.col, fields);
     const playersId = context.player.id;
 
     const optionalMoveUnits: ModalActionType = this.canMoveUnits(
-      fromField,
-      toField,
+      fieldSelection.from.field,
+      fieldSelection.to.field,
       playersId,
-      path,
+      fieldSelection.path,
       context.balance.combat
     )
       ? 'MOVE_UNITS'
       : null;
 
     const optionalAttack: ModalActionType = this.canAttack(
-      fromField,
-      toField,
+      fieldSelection.from.field,
+      fieldSelection.to.field,
       playersId,
-      path,
+      fieldSelection.path,
       context.balance.combat
     )
       ? 'ATTACK'
       : null;
 
     const optionalBombard: ModalActionType = this.canBombard(
-      fromField,
-      toField,
+      fieldSelection.from.field,
+      fieldSelection.to.field,
       context.player,
-      path,
+      fieldSelection.path,
       context.balance.combat
     )
       ? 'BOMBARD'
       : null;
 
     const optionalFireRocket: ModalActionType = this.canFireRocket(
-      fromField,
+      fieldSelection.from.field,
       playersId
     )
       ? 'FIRE_ROCKET'

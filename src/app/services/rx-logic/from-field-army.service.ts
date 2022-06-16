@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Army, BoardLocation } from 'src/app/models/game-models';
+import { Army } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
-import { findByFieldLocation } from 'src/app/utils/location-utils';
+import { getFrozenUnitsAtLocation, subtractArmies } from 'src/app/utils/army-utils';
+import {
+  DoubleFieldSelection,
+  DoubleFieldSelectionService,
+} from './double-field-selection.service';
 import { GameContextService } from './game-context.service';
-import { LastShortestPathCalculationService } from './last-shortest-path-calculation.service';
 import { ResourceProcessor } from './resource-processor';
 
 @Injectable({
@@ -11,25 +14,26 @@ import { ResourceProcessor } from './resource-processor';
 })
 export class FromFieldArmyService extends ResourceProcessor<Army> {
   constructor(
-    private lastShortestPathService: LastShortestPathCalculationService,
+    private fieldSelectionService: DoubleFieldSelectionService,
     private gameContextService: GameContextService
   ) {
-    super([lastShortestPathService, gameContextService]);
+    super([fieldSelectionService, gameContextService]);
   }
 
   protected processData(dataElements: any[]): Army {
-    const [path, context] = dataElements as [Array<BoardLocation>, GameContext];
-    if (path === null || path.length < 2) {
+    const [fieldSelection, context] = dataElements as [
+      DoubleFieldSelection,
+      GameContext
+    ];
+    if (fieldSelection === null) {
       return { droids: 0, tanks: 0, cannons: 0 };
     }
-    const firstLoc = path[0];
-    const field = findByFieldLocation(
-      firstLoc.row,
-      firstLoc.col,
-      context.game.fields
-    );
-    const army = field.army !== null ? field.army : {droids: 0, tanks: 0, cannons: 0} ;
-    // todo: logic for other movements
-    return army;
+    const field = fieldSelection.from.field;
+    const army =
+      field.army !== null ? field.army : { droids: 0, tanks: 0, cannons: 0 };
+
+    const from = fieldSelection.from;
+    const frozenUnits = getFrozenUnitsAtLocation({ row: from.row, col: from.col }, context.currentActions);
+    return subtractArmies(army, frozenUnits);
   }
 }

@@ -1,15 +1,18 @@
+import { MoveUnitsAction, PlayersAction } from '../models/actions';
 import {
   AllCombatBalance,
   GameBalanceConfig,
 } from '../models/game-config-models';
 import {
   Army,
+  BoardLocation,
   Building,
   Player,
   TrainingMode,
   UnitType,
 } from '../models/game-models';
 import { isDefensive } from './building-utils';
+import { areLocationsEqual } from './location-utils';
 
 export const getFogOfWarCoefficient = (
   fogOfWarLevel: number,
@@ -116,6 +119,7 @@ export const getFastestUnitsSpeed = (
   const optionalTanksBalance = army.tanks > 0 ? balanceConfig.tanks : null;
   const optionalCannonsBalance =
     army.cannons > 0 ? balanceConfig.cannons : null;
+
   return [optionalDroidsBalance, optionalTanksBalance, optionalCannonsBalance]
     .filter((balance) => balance !== null)
     .map((balance) => balance.fieldsTraveledPerTurn)
@@ -123,3 +127,47 @@ export const getFastestUnitsSpeed = (
       return next > prev ? next : prev;
     }, 0);
 };
+
+// todo: apply also attacking/bombarding
+export const getFrozenUnitsAtLocation = (
+  location: BoardLocation,
+  actions: Array<PlayersAction<any>>
+): Army => {
+  return actions
+    .filter((a) => a.getType() === 'MOVE_UNITS')
+    .map((a) => a as MoveUnitsAction)
+    .filter((a) => areLocationsEqual(a.from, location))
+    .map((a) => a.army)
+    .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+};
+
+export const getNextTurnMovedUnitsAtLocation = (
+  location: BoardLocation,
+  actions: Array<PlayersAction<any>>
+): Army => {
+  const frozenUnits = getFrozenUnitsAtLocation(location, actions);
+  const incomingUnits = actions
+    .filter((a) => a.getType() === 'MOVE_UNITS')
+    .map((a) => a as MoveUnitsAction)
+    .filter((a) => areLocationsEqual(a.to, location))
+    .map((a) => a.army)
+    .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+  return subtractArmies(incomingUnits, frozenUnits);
+};
+
+export const sumArmies = (army1: Army, army2: Army): Army => {
+  return {
+    droids: army1.droids + army2.droids,
+    tanks: army1.tanks + army2.tanks,
+    cannons: army1.cannons + army2.cannons,
+  };
+};
+
+export const subtractArmies = (army1: Army, army2: Army): Army => {
+  return {
+    droids: army1.droids - army2.droids,
+    tanks: army1.tanks - army2.tanks,
+    cannons: army1.cannons - army2.cannons,
+  };
+};
+

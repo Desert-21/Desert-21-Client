@@ -5,7 +5,6 @@ import { GameStateService } from '../http/game-state.service';
 import { DragAndDropIsOnService } from './drag-and-drop-is-on.service';
 import { LastShortestPathCalculationService } from './last-shortest-path-calculation.service';
 import { ResourceProcessor } from './resource-processor';
-import { ShortestPathCalculatorService } from './shortest-path-calculator.service';
 
 export type FieldLinking = {
   vertical: Array<Array<boolean>>;

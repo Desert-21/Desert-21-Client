@@ -52,9 +52,7 @@ export class ArmyDestinationPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.army);
     if (this.context === null || this.location === null) {
-      console.log('HERE!');
       this.defendingArmyPower = 0;
       return;
     }

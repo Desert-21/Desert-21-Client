@@ -48,7 +48,7 @@
     </button>
   </div>
   <div>
-    <app-move-units #moveUnits *ngIf="currentActionType == 'MOVE_UNITS'"></app-move-units>
+    <app-move-units [modal]="modal" *ngIf="currentActionType == 'MOVE_UNITS'"></app-move-units>
     <app-attack *ngIf="currentActionType == 'ATTACK'"></app-attack>
     <app-bombard *ngIf="currentActionType == 'BOMBARD'"></app-bombard>
     <app-fire-rocket
@@ -56,8 +56,8 @@
     ></app-fire-rocket>
   </div>
 </div>
-<div class="modal-footer">
+<!-- <div class="modal-footer">
   <button type="button" class="btn btn-light" (click)="onMoveUnitsConfirm()">
     Move units
   </button>
-</div>
+</div> -->

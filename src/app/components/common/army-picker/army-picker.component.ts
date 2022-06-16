@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Army, UnitType } from 'src/app/models/game-models';
+import { UnitsMovementAvailabilityService } from 'src/app/services/rx-logic/units-movement-availability.service';
 
 @Component({
   selector: 'app-army-picker',
@@ -17,9 +18,16 @@ export class ArmyPickerComponent implements OnInit {
 
   private armySelection: Army = { droids: 0, tanks: 0, cannons: 0 };
 
-  constructor() {}
+  unitsAvailability: [boolean, boolean, boolean] = [false, false, false];
 
-  ngOnInit(): void {}
+  constructor(private unitAvailablityService: UnitsMovementAvailabilityService) {}
+
+  ngOnInit(): void {
+    this.unitAvailablityService.getStateUpdates().subscribe(availability => {
+      this.unitsAvailability = availability;
+    });
+    this.unitAvailablityService.requestState();
+  }
 
   updateArmySelection(unitType: UnitType, amount: number): void {
     switch (unitType) {

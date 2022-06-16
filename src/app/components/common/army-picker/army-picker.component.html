@@ -1,7 +1,15 @@
 <div class="wrapper">
-  <div class="image-input-wrapper">
+  <div
+    class="image-input-wrapper"
+    [class.darkened]="!unitsAvailability[0]"
+    [ngbTooltip]="
+      !unitsAvailability[0] ? 'This unit cannot travel that fast!' : null
+    "
+    placement="top"
+  >
     <img
       appEnlighter
+      [isEnlighterEnabled]="unitsAvailability[0]"
       (click)="selectMax('DROID')"
       class="w-100"
       src="/assets/mechs/droid-full.png"
@@ -15,12 +23,22 @@
         [max]="maxArmy.droids"
         class="w-100"
         type="number"
+        [disabled]="!unitsAvailability[0]"
+        onkeydown="return false"
       />
     </div>
   </div>
-  <div class="image-input-wrapper">
+  <div
+    class="image-input-wrapper"
+    [class.darkened]="!unitsAvailability[1]"
+    [ngbTooltip]="
+      !unitsAvailability[1] ? 'This unit cannot travel that fast!' : null
+    "
+    placement="top"
+  >
     <img
       appEnlighter
+      [isEnlighterEnabled]="unitsAvailability[1]"
       (click)="selectMax('TANK')"
       class="w-100"
       src="/assets/mechs/tank-full.png"
@@ -34,12 +52,22 @@
         [max]="maxArmy.tanks"
         class="w-100"
         type="number"
+        [disabled]="!unitsAvailability[1]"
+        onkeydown="return false"
       />
     </div>
   </div>
-  <div class="image-input-wrapper">
+  <div
+    class="image-input-wrapper"
+    [class.darkened]="!unitsAvailability[2]"
+    [ngbTooltip]="
+      !unitsAvailability[2] ? 'This unit cannot travel that fast!' : null
+    "
+    placement="top"
+  >
     <img
       appEnlighter
+      [isEnlighterEnabled]="unitsAvailability[2]"
       (click)="selectMax('CANNON')"
       class="w-100"
       src="/assets/mechs/cannon-full.png"
@@ -53,6 +81,8 @@
         [max]="maxArmy.cannons"
         class="w-100"
         type="number"
+        [disabled]="!unitsAvailability[2]"
+        onkeydown="return false"
       />
     </div>
   </div>
