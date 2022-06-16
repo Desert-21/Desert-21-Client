@@ -18,24 +18,26 @@ export type FieldLinking = {
 export class FieldLinkingService extends ResourceProcessor<FieldLinking> {
   constructor(
     private gameStateService: GameStateService,
-    private lastShortestPathCalculator: LastShortestPathCalculationService
+    private lastShortestPathCalculator: LastShortestPathCalculationService,
+    private isOnService: DragAndDropIsOnService
   ) {
-    super([
-      gameStateService,
-      lastShortestPathCalculator,
-    ]);
+    super([gameStateService, lastShortestPathCalculator, isOnService]);
   }
 
   protected processData(dataElements: any[]): FieldLinking {
-    const [game, path] = dataElements as [
+    const [game, path, isOn] = dataElements as [
       Game,
       Array<BoardLocation>,
       boolean
     ];
+
     const rows = game.fields.length;
     const cols = game.fields[0].length;
     const vertical = generateEmptyTable(rows, cols);
     const horizontal = generateEmptyTable(rows, cols);
+    if (!isOn) {
+      return { vertical, horizontal };
+    }
     const horizontalLinkageLocations =
       this.locationsToHorizontalLinkageLocations(path);
     const verticalLinkageLocations =

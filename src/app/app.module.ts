@@ -49,6 +49,13 @@ import { DragAndDropFieldsSelectionService } from './services/rx-logic/drag-and-
 import { DragAndDropSelectionDirective } from './directives/drag-and-drop-selection.directive';
 import { DragAndDropCancelableDirective } from './directives/drag-and-drop-cancelable.directive';
 import { ShortestPathCalculatorService } from './services/rx-logic/shortest-path-calculator.service';
+import { MovementModalComponent } from './components/game-view/movement-modal/movement-modal.component';
+import { MoveUnitsComponent } from './components/game-view/movement-modal/move-units/move-units.component';
+import { AttackComponent } from './components/game-view/movement-modal/attack/attack.component';
+import { BombardComponent } from './components/game-view/movement-modal/bombard/bombard.component';
+import { FireRocketComponent } from './components/game-view/movement-modal/fire-rocket/fire-rocket.component';
+import { ArmyPickerComponent } from './components/common/army-picker/army-picker.component';
+import { ArmyDestinationPreviewComponent } from './components/common/army-destination-preview/army-destination-preview.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +97,14 @@ import { ShortestPathCalculatorService } from './services/rx-logic/shortest-path
     TrainArmySectionComponent,
     TrainArmyQueueComponent,
     DragAndDropSelectionDirective,
-    DragAndDropCancelableDirective
+    DragAndDropCancelableDirective,
+    MovementModalComponent,
+    MoveUnitsComponent,
+    AttackComponent,
+    BombardComponent,
+    FireRocketComponent,
+    ArmyPickerComponent,
+    ArmyDestinationPreviewComponent
   ],
   imports: [
     BrowserModule,

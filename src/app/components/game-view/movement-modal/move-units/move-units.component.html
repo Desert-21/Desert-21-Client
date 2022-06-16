@@ -1,0 +1,18 @@
+<h5 class="mt-2">Available units</h5>
+<div class="mt-4 army-picker-wrapper">
+  <div class="w-75">
+    <app-army-picker
+      (armySelectionChanges)="onArmySelectionChange($event)"
+      [maxArmy]="maxArmy"
+    ></app-army-picker>
+  </div>
+</div>
+<h5 class="mt-2">Units at destination</h5>
+<div class="mt-4 army-picker-wrapper">
+  <div class="w-75">
+    <app-army-destination-preview
+      [army]="toFieldArmyAfterMovement"
+      [showDefendingPower]="true"
+    ></app-army-destination-preview>
+  </div>
+</div>

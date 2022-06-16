@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-wrapper {
+  width: 30%;
+
+  > span {
+    position: relative;
+    bottom: 30px;
+    left: 4px;
+    font-size: larger;
+    color: greenyellow;
+  }
+}

@@ -20,6 +20,12 @@ export class LastShortestPathCalculationService extends ResourceProcessor<
     if (path === null) {
       return this.previous;
     }
+    this.previous = path;
     return path;
+  }
+
+  clearData(): void {
+    this.subject.next([]);
+    this.previous = [];
   }
 }

@@ -184,7 +184,7 @@ const getArmyBasePower = (army: Army, balance: GameBalanceConfig): Power => {
   return {
     droids: getUnitsBasePower(army.droids, 'DROID', balance),
     tanks: getUnitsBasePower(army.tanks, 'TANK', balance),
-    cannons: getUnitsBasePower(army.droids, 'CANNON', balance),
+    cannons: getUnitsBasePower(army.cannons, 'CANNON', balance),
     constant: 0,
   };
 };

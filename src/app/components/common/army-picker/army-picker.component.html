@@ -1,0 +1,59 @@
+<div class="wrapper">
+  <div class="image-input-wrapper">
+    <img
+      appEnlighter
+      (click)="selectMax('DROID')"
+      class="w-100"
+      src="/assets/mechs/droid-full.png"
+    />
+    <span>{{ maxArmy.droids }}</span>
+    <div class="input-wrapper">
+      <input
+        [(ngModel)]="droids"
+        value="0"
+        min="0"
+        [max]="maxArmy.droids"
+        class="w-100"
+        type="number"
+      />
+    </div>
+  </div>
+  <div class="image-input-wrapper">
+    <img
+      appEnlighter
+      (click)="selectMax('TANK')"
+      class="w-100"
+      src="/assets/mechs/tank-full.png"
+    />
+    <span>{{ maxArmy.tanks }}</span>
+    <div class="input-wrapper">
+      <input
+        [(ngModel)]="tanks"
+        value="0"
+        min="0"
+        [max]="maxArmy.tanks"
+        class="w-100"
+        type="number"
+      />
+    </div>
+  </div>
+  <div class="image-input-wrapper">
+    <img
+      appEnlighter
+      (click)="selectMax('CANNON')"
+      class="w-100"
+      src="/assets/mechs/cannon-full.png"
+    />
+    <span>{{ maxArmy.cannons }}</span>
+    <div class="input-wrapper">
+      <input
+        [(ngModel)]="cannons"
+        value="0"
+        min="0"
+        [max]="maxArmy.cannons"
+        class="w-100"
+        type="number"
+      />
+    </div>
+  </div>
+</div>

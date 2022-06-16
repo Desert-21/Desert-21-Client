@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title">My Moves</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.close('')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="btn-group w-100" role="group" aria-label="Basic example">
+    <button
+      (click)="selectActionType('MOVE_UNITS')"
+      [disabled]="!isAvailable[0]"
+      type="button"
+      class="btn"
+      [class.btn-success]="isAvailable[0]"
+      [class.btn-secondary]="!isAvailable[0]"
+    >
+      Move Units
+    </button>
+    <button
+      (click)="selectActionType('ATTACK')"
+      [disabled]="!isAvailable[1]"
+      type="button"
+      class="btn"
+      [class.btn-danger]="isAvailable[1]"
+      [class.btn-secondary]="!isAvailable[1]"
+    >
+      Attack
+    </button>
+    <button
+      (click)="selectActionType('BOMBARD')"
+      [disabled]="!isAvailable[2]"
+      type="button"
+      class="btn"
+      [class.btn-warning]="isAvailable[2]"
+      [class.btn-secondary]="!isAvailable[2]"
+    >
+      Bombard
+    </button>
+    <button
+      (click)="selectActionType('FIRE_ROCKET')"
+      [disabled]="!isAvailable[3]"
+      type="button"
+      class="btn"
+      [class.btn-primary]="isAvailable[3]"
+      [class.btn-secondary]="!isAvailable[3]"
+    >
+      Rocket Strike
+    </button>
+  </div>
+  <div>
+    <app-move-units #moveUnits *ngIf="currentActionType == 'MOVE_UNITS'"></app-move-units>
+    <app-attack *ngIf="currentActionType == 'ATTACK'"></app-attack>
+    <app-bombard *ngIf="currentActionType == 'BOMBARD'"></app-bombard>
+    <app-fire-rocket
+      *ngIf="currentActionType == 'FIRE_ROCKET'"
+    ></app-fire-rocket>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="onMoveUnitsConfirm()">
+    Move units
+  </button>
+</div>
