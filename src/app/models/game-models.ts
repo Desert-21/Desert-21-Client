@@ -62,6 +62,7 @@ export type StateManager = {
   gameState: string;
   timeout: string;
   currentPlayerId?: string;
+  turnCounter: number;
 };
 
 export type BoardLocation = {

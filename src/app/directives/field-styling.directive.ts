@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   Directive,
   ElementRef,
   Input,

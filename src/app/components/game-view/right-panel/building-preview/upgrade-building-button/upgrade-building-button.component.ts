@@ -23,6 +23,7 @@ import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 import { buildingToConfig } from 'src/app/utils/balance-utils';
+import { areLocationsEqual } from 'src/app/utils/location-utils';
 
 @Component({
   selector: 'app-upgrade-building-button',
@@ -127,11 +128,8 @@ export class UpgradeBuildingButtonComponent implements OnInit, OnDestroy {
   ): boolean {
     return actions
       .filter((a) => a.getType() === 'UPGRADE')
-      .map((a) => a.toActionAPIBody() as UpgradeActionContent)
-      .some(
-        (a) =>
-          a.location.row === location.row && a.location.col === location.col
-      );
+      .map((a) => a.toActionAPIBody().content as UpgradeActionContent)
+      .some((a) => areLocationsEqual(a.location, location));
   }
 
   private getBuildingCost(

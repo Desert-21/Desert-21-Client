@@ -114,7 +114,7 @@ export class AreasComponent implements OnInit, OnDestroy {
   // }
 
   getBackground(): string {
-    return "url('assets/game-graphics/game-background.jpg')";
+    return 'url(\'assets/game-graphics/game-background.jpg\')';
   }
 
   // getSource(row: number, col: number){
