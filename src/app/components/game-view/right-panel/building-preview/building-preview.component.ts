@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FieldSelection } from 'src/app/models/game-utility-models';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
@@ -8,10 +9,8 @@ import { underscoreToRegular } from 'src/app/utils/text-utils';
   templateUrl: './building-preview.component.html',
   styleUrls: ['./building-preview.component.scss'],
 })
-export class BuildingPreviewComponent implements OnInit {
-  constructor(
-    private selectedFieldService: SelectedFieldService
-  ) {}
+export class BuildingPreviewComponent implements OnInit, OnDestroy {
+  constructor(private selectedFieldService: SelectedFieldService) {}
 
   fieldSelectionEmpty = true;
   buildingName = 'Loading...';
@@ -21,8 +20,10 @@ export class BuildingPreviewComponent implements OnInit {
   level: number | null = null;
   isEmpty = true;
 
+  private sub1: Subscription;
+
   ngOnInit(): void {
-    this.selectedFieldService
+    this.sub1 = this.selectedFieldService
       .getStateUpdates()
       .subscribe((selectedFieldInfo) => {
         if (selectedFieldInfo === null) {
@@ -46,6 +47,10 @@ export class BuildingPreviewComponent implements OnInit {
         this.isEmpty = building?.type === 'EMPTY_FIELD';
       });
     this.selectedFieldService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   private getOwnershipPrefix(selectedField: FieldSelection): string {

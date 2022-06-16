@@ -1,17 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MoveUnitsAction } from 'src/app/models/actions';
 import { Army, BoardLocation } from 'src/app/models/game-models';
 import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
 import { FromFieldArmyService } from 'src/app/services/rx-logic/from-field-army.service';
 import { LastShortestPathCalculationService } from 'src/app/services/rx-logic/last-shortest-path-calculation.service';
 import { ToFieldArmyService } from 'src/app/services/rx-logic/to-field-army.service';
+import { sumArmies } from 'src/app/utils/army-utils';
 
 @Component({
   selector: 'app-move-units',
   templateUrl: './move-units.component.html',
   styleUrls: ['./move-units.component.scss'],
 })
-export class MoveUnitsComponent implements OnInit {
+export class MoveUnitsComponent implements OnInit, OnDestroy {
   maxArmy: Army = { droids: 0, tanks: 0, cannons: 0 };
   toFieldArmy: Army = { droids: 0, tanks: 0, cannons: 0 };
 
@@ -24,6 +26,10 @@ export class MoveUnitsComponent implements OnInit {
 
   @Input() modal: any;
 
+  private sub1: Subscription;
+  private sub2: Subscription;
+  private sub3: Subscription;
+
   constructor(
     private fromFieldArmyService: FromFieldArmyService,
     private toFieldArmyService: ToFieldArmyService,
@@ -32,14 +38,14 @@ export class MoveUnitsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fromFieldArmyService.getStateUpdates().subscribe((maxArmy) => {
+    this.sub1 = this.fromFieldArmyService.getStateUpdates().subscribe((maxArmy) => {
       this.maxArmy = maxArmy;
     });
-    this.toFieldArmyService.getStateUpdates().subscribe((targetArmy) => {
+    this.sub2 = this.toFieldArmyService.getStateUpdates().subscribe((targetArmy) => {
       this.toFieldArmy = targetArmy;
       this.toFieldArmyAfterMovement = targetArmy;
     });
-    this.lastShortestPathService.getStateUpdates().subscribe((path) => {
+    this.sub3 = this.lastShortestPathService.getStateUpdates().subscribe((path) => {
       this.path = path;
     });
     this.fromFieldArmyService.requestState();
@@ -47,13 +53,15 @@ export class MoveUnitsComponent implements OnInit {
     this.lastShortestPathService.requestState();
   }
 
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
+    this.sub2.unsubscribe();
+    this.sub3.unsubscribe();
+  }
+
   onArmySelectionChange(army: Army): void {
     this.toMove = army;
-    this.toFieldArmyAfterMovement = {
-      droids: this.toFieldArmy.droids + army.droids,
-      tanks: this.toFieldArmy.tanks + army.tanks,
-      cannons: this.toFieldArmy.cannons + army.cannons,
-    };
+    this.toFieldArmyAfterMovement = sumArmies(this.toFieldArmy, army);
     this.isConfirmEnabled =
       army.droids > 0 || army.tanks > 0 || army.cannons > 0;
   }

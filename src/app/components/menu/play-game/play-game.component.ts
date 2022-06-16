@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { StartGameHandlerService } from 'src/app/services/notification-handlers/start-game-handler.service';
 import {
   formatSecondsToTimeString,
@@ -13,7 +14,7 @@ import {
   templateUrl: './play-game.component.html',
   styleUrls: ['./play-game.component.scss'],
 })
-export class PlayGameComponent implements OnInit {
+export class PlayGameComponent implements OnInit, OnDestroy {
   isAddToQueueLoading = false;
   isAddToQueueDisabled = false;
 
@@ -24,6 +25,8 @@ export class PlayGameComponent implements OnInit {
   timeString = '00:00';
   interval: any;
 
+  private sub1: Subscription;
+
   constructor(
     private http: HttpClient,
     private startGameHandler: StartGameHandlerService,
@@ -31,7 +34,7 @@ export class PlayGameComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.startGameHandler.getStartGameUpdates().subscribe({
+    this.sub1 = this.startGameHandler.getStartGameUpdates().subscribe({
       next: id => {
         this.isInTheQueue = false;
         this.isAddToQueueDisabled = true;
@@ -39,6 +42,10 @@ export class PlayGameComponent implements OnInit {
         this.router.navigate(['game', id]);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   addToTheQueue(): void {

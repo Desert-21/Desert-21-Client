@@ -2,66 +2,71 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Army, BoardLocation } from 'src/app/models/game-models';
+import { Subscription } from 'rxjs';
+import { Army } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
+import {
+  DoubleFieldSelection,
+  DoubleFieldSelectionService,
+} from 'src/app/services/rx-logic/double-field-selection.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
-import { LastShortestPathCalculationService } from 'src/app/services/rx-logic/last-shortest-path-calculation.service';
 import { calculateArmyPower } from 'src/app/utils/army-power-calculator';
-import { findByFieldLocation } from 'src/app/utils/location-utils';
 
 @Component({
   selector: 'app-army-destination-preview',
   templateUrl: './army-destination-preview.component.html',
   styleUrls: ['./army-destination-preview.component.scss'],
 })
-export class ArmyDestinationPreviewComponent implements OnInit, OnChanges {
+export class ArmyDestinationPreviewComponent implements OnInit, OnChanges, OnDestroy {
   @Input() army: Army = { droids: 0, tanks: 0, cannons: 0 };
 
   @Input() showAttackingPower = false;
   @Input() showDefendingPower = false;
 
-  location: BoardLocation | null = null;
+  fieldSelection: DoubleFieldSelection | null = null;
 
   context: GameContext | null = null;
 
   defendingArmyPower = 0;
 
+  private sub1: Subscription;
+  private sub2: Subscription;
+
   constructor(
     private gameContextService: GameContextService,
-    private lastShortestPathService: LastShortestPathCalculationService
+    private fieldSelectionService: DoubleFieldSelectionService
   ) {}
 
   ngOnInit(): void {
-    this.gameContextService.getStateUpdates().subscribe(context => {
+    this.sub1 = this.gameContextService.getStateUpdates().subscribe((context) => {
       this.context = context;
       this.ngOnChanges(null);
     });
-    this.lastShortestPathService.getStateUpdates().subscribe(path => {
-      if (path === null || path.length < 2) {
-        this.location = null;
+    this.sub2 = this.fieldSelectionService.getStateUpdates().subscribe((selection) => {
+      if (selection === null) {
+        this.fieldSelection = null;
         return;
       }
-      this.location = path[path.length - 1];
+      this.fieldSelection = selection;
       this.ngOnChanges(null);
     });
     this.gameContextService.requestState();
-    this.lastShortestPathService.requestState();
+    this.fieldSelectionService.requestState();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.context === null || this.location === null) {
+    if (this.context === null || this.fieldSelection === null) {
       this.defendingArmyPower = 0;
       return;
     }
-    const field = findByFieldLocation(
-      this.location.row,
-      this.location.col,
-      this.context.game.fields
+    const field = this.fieldSelection.to.field;
+    const fieldOwner = this.context.game.players.find(
+      (p) => p.id === field.ownerId
     );
-    const fieldOwner = this.context.game.players.find(p => p.id === field.ownerId);
     const defendingArmyPower = calculateArmyPower(
       this.army,
       this.context.balance,
@@ -70,5 +75,10 @@ export class ArmyDestinationPreviewComponent implements OnInit, OnChanges {
       true
     );
     this.defendingArmyPower = defendingArmyPower;
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
+    this.sub2.unsubscribe();
   }
 }

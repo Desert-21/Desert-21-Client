@@ -65,8 +65,8 @@ export class ShortestPathCalculatorService extends ResourceProcessor<Array<Board
     const fromLoc = selectedLocations.from;
     const toLoc = selectedLocations.to;
     const fields = context.game.fields;
-    const fromField = findByFieldLocation(fromLoc.row, fromLoc.col, fields);
-    const toField = findByFieldLocation(toLoc.row, toLoc.col, fields);
+    const fromField = findByFieldLocation(fromLoc, fields);
+    const toField = findByFieldLocation(toLoc, fields);
     if (fromField === null || toField === null || fromField === toField) {
       return null;
     }

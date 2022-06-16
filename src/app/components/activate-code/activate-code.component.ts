@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ActivateCodeRequest } from './activate-code-types';
 
 @Component({
@@ -8,15 +9,17 @@ import { ActivateCodeRequest } from './activate-code-types';
   templateUrl: './activate-code.component.html',
   styleUrls: ['./activate-code.component.scss']
 })
-export class ActivateCodeComponent implements OnInit {
+export class ActivateCodeComponent implements OnInit, OnDestroy {
 
   isLoading = true;
   isSucceeded = false;
 
+  private sub1: Subscription;
+
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.sub1 = this.route.params.subscribe(params => {
       const code = params.activationCode;
       const email = params.email;
       const request: ActivateCodeRequest = {
@@ -33,6 +36,10 @@ export class ActivateCodeComponent implements OnInit {
         this.isSucceeded = false;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
 }

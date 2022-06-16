@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ModalActionType,
   MovementModalAvailableActionsService,
@@ -9,7 +10,7 @@ import {
   templateUrl: './movement-modal.component.html',
   styleUrls: ['./movement-modal.component.scss'],
 })
-export class MovementModalComponent implements OnInit {
+export class MovementModalComponent implements OnInit, OnDestroy {
   isAvailable: [boolean, boolean, boolean, boolean] = [
     false,
     false,
@@ -20,12 +21,14 @@ export class MovementModalComponent implements OnInit {
 
   @Input() modal: any;
 
+  private sub1: Subscription;
+
   constructor(
     private availableActionService: MovementModalAvailableActionsService
   ) {}
 
   ngOnInit(): void {
-    this.availableActionService.getStateUpdates().subscribe((actions) => {
+    this.sub1 = this.availableActionService.getStateUpdates().subscribe((actions) => {
       const canMoveUnits = actions.includes('MOVE_UNITS');
       const canAttack = actions.includes('ATTACK');
       const canBombard = actions.includes('BOMBARD');
@@ -34,6 +37,10 @@ export class MovementModalComponent implements OnInit {
       this.currentActionType = actions[0];
     });
     this.availableActionService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   selectActionType(actionType: ModalActionType): void {

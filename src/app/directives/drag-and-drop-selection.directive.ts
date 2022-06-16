@@ -1,5 +1,5 @@
-import { Directive, HostListener, Input } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { Directive, HostListener, Input, OnDestroy } from '@angular/core';
+import { combineLatest, Subscription } from 'rxjs';
 import { BoardLocation } from '../models/game-models';
 import { DirectedLocationPair } from '../models/game-utility-models';
 import { DragAndDropFieldsSelectionService } from '../services/rx-logic/drag-and-drop-fields-selection.service';
@@ -11,12 +11,14 @@ import { areLocationsEqual } from '../utils/location-utils';
 @Directive({
   selector: '[appDragAndDropSelection]',
 })
-export class DragAndDropSelectionDirective {
+export class DragAndDropSelectionDirective implements OnDestroy {
   @Input() row = -1;
   @Input() col = -1;
 
   currentSelection: DirectedLocationPair | null = null;
   isOn = false;
+
+  private sub1: Subscription;
 
   constructor(
     private isOnService: DragAndDropIsOnService,
@@ -24,7 +26,7 @@ export class DragAndDropSelectionDirective {
     private gameModalService: GameModalService,
     private lastShortestPathService: LastShortestPathCalculationService
   ) {
-    combineLatest([
+    this.sub1 = combineLatest([
       isOnService.getStateUpdates(),
       dragAndDropService.getStateUpdates(),
     ]).subscribe((update) => {
@@ -32,6 +34,10 @@ export class DragAndDropSelectionDirective {
       this.isOn = isOn;
       this.currentSelection = selection;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   @HostListener('mouseenter', ['$event']) onEnter(e: MouseEvent): void {

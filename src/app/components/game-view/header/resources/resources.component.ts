@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ResourceSet } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
@@ -10,7 +11,7 @@ import { GameContextService } from 'src/app/services/rx-logic/game-context.servi
   templateUrl: './resources.component.html',
   styleUrls: ['./resources.component.scss'],
 })
-export class ResourcesComponent implements OnInit {
+export class ResourcesComponent implements OnInit, OnDestroy {
   constructor(private availableResourcesService: AvailableResourcesService) {}
 
   userId: string = null;
@@ -20,12 +21,18 @@ export class ResourcesComponent implements OnInit {
     electricity: null,
   };
 
+  private sub1: Subscription;
+
   ngOnInit(): void {
-    this.availableResourcesService
+    this.sub1 = this.availableResourcesService
       .getStateUpdates()
       .subscribe((resourceSet) => {
         this.resourceSet = resourceSet;
       });
     this.availableResourcesService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 }

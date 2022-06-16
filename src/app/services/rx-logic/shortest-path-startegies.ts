@@ -47,8 +47,7 @@ export const attackStrategy: FindShortestPathStartegy = {
         neighbours
           .filter((n) => {
             const field = findByFieldLocation(
-              n.row,
-              n.col,
+              n,
               context.game.fields
             );
             return field.ownerId === context.player.id;
@@ -76,7 +75,7 @@ export const validatePathsLength = (path: Array<BoardLocation> | null, context: 
     return false;
   }
   const firstLoc = path[0];
-  const fromField = findByFieldLocation(firstLoc.row, firstLoc.col, context.game.fields);
+  const fromField = findByFieldLocation(firstLoc, context.game.fields);
   const fastestUnitSpeed = getFastestUnitsSpeed(
     fromField.army,
     context.balance.combat
@@ -118,7 +117,7 @@ const performBFS = (
       (loc) => !checkedLocations.has(locationToString(loc))
     );
     const ownedNonRepeatedLocations = nonRepeatedLocations.filter((loc) => {
-      const neighbouringField = findByFieldLocation(loc.row, loc.col, fields);
+      const neighbouringField = findByFieldLocation(loc, fields);
       return neighbouringField.ownerId === playerId;
     });
     for (const location of ownedNonRepeatedLocations) {

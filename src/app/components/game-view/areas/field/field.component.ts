@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, Subscription } from 'rxjs';
 import { Field } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
@@ -12,7 +12,7 @@ import { findByFieldLocation } from 'src/app/utils/location-utils';
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss'],
 })
-export class FieldComponent implements OnInit {
+export class FieldComponent implements OnInit, OnDestroy {
   constructor(
     private gameStateService: GameStateService,
     private userInfoService: UserInfoService,
@@ -32,8 +32,11 @@ export class FieldComponent implements OnInit {
 
   isSelected = false;
 
+  private sub1: Subscription;
+  private sub2: Subscription;
+
   ngOnInit(): void {
-    combineLatest([
+    this.sub1 = combineLatest([
       this.gameStateService.getStateUpdates(),
       this.userInfoService.getStateUpdates(),
     ]).subscribe((gameWithUsersData) => {
@@ -44,13 +47,18 @@ export class FieldComponent implements OnInit {
       this.field = game?.fields[this.row][this.col];
       this.currentClasses = this.getStyling();
     });
-    this.selectedFieldService.getStateUpdates().subscribe((field) => {
+    this.sub2 = this.selectedFieldService.getStateUpdates().subscribe((field) => {
       if (field === null) {
         this.isSelected = false;
       } else {
         this.isSelected = this.row === field.row && this.col === field.col;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
+    this.sub2.unsubscribe();
   }
 
   getStyling(): string {
@@ -79,19 +87,19 @@ export class FieldComponent implements OnInit {
     const classes = [
       this.getClassIfFieldBelongsTo(
         'top',
-        findByFieldLocation(this.row - 1, this.col, this.fields)
+        findByFieldLocation({ row: this.row - 1, col: this.col }, this.fields)
       ),
       this.getClassIfFieldBelongsTo(
         'bottom',
-        findByFieldLocation(this.row + 1, this.col, this.fields)
+        findByFieldLocation({ row: this.row + 1, col: this.col }, this.fields)
       ),
       this.getClassIfFieldBelongsTo(
         'left',
-        findByFieldLocation(this.row, this.col - 1, this.fields)
+        findByFieldLocation({ row: this.row, col: this.col - 1 }, this.fields)
       ),
       this.getClassIfFieldBelongsTo(
         'right',
-        findByFieldLocation(this.row, this.col + 1, this.fields)
+        findByFieldLocation({ row: this.row, col: this.col + 1 }, this.fields)
       ),
     ];
     return classes;

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PlayersAction } from 'src/app/models/actions';
 import { GameTurnRequest } from 'src/app/models/game-utility-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
@@ -18,7 +19,7 @@ import {
   templateUrl: './turn-timer-button.component.html',
   styleUrls: ['./turn-timer-button.component.scss'],
 })
-export class TurnTimerButtonComponent implements OnInit {
+export class TurnTimerButtonComponent implements OnInit, OnDestroy {
   timeOfNextTurn: Date = new Date();
   timeDisplay = '00:00';
 
@@ -29,6 +30,8 @@ export class TurnTimerButtonComponent implements OnInit {
   gameId: string | null = null;
 
   currentActions: Array<PlayersAction<any>> = [];
+
+  private sub1: Subscription;
 
   currentOnClick: () => void = () => {};
 
@@ -41,24 +44,32 @@ export class TurnTimerButtonComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.gameContextService.getStateUpdates().subscribe((context) => {
-      const game = context.game;
-      const { currentPlayerId, gameState, timeout } = game.stateManager;
-      const isMyTurn =
-        currentPlayerId === null ? null : currentPlayerId === context.player.id;
+    this.sub1 = this.gameContextService
+      .getStateUpdates()
+      .subscribe((context) => {
+        const game = context.game;
+        const { currentPlayerId, gameState, timeout } = game.stateManager;
+        const isMyTurn =
+          currentPlayerId === null
+            ? null
+            : currentPlayerId === context.player.id;
 
-      this.timeOfNextTurn = parseDate(timeout);
-      this.buttonDisplay = this.getButtonText(gameState, isMyTurn);
-      this.gameId = game.gameId;
+        this.timeOfNextTurn = parseDate(timeout);
+        this.buttonDisplay = this.getButtonText(gameState, isMyTurn);
+        this.gameId = game.gameId;
 
-      this.currentActions = context.currentActions;
+        this.currentActions = context.currentActions;
 
-      this.currentOnClick = this.getCurrentOnClick(isMyTurn, gameState);
+        this.currentOnClick = this.getCurrentOnClick(isMyTurn, gameState);
 
-      this.isButtonDisabled = this.getIsButtonDisabled(gameState, isMyTurn);
-    });
+        this.isButtonDisabled = this.getIsButtonDisabled(gameState, isMyTurn);
+      });
     this.gameContextService.requestState();
     this.tickTheTime();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   notifyAboutGameReadiness(): void {

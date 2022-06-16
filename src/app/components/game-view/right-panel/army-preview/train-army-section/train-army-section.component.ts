@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, Subscription } from 'rxjs';
 import { TrainAction } from 'src/app/models/actions';
 import { TrainingEventContent } from 'src/app/models/game-models';
 import {
@@ -16,7 +16,7 @@ import { areLocationsEqual } from 'src/app/utils/location-utils';
   templateUrl: './train-army-section.component.html',
   styleUrls: ['./train-army-section.component.scss'],
 })
-export class TrainArmySectionComponent implements OnInit {
+export class TrainArmySectionComponent implements OnInit, OnDestroy {
   showScarabInfo = false;
   showEnemyInfo = false;
   showQueue = false;
@@ -25,13 +25,15 @@ export class TrainArmySectionComponent implements OnInit {
 
   optionalPendingTraining: TrainingEventContent;
 
+  private sub1: Subscription;
+
   constructor(
     private gameContextService: GameContextService,
     private selectedFieldService: SelectedFieldService
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
+    this.sub1 = combineLatest([
       this.gameContextService.getStateUpdates(),
       this.selectedFieldService.getStateUpdates(),
     ]).subscribe((updates) => {
@@ -64,6 +66,10 @@ export class TrainArmySectionComponent implements OnInit {
     });
     this.gameContextService.requestState();
     this.selectedFieldService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   private resetVisibility(): void {

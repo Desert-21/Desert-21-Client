@@ -1,5 +1,5 @@
-import { Component, ContentChild, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { Component, ContentChild, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, Subscription } from 'rxjs';
 import { TrainAction } from 'src/app/models/actions';
 import {
   AllCombatBalance,
@@ -18,6 +18,7 @@ import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
 import { canTrainUnits } from 'src/app/utils/army-utils';
+import { unitTypeToConfig } from 'src/app/utils/balance-utils';
 
 type TrainingOption = {
   unitType: UnitType;
@@ -48,11 +49,13 @@ const trainingOptions: Array<TrainingOption> = [
   templateUrl: './train-army-button-section.component.html',
   styleUrls: ['./train-army-button-section.component.scss'],
 })
-export class TrainArmyButtonSectionComponent implements OnInit {
+export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
   enrichedTrainingOptions: Array<EnrichedTrainingOption> = [];
   location: BoardLocation | null = null;
   isTrainingButtonVisible = false;
   isTrainingButtonDisabled = false;
+
+  private sub1: Subscription;
 
   constructor(
     private gameContextService: GameContextService,
@@ -61,7 +64,7 @@ export class TrainArmyButtonSectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
+    this.sub1 = combineLatest([
       this.gameContextService.getStateUpdates(),
       this.selectedFieldService.getStateUpdates(),
     ]).subscribe((updates) => {
@@ -80,6 +83,10 @@ export class TrainArmyButtonSectionComponent implements OnInit {
 
     this.gameContextService.requestState();
     this.selectedFieldService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   saveArmyTraining(option: EnrichedTrainingOption): void {
@@ -102,7 +109,7 @@ export class TrainArmyButtonSectionComponent implements OnInit {
     fieldSelection: FieldSelection
   ): EnrichedTrainingOption {
     const combatConfig = context.balance.combat;
-    const config = this.getUnitConfig(combatConfig, option.unitType);
+    const config = unitTypeToConfig(combatConfig, option.unitType);
     const amount = this.getProducedAmount(config, option.trainingMode);
     const cost = amount * config.cost;
     const imageSource = this.getImageSource(option.unitType);
@@ -120,20 +127,6 @@ export class TrainArmyButtonSectionComponent implements OnInit {
       imageSource,
       isAvailable,
     };
-  }
-
-  private getUnitConfig(
-    balance: AllCombatBalance,
-    unitType: UnitType
-  ): CombatUnitConfig {
-    switch (unitType) {
-      case 'DROID':
-        return balance.droids;
-      case 'TANK':
-        return balance.tanks;
-      case 'CANNON':
-        return balance.cannons;
-    }
   }
 
   private getProducedAmount(

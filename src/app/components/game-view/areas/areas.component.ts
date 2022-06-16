@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import {
   FieldLinking,
@@ -13,7 +14,7 @@ import { Field } from '../../../models/game-models';
   templateUrl: './areas.component.html',
   styleUrls: ['./areas.component.scss'],
 })
-export class AreasComponent implements OnInit {
+export class AreasComponent implements OnInit, OnDestroy {
   myColor = 'rgba(0, 255, 0, 1.0)';
   player1Color = 'rgba(255, 255, 0, 0.3)';
   player2Color = 'rgba(255, 70, 0, 0.3)';
@@ -26,6 +27,9 @@ export class AreasComponent implements OnInit {
     horizontal: generateEmptyTable(11, 11),
     vertical: generateEmptyTable(11, 11),
   };
+
+  private sub1: Subscription;
+  private sub2: Subscription;
 
   constructor(
     private http: HttpClient,
@@ -61,14 +65,21 @@ export class AreasComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFields();
-    this.gameService
+    this.sub1 = this.gameService
       .getStateUpdates()
       .subscribe((resp) => (this.fields = resp.fields));
+    this.sub2 = this.fieldLinkingService
+      .getStateUpdates()
+      .subscribe((linking) => {
+        this.fieldLinking = linking;
+      });
     this.gameService.requestState();
-    this.fieldLinkingService.getStateUpdates().subscribe((linking) => {
-      this.fieldLinking = linking;
-    });
     this.fieldLinkingService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
+    this.sub2.unsubscribe();
   }
 
   fieldToImagePath(field: Field): string {
@@ -103,7 +114,7 @@ export class AreasComponent implements OnInit {
   // }
 
   getBackground(): string {
-    return 'url(\'assets/game-graphics/game-background.jpg\')';
+    return "url('assets/game-graphics/game-background.jpg')";
   }
 
   // getSource(row: number, col: number){

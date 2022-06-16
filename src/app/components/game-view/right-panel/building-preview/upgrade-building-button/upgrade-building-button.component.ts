@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, Subscription } from 'rxjs';
 import {
   PlayersAction,
   UpgradeAction,
@@ -29,7 +29,7 @@ import { buildingToConfig } from 'src/app/utils/balance-utils';
   templateUrl: './upgrade-building-button.component.html',
   styleUrls: ['./upgrade-building-button.component.scss'],
 })
-export class UpgradeBuildingButtonComponent implements OnInit {
+export class UpgradeBuildingButtonComponent implements OnInit, OnDestroy {
   isBuildingUpgradable = false; // too high level already, not owned
   isUpgradingLocked = true; // not enough resources, already upgrading
   buildingCost = 0;
@@ -39,6 +39,8 @@ export class UpgradeBuildingButtonComponent implements OnInit {
 
   shouldShowTooltip = false;
 
+  private sub1: Subscription;
+
   constructor(
     private gameContextService: GameContextService,
     private selectedFieldService: SelectedFieldService,
@@ -47,7 +49,7 @@ export class UpgradeBuildingButtonComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
+    this.sub1 = combineLatest([
       this.gameContextService.getStateUpdates(),
       this.selectedFieldService.getStateUpdates(),
       this.availableResourcesService.getStateUpdates(),
@@ -58,6 +60,10 @@ export class UpgradeBuildingButtonComponent implements OnInit {
     this.gameContextService.requestState();
     this.selectedFieldService.requestState();
     this.availableResourcesService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   private reactToRxUpdate(

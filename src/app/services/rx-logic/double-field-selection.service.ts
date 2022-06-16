@@ -28,8 +28,8 @@ export class DoubleFieldSelectionService extends ResourceProcessor<DoubleFieldSe
     }
     const fromLoc = path[0];
     const toLoc = path[path.length - 1];
-    const fromField = findByFieldLocation(fromLoc.row, fromLoc.col, context.game.fields);
-    const toField = findByFieldLocation(toLoc.row, toLoc.col, context.game.fields);
+    const fromField = findByFieldLocation(fromLoc, context.game.fields);
+    const toField = findByFieldLocation(toLoc, context.game.fields);
     const fromIsOwned = fromField.ownerId === context.player.id;
     const toIsOwned = toField.ownerId === context.player.id;
     const fromIsEnemy = fromField.ownerId === context.opponent.id;

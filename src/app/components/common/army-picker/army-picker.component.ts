@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Army, UnitType } from 'src/app/models/game-models';
 import { UnitsMovementAvailabilityService } from 'src/app/services/rx-logic/units-movement-availability.service';
 
@@ -7,7 +8,7 @@ import { UnitsMovementAvailabilityService } from 'src/app/services/rx-logic/unit
   templateUrl: './army-picker.component.html',
   styleUrls: ['./army-picker.component.scss'],
 })
-export class ArmyPickerComponent implements OnInit {
+export class ArmyPickerComponent implements OnInit, OnDestroy {
   @Input() maxArmy: Army = { droids: 0, tanks: 0, cannons: 0 };
 
   @Output() armySelectionChanges: EventEmitter<Army> = new EventEmitter<Army>();
@@ -20,13 +21,19 @@ export class ArmyPickerComponent implements OnInit {
 
   unitsAvailability: [boolean, boolean, boolean] = [false, false, false];
 
+  private sub1: Subscription;
+
   constructor(private unitAvailablityService: UnitsMovementAvailabilityService) {}
 
   ngOnInit(): void {
-    this.unitAvailablityService.getStateUpdates().subscribe(availability => {
+    this.sub1 = this.unitAvailablityService.getStateUpdates().subscribe(availability => {
       this.unitsAvailability = availability;
     });
     this.unitAvailablityService.requestState();
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   updateArmySelection(unitType: UnitType, amount: number): void {

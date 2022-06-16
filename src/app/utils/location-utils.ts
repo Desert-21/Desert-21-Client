@@ -1,22 +1,25 @@
-import { NumberSymbol } from '@angular/common';
 import { BoardLocation, Field } from '../models/game-models';
 
 export const findByFieldLocation = (
-  row: number,
-  col: number,
+  location: BoardLocation,
   fields: Array<Array<Field>>
 ): Field | null => {
-  if (!isLocationValid(row, col)) {
+  if (!isLocationValid(location)) {
     return null;
   }
-  return fields[row][col];
+  return fields[location.row][location.col];
 };
 
 const BOARD_ROWS = 11;
 const BOARD_COLS = 11;
 
-export const isLocationValid = (row: number, col: number) => {
-  return row >= 0 && col >= 0 && row < BOARD_ROWS && col < BOARD_COLS;
+export const isLocationValid = (location: BoardLocation) => {
+  return (
+    location.row >= 0 &&
+    location.col >= 0 &&
+    location.row < BOARD_ROWS &&
+    location.col < BOARD_COLS
+  );
 };
 
 export const getFogOfWarLevel = (
@@ -49,7 +52,7 @@ export const getLevel1DistancedLocations = (
     { row, col: col - 1 },
     { row, col: col + 1 },
   ];
-  return potentialLocations.filter((loc) => isLocationValid(loc.row, loc.col));
+  return potentialLocations.filter((loc) => isLocationValid(loc));
 };
 
 export const getLevel1DistancedFields = (
@@ -63,8 +66,8 @@ export const getLevel1DistancedFields = (
     { row, col: col - 1 },
     { row, col: col + 1 },
   ]
-    .filter((loc) => isLocationValid(loc.row, loc.col))
-    .map((loc) => findByFieldLocation(loc.row, loc.col, fields));
+    .filter((loc) => isLocationValid(loc))
+    .map((loc) => findByFieldLocation(loc, fields));
 };
 
 export const getLevel2DistancedFields = (
@@ -78,8 +81,8 @@ export const getLevel2DistancedFields = (
     { row: row + 1, col: col - 1 },
     { row: row - 1, col: col + 1 },
   ]
-    .filter((loc) => isLocationValid(loc.row, loc.col))
-    .map((loc) => findByFieldLocation(loc.row, loc.col, fields));
+    .filter((loc) => isLocationValid(loc))
+    .map((loc) => findByFieldLocation(loc, fields));
 };
 
 export const areLocationsEqual = (
@@ -104,7 +107,6 @@ export const getGeometricDistanceBetween = (
   const yDiff = Math.abs(loc1.row - loc2.row);
   return xDiff + yDiff;
 };
-
 
 export const generateEmptyTable = (
   rows: number,

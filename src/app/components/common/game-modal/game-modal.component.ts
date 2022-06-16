@@ -1,5 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { GameModalService, ModalType } from 'src/app/services/rx-logic/game-modal.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
 
@@ -8,9 +9,11 @@ import { textChangeRangeIsUnchanged } from 'typescript';
   templateUrl: './game-modal.component.html',
   styleUrls: ['./game-modal.component.scss'],
 })
-export class GameModalComponent implements OnInit {
+export class GameModalComponent implements OnInit, OnDestroy {
   @ViewChild('content', { read: TemplateRef })
   content: TemplateRef<any>;
+
+  private sub1: Subscription;
 
   constructor(
     private modalService: NgbModal,
@@ -18,13 +21,17 @@ export class GameModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.gameModalService.getStateUpdates().subscribe(modalType => {
+    this.sub1 = this.gameModalService.getStateUpdates().subscribe(modalType => {
       const content = this.getContentToDisplay(modalType);
       this.modalService.open(content, {
         windowClass: 'dark-modal',
         centered: true,
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe();
   }
 
   openModalDialogCustomClass(): void {
