@@ -32,6 +32,7 @@ export class MaxPowerService extends ResourceProcessor<number> {
     const player = context.game.players.find((p) => p.id === field.ownerId);
     return calculateArmyPower(
       field.army,
+      0,
       context.balance,
       player,
       field.building,

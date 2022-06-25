@@ -127,6 +127,38 @@ export class MoveUnitsAction extends PlayersAction<MoveUnitsActionContent> {
   }
 }
 
+export class AttackAction extends PlayersAction<AttackActionContent> {
+  from: BoardLocation;
+  to: BoardLocation;
+  path: Array<BoardLocation>;
+  army: Army;
+
+  constructor(path: Array<BoardLocation>, army: Army) {
+    super();
+    this.path = path;
+    this.from = this.path[0],
+    this.to = this.path[this.path.length - 1],
+    this.army = army;
+  }
+
+  getType(): ActionType {
+    return 'ATTACK';
+  }
+
+  getCost(): ResourceSet {
+    return { metal: 0, buildingMaterials: 0, electricity: 0 };
+  }
+
+  protected toActionAPIRequestBody(): AttackActionContent {
+    return {
+      from: this.from,
+      to: this.to,
+      path: this.path,
+      army: this.army,
+    };
+  }
+}
+
 export type UpgradeActionContent = {
   location: BoardLocation;
 };
@@ -138,6 +170,13 @@ export type TrainActionContent = {
 };
 
 export type MoveUnitsActionContent = {
+  from: BoardLocation;
+  to: BoardLocation;
+  path: Array<BoardLocation>;
+  army: Army;
+};
+
+export type AttackActionContent = {
   from: BoardLocation;
   to: BoardLocation;
   path: Array<BoardLocation>;

@@ -78,6 +78,14 @@ export type AllCombatBalance = {
   droids: CombatUnitConfig;
   tanks: CombatUnitConfig;
   cannons: CombatUnitConfig;
+  scarabs: ScarabConfig;
+};
+
+export type ScarabConfig = {
+  power: number;
+  baseGeneration: number;
+  additionalGenerationPerTurn: number;
+  generationBias: number;
 };
 
 export type LeveledValue = {

@@ -17,6 +17,7 @@ type Power = {
 
 export const calculateArmyPower = (
   army: Army, // base army
+  scarabs: number, // are we generating some scarabs?
   balance: GameBalanceConfig, // reference to balance
   player: Player, // mainly for upgrades, but who knows...
   building: Building, // for tower bonuses, etc.

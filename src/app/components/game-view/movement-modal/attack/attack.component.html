@@ -1,1 +1,29 @@
-<p>attack works!</p>
+<h5 class="mt-2">Available units</h5>
+<div class="mt-4 army-picker-wrapper">
+  <div class="w-75">
+    <app-army-picker
+      (armySelectionChanges)="onArmySelectionChange($event)"
+      [maxArmy]="maxArmy"
+    ></app-army-picker>
+  </div>
+</div>
+
+<h5 class="mt-4">Battle</h5>
+
+<div class="mt-4 army-picker-wrapper">
+  <div class="w-75">
+    <app-army-destination-preview
+      [army]="toFieldArmyAfterMovement"
+    ></app-army-destination-preview>
+  </div>
+</div>
+
+<h5 class="mt-4">VS</h5>
+
+<div class="mt-4 army-picker-wrapper">
+  <div class="w-75">
+    <app-army-destination-preview
+      [army]="toFieldEnemyArmy"
+    ></app-army-destination-preview>
+  </div>
+</div>

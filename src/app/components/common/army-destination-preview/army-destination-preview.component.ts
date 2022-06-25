@@ -67,14 +67,14 @@ export class ArmyDestinationPreviewComponent implements OnInit, OnChanges, OnDes
     const fieldOwner = this.context.game.players.find(
       (p) => p.id === field.ownerId
     );
-    const defendingArmyPower = calculateArmyPower(
+    this.defendingArmyPower = calculateArmyPower(
       this.army,
+      0,
       this.context.balance,
       fieldOwner,
       field.building,
       true
     );
-    this.defendingArmyPower = defendingArmyPower;
   }
 
   ngOnDestroy(): void {

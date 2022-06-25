@@ -1,7 +1,13 @@
-import { MoveUnitsAction, PlayersAction } from '../models/actions';
+import {
+  AttackAction,
+  MoveUnitsAction,
+  PlayersAction,
+} from '../models/actions';
+import { EstimatedArmy, FightingArmy } from '../models/army-ranges';
 import {
   AllCombatBalance,
   GameBalanceConfig,
+  ScarabConfig,
 } from '../models/game-config-models';
 import {
   Army,
@@ -62,6 +68,45 @@ export const getArmyRanges = (
     maxArmy,
     isUnknown: false,
   };
+};
+
+export const getHostileArmyEstimation = (
+  fogOfWarLevel: number,
+  balance: GameBalanceConfig,
+  army: Army | null,
+  player: Player,
+  scarabsRange: ScarabsRange
+): EstimatedArmy => {
+  const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance);
+  if (coefficient === null || army === null) {
+    return new EstimatedArmy(
+      false,
+      { droids: 0, tanks: 0, cannons: 0, scarabs: 0 },
+      { droids: 0, tanks: 0, cannons: 0, scarabs: 0 },
+      { droids: 0, tanks: 0, cannons: 0, scarabs: 0 }
+    );
+  }
+  const hasDefensiveScarabs = player.upgrades.includes('KING_OF_DESERT');
+  const scarabRange: ScarabsRange = hasDefensiveScarabs ? scarabsRange : { min: 0, avg: 0, max: 0, };
+  const minArmy: FightingArmy = {
+    droids: Math.round(army.droids * (1 - coefficient)),
+    tanks: Math.round(army.tanks * (1 - coefficient)),
+    cannons: Math.round(army.cannons * (1 - coefficient)),
+    scarabs: scarabRange.min,
+  };
+  const avgArmy: FightingArmy = {
+    droids: army.droids,
+    tanks: army.tanks,
+    cannons: army.cannons,
+    scarabs: scarabRange.avg,
+  };
+  const maxArmy: FightingArmy = {
+    droids: Math.round(army.droids * (1 + coefficient)),
+    tanks: Math.round(army.tanks * (1 + coefficient)),
+    cannons: Math.round(army.cannons * (1 + coefficient)),
+    scarabs: scarabRange.max,
+  };
+  return new EstimatedArmy(true, minArmy, avgArmy, maxArmy);
 };
 
 export const canTrainUnits = (
@@ -134,7 +179,7 @@ export const getFrozenUnitsAtLocation = (
   actions: Array<PlayersAction<any>>
 ): Army => {
   return actions
-    .filter((a) => a.getType() === 'MOVE_UNITS')
+    .filter((a) => ['MOVE_UNITS', 'ATTACK'].includes(a.getType()))
     .map((a) => a as MoveUnitsAction)
     .filter((a) => areLocationsEqual(a.from, location))
     .map((a) => a.army)
@@ -155,6 +200,18 @@ export const getNextTurnMovedUnitsAtLocation = (
   return subtractArmies(incomingUnits, frozenUnits);
 };
 
+export const getNextTurnAttackingUnitsAtLocation = (
+  location: BoardLocation,
+  actions: Array<PlayersAction<any>>
+): Army => {
+  return actions
+    .filter((a) => a.getType() === 'ATTACK')
+    .map((a) => a as AttackAction)
+    .filter((a) => areLocationsEqual(a.to, location))
+    .map((a) => a.army)
+    .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+};
+
 export const sumArmies = (army1: Army, army2: Army): Army => {
   return {
     droids: army1.droids + army2.droids,
@@ -171,3 +228,27 @@ export const subtractArmies = (army1: Army, army2: Army): Army => {
   };
 };
 
+export type ScarabsRange = {
+  min: number;
+  avg: number;
+  max: number;
+};
+
+export const getScarabsRange = (
+  turnNumber: number,
+  config: ScarabConfig
+): ScarabsRange => {
+  const middleScarabsNumber =
+    config.baseGeneration + turnNumber * config.additionalGenerationPerTurn;
+  const minScarabs = Math.round(
+    middleScarabsNumber * (1 - config.generationBias)
+  );
+  const maxScarabs = Math.round(
+    middleScarabsNumber * (1 + config.generationBias)
+  );
+  return {
+    min: minScarabs,
+    avg: middleScarabsNumber,
+    max: maxScarabs,
+  };
+};

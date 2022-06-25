@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { FieldSelection } from 'src/app/models/game-utility-models';
+import { CurrentScarabsGenerationService } from 'src/app/services/rx-logic/current-scarabs-generation.service';
 import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { ScarabsRange } from 'src/app/utils/army-utils';
 import {
   EnemyArmyPreviewState,
   OwnedArmyPreviewState,
@@ -31,11 +33,15 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
     attackingPower: '???',
   };
 
+  currentScarabsGeneration: ScarabsRange = { min: 0, avg: 0, max: 0 };
+
   private sub1: Subscription;
+  private sub2: Subscription;
 
   constructor(
     private selectedFieldService: SelectedFieldService,
-    private gameContextService: GameContextService
+    private gameContextService: GameContextService,
+    private scarabsGenerationService: CurrentScarabsGenerationService
   ) {}
 
   ngOnInit(): void {
@@ -66,10 +72,14 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
         fieldSelection
       );
     });
+    this.sub2 = this.scarabsGenerationService.getStateUpdates().subscribe(range => {
+      this.currentScarabsGeneration = range;
+    });
   }
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
+    this.sub2.unsubscribe();
   }
 
   getCurrentState(fieldSelection: FieldSelection): ArmyPreviewState {

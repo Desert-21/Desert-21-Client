@@ -70,6 +70,7 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     const isHostile = player.id !== context.player.id;
     const armyPower = calculateArmyPower(
       field.army,
+      0,
       context.balance,
       player,
       field.building,
