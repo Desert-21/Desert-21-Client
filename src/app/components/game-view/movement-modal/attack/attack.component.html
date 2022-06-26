@@ -31,6 +31,9 @@
   </div>
 </div>
 
-<button class="btn btn-danger">Attack</button>
+<div class="attack-button-wrapper">
+  <button [disabled]="isAttackDisabled" (click)="onAttackClick()" class="btn btn-danger">Attack</button>
+</div>
+
 
 

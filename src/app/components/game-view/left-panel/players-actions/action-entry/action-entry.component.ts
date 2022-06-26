@@ -22,6 +22,10 @@ export class ActionEntryComponent implements OnInit {
         return 'Upgrade Building';
       case 'ATTACK':
         return 'Attack';
+      case 'MOVE_UNITS':
+        return 'Move Units';
+      case 'TRAIN':
+        return 'Train Units';
       default:
         return 'Unknown';
     }

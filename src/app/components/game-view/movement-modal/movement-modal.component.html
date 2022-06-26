@@ -49,7 +49,7 @@
   </div>
   <div>
     <app-move-units [modal]="modal" *ngIf="currentActionType == 'MOVE_UNITS'"></app-move-units>
-    <app-attack *ngIf="currentActionType == 'ATTACK'"></app-attack>
+    <app-attack [modal]="modal" *ngIf="currentActionType == 'ATTACK'"></app-attack>
     <app-bombard *ngIf="currentActionType == 'BOMBARD'"></app-bombard>
     <app-fire-rocket
       *ngIf="currentActionType == 'FIRE_ROCKET'"
