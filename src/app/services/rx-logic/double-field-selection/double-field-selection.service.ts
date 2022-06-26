@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { BoardLocation } from 'src/app/models/game-models';
 import { FieldSelection, GameContext } from 'src/app/models/game-utility-models';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
-import { GameContextService } from './game-context.service';
-import { LastShortestPathCalculationService } from './last-shortest-path-calculation.service';
-import { ResourceProcessor } from './resource-processor';
+import { GameContextService } from '../shared/game-context.service';
+import { LastShortestPathCalculationService } from './drag-and-drop/last-shortest-path-calculation.service';
+import { ResourceProcessor } from '../templates/resource-processor';
 
 export type DoubleFieldSelection = {
   from: FieldSelection;

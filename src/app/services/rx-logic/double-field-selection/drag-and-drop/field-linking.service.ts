@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BoardLocation, Game } from 'src/app/models/game-models';
 import { generateEmptyTable } from 'src/app/utils/location-utils';
-import { GameStateService } from '../http/game-state.service';
+import { GameStateService } from '../../../http/game-state.service';
 import { DragAndDropIsOnService } from './drag-and-drop-is-on.service';
 import { LastShortestPathCalculationService } from './last-shortest-path-calculation.service';
-import { ResourceProcessor } from './resource-processor';
+import { ResourceProcessor } from '../../templates/resource-processor';
 
 export type FieldLinking = {
   vertical: Array<Array<boolean>>;

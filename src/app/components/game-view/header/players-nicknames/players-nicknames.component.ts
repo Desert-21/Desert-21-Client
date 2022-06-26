@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
+import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 
 @Component({
   selector: 'app-players-nicknames',

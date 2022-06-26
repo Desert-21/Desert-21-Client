@@ -9,8 +9,8 @@ import {
 import { combineLatest, Subscription } from 'rxjs';
 import { Field } from '../models/game-models';
 import { GameContext } from '../models/game-utility-models';
-import { GameContextService } from '../services/rx-logic/game-context.service';
-import { MaxPowerService } from '../services/rx-logic/max-power.service';
+import { GameContextService } from '../services/rx-logic/shared/game-context.service';
+import { MaxPowerService } from '../services/rx-logic/shared/max-power.service';
 import { calculateArmyPower } from '../utils/army-power-calculator';
 
 @Directive({

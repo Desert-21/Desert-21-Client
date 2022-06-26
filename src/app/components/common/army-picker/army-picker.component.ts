@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Army, UnitType } from 'src/app/models/game-models';
-import { UnitsMovementAvailabilityService } from 'src/app/services/rx-logic/units-movement-availability.service';
+import { UnitsMovementAvailabilityService } from 'src/app/services/rx-logic/double-field-selection/army-movements/units-movement-availability.service';
 
 @Component({
   selector: 'app-army-picker',

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { GameModalService, ModalType } from 'src/app/services/rx-logic/game-modal.service';
+import { GameModalService, ModalType } from 'src/app/services/rx-logic/shared/game-modal.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Component({

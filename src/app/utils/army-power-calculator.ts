@@ -1,3 +1,4 @@
+import { FightingArmy } from '../models/army-ranges';
 import { GameBalanceConfig, TowerConfig } from '../models/game-config-models';
 import { Army, Building, Player, UnitType } from '../models/game-models';
 import { buildingToConfig, unitTypeToConfig } from './balance-utils';
@@ -13,6 +14,51 @@ type Power = {
   cannons: number;
 
   constant: number;
+};
+
+export const calculateFightingArmyPower = (
+  army: FightingArmy, // base army
+  balance: GameBalanceConfig, // reference to balance
+  player: Player, // mainly for upgrades, but who knows...
+  building: Building, // for tower bonuses, etc.
+  isDefending: boolean // is defending, or attacking power?
+): number => {
+  const basePower = getArmyBasePower(army, balance);
+  const postTowerPower = getOptionalTowerPowerBonuses(
+    basePower,
+    isDefending,
+    building,
+    balance
+  );
+  const postFactoryTurretPower = getOptionalFactoryPowerBonuses(
+    postTowerPower,
+    isDefending,
+    building,
+    balance,
+    player
+  );
+  const postImprovedDroidsPower = getOptionalImprovedDroidsPower(
+    postFactoryTurretPower,
+    isDefending,
+    building,
+    balance,
+    player
+  );
+  const postImprovedTanksPower = getOptionalImprovedTanksPower(
+    postImprovedDroidsPower,
+    balance,
+    player
+  );
+  const totalPreAdvancedTacticsArmyPower =
+    postImprovedTanksPower.droids +
+    postImprovedTanksPower.tanks +
+    postImprovedTanksPower.cannons +
+    postImprovedTanksPower.constant;
+  return getOptionalAdvancedTacticsPower(
+    totalPreAdvancedTacticsArmyPower,
+    balance,
+    player
+  );
 };
 
 export const calculateArmyPower = (

@@ -2,10 +2,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MoveUnitsAction } from 'src/app/models/actions';
 import { Army, BoardLocation } from 'src/app/models/game-models';
-import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
-import { FromFieldArmyService } from 'src/app/services/rx-logic/from-field-army.service';
-import { LastShortestPathCalculationService } from 'src/app/services/rx-logic/last-shortest-path-calculation.service';
-import { ToFieldArmyService } from 'src/app/services/rx-logic/to-field-army.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
+import { FromFieldArmyService } from 'src/app/services/rx-logic/double-field-selection/army-movements/from-field-army.service';
+import { LastShortestPathCalculationService } from 'src/app/services/rx-logic/double-field-selection/drag-and-drop/last-shortest-path-calculation.service';
+import { ToFieldArmyService } from 'src/app/services/rx-logic/double-field-selection/army-movements/to-field-army.service';
 import { sumArmies } from 'src/app/utils/army-utils';
 
 @Component({
@@ -38,16 +38,22 @@ export class MoveUnitsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.sub1 = this.fromFieldArmyService.getStateUpdates().subscribe((maxArmy) => {
-      this.maxArmy = maxArmy;
-    });
-    this.sub2 = this.toFieldArmyService.getStateUpdates().subscribe((targetArmy) => {
-      this.toFieldArmy = targetArmy;
-      this.toFieldArmyAfterMovement = targetArmy;
-    });
-    this.sub3 = this.lastShortestPathService.getStateUpdates().subscribe((path) => {
-      this.path = path;
-    });
+    this.sub1 = this.fromFieldArmyService
+      .getStateUpdates()
+      .subscribe((maxArmy) => {
+        this.maxArmy = maxArmy;
+      });
+    this.sub2 = this.toFieldArmyService
+      .getStateUpdates()
+      .subscribe((targetArmy) => {
+        this.toFieldArmy = targetArmy;
+        this.toFieldArmyAfterMovement = targetArmy;
+      });
+    this.sub3 = this.lastShortestPathService
+      .getStateUpdates()
+      .subscribe((path) => {
+        this.path = path;
+      });
     this.fromFieldArmyService.requestState();
     this.toFieldArmyService.requestState();
     this.lastShortestPathService.requestState();

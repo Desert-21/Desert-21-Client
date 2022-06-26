@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import {
   ModalActionType,
   MovementModalAvailableActionsService,
-} from 'src/app/services/rx-logic/movement-modal-available-actions.service';
+} from 'src/app/services/rx-logic/double-field-selection/movement-modal-available-actions.service';
 
 @Component({
   selector: 'app-movement-modal',

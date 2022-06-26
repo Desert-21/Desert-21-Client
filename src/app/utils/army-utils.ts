@@ -80,6 +80,7 @@ export const getHostileArmyEstimation = (
   const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance);
   if (coefficient === null || army === null) {
     return new EstimatedArmy(
+      true,
       false,
       { droids: 0, tanks: 0, cannons: 0, scarabs: 0 },
       { droids: 0, tanks: 0, cannons: 0, scarabs: 0 },
@@ -106,7 +107,7 @@ export const getHostileArmyEstimation = (
     cannons: Math.round(army.cannons * (1 + coefficient)),
     scarabs: scarabRange.max,
   };
-  return new EstimatedArmy(true, minArmy, avgArmy, maxArmy);
+  return new EstimatedArmy(true, true, minArmy, avgArmy, maxArmy);
 };
 
 export const canTrainUnits = (

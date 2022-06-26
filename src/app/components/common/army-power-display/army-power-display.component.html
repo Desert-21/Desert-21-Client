@@ -1,0 +1,6 @@
+<div *ngIf="isDefending" class="mt-0">
+  <b class="ml-2 text-success">Defending power: {{ armyPowerDescription }}</b>
+</div>
+<div *ngIf="!isDefending">
+  <b class="mt-2 ml-2 text-danger">Attacking power: {{ armyPowerDescription }}</b>
+</div>

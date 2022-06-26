@@ -6,10 +6,10 @@ import { findByFieldLocation } from 'src/app/utils/location-utils';
 import {
   DoubleFieldSelection,
   DoubleFieldSelectionService,
-} from './double-field-selection.service';
-import { GameContextService } from './game-context.service';
-import { LastShortestPathCalculationService } from './last-shortest-path-calculation.service';
-import { ResourceProcessor } from './resource-processor';
+} from '../double-field-selection.service';
+import { GameContextService } from '../../shared/game-context.service';
+import { LastShortestPathCalculationService } from '../drag-and-drop/last-shortest-path-calculation.service';
+import { ResourceProcessor } from '../../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',

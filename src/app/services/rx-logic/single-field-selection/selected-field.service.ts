@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BoardLocation, Game } from '../../models/game-models';
-import { FieldSelection } from '../../models/game-utility-models';
-import { UsersData } from '../../models/profile-models.';
-import { GameStateService } from '../http/game-state.service';
-import { UserInfoService } from '../http/user-info.service';
+import { BoardLocation, Game } from '../../../models/game-models';
+import { FieldSelection } from '../../../models/game-utility-models';
+import { UsersData } from '../../../models/profile-models.';
+import { GameStateService } from '../../http/game-state.service';
+import { UserInfoService } from '../../http/user-info.service';
 import { LocationSelectionService } from './location-selection.service';
-import { ResourceProcessor } from './resource-processor';
+import { ResourceProcessor } from '../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',

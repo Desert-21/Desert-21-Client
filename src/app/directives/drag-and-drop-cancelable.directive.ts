@@ -1,7 +1,7 @@
 import { Directive, HostListener, OnDestroy } from '@angular/core';
 import { DirectedLocationPair } from '../models/game-utility-models';
-import { DragAndDropFieldsSelectionService } from '../services/rx-logic/drag-and-drop-fields-selection.service';
-import { DragAndDropIsOnService } from '../services/rx-logic/drag-and-drop-is-on.service';
+import { DragAndDropFieldsSelectionService } from '../services/rx-logic/double-field-selection/drag-and-drop/drag-and-drop-fields-selection.service';
+import { DragAndDropIsOnService } from '../services/rx-logic/double-field-selection/drag-and-drop/drag-and-drop-is-on.service';
 import { combineLatest, Subscription } from 'rxjs';
 
 @Directive({

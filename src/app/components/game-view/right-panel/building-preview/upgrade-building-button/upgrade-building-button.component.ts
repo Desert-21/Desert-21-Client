@@ -18,10 +18,10 @@ import {
   FieldSelection,
   GameContext,
 } from 'src/app/models/game-utility-models';
-import { AvailableResourcesService } from 'src/app/services/rx-logic/available-resources.service';
-import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
-import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
-import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { AvailableResourcesService } from 'src/app/services/rx-logic/shared/available-resources.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
+import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { buildingToConfig } from 'src/app/utils/balance-utils';
 import { areLocationsEqual } from 'src/app/utils/location-utils';
 

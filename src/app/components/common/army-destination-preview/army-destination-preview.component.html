@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="image-wrapper">
+  <div *ngIf="shouldShowArmy" class="image-wrapper">
     <img
       class="img-fluid"
       src="/assets/mechs/droid-full.png"
@@ -7,11 +7,11 @@
     />
     <span>{{ army.droids }}</span>
   </div>
-  <div class="image-wrapper">
+  <div *ngIf="shouldShowArmy" class="image-wrapper">
     <img class="img-fluid" src="/assets/mechs/tank-full.png" alt="tank-full" />
     <span>{{ army.tanks }}</span>
   </div>
-  <div class="image-wrapper">
+  <div *ngIf="shouldShowArmy" class="image-wrapper">
     <img
       class="img-fluid"
       src="/assets/mechs/cannon-full.png"
@@ -19,10 +19,19 @@
     />
     <span>{{ army.cannons }}</span>
   </div>
+  <div *ngIf="shouldShowScarabs" class="image-wrapper">
+    <img
+      class="img-fluid"
+      src="/assets/mechs/desertbot-full.png"
+      alt="cannon-full"
+    />
+    <span>{{ army.scarabs }}</span>
+  </div>
 </div>
-<div *ngIf="showDefendingPower" class="mt-0">
+<div class="margin-reducer"></div>
+<!-- <div *ngIf="showDefendingPower" class="mt-0">
   <b class="ml-2 text-success">Defending power: {{ defendingArmyPower }}</b>
 </div>
 <div *ngIf="showAttackingPower">
   <b class="mt-2 ml-2 text-danger">Attacking power: {{ 200 }}</b>
-</div>
+</div> -->

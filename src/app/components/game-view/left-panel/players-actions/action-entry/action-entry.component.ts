@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PlayersAction } from 'src/app/models/actions';
-import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 
 @Component({
   selector: 'app-action-entry',

@@ -10,8 +10,8 @@ import {
   getGeometricDistanceBetween,
 } from 'src/app/utils/location-utils';
 import { DragAndDropFieldsSelectionService } from './drag-and-drop-fields-selection.service';
-import { GameContextService } from './game-context.service';
-import { ResourceProcessor } from './resource-processor';
+import { GameContextService } from '../../shared/game-context.service';
+import { ResourceProcessor } from '../../templates/resource-processor';
 import {
   attackStrategy,
   FindShortestPathStartegy,

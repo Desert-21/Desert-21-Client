@@ -2,3 +2,14 @@
   display: flex;
   justify-content: center;
 }
+
+.battle-wrapper {
+  margin-top: 12px;
+  margin-left: 20%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  border: 2px solid gray;
+  padding-bottom: 20px;
+}

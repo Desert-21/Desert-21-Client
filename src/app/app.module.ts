@@ -45,10 +45,10 @@ import { ArmyPreviewComponent } from './components/game-view/right-panel/army-pr
 import { TrainArmyButtonSectionComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-button-section/train-army-button-section.component';
 import { TrainArmySectionComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-section.component';
 import { TrainArmyQueueComponent } from './components/game-view/right-panel/army-preview/train-army-section/train-army-queue/train-army-queue.component';
-import { DragAndDropFieldsSelectionService } from './services/rx-logic/drag-and-drop-fields-selection.service';
+import { DragAndDropFieldsSelectionService } from './services/rx-logic/double-field-selection/drag-and-drop/drag-and-drop-fields-selection.service';
 import { DragAndDropSelectionDirective } from './directives/drag-and-drop-selection.directive';
 import { DragAndDropCancelableDirective } from './directives/drag-and-drop-cancelable.directive';
-import { ShortestPathCalculatorService } from './services/rx-logic/shortest-path-calculator.service';
+import { ShortestPathCalculatorService } from './services/rx-logic/double-field-selection/drag-and-drop/shortest-path-calculator.service';
 import { MovementModalComponent } from './components/game-view/movement-modal/movement-modal.component';
 import { MoveUnitsComponent } from './components/game-view/movement-modal/move-units/move-units.component';
 import { AttackComponent } from './components/game-view/movement-modal/attack/attack.component';
@@ -56,6 +56,7 @@ import { BombardComponent } from './components/game-view/movement-modal/bombard/
 import { FireRocketComponent } from './components/game-view/movement-modal/fire-rocket/fire-rocket.component';
 import { ArmyPickerComponent } from './components/common/army-picker/army-picker.component';
 import { ArmyDestinationPreviewComponent } from './components/common/army-destination-preview/army-destination-preview.component';
+import { ArmyPowerDisplayComponent } from './components/common/army-power-display/army-power-display.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { ArmyDestinationPreviewComponent } from './components/common/army-destin
     BombardComponent,
     FireRocketComponent,
     ArmyPickerComponent,
-    ArmyDestinationPreviewComponent
+    ArmyDestinationPreviewComponent,
+    ArmyPowerDisplayComponent
   ],
   imports: [
     BrowserModule,

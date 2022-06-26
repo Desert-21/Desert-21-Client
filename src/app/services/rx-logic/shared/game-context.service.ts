@@ -4,11 +4,11 @@ import { GameBalanceConfig } from 'src/app/models/game-config-models';
 import { Game } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
 import { UsersData } from 'src/app/models/profile-models.';
-import { GameBalanceService } from '../http/game-balance.service';
-import { GameStateService } from '../http/game-state.service';
-import { UserInfoService } from '../http/user-info.service';
+import { GameBalanceService } from '../../http/game-balance.service';
+import { GameStateService } from '../../http/game-state.service';
+import { UserInfoService } from '../../http/user-info.service';
 import { CurrentActionsService } from './current-actions.service';
-import { ResourceProcessor } from './resource-processor';
+import { ResourceProcessor } from '../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',

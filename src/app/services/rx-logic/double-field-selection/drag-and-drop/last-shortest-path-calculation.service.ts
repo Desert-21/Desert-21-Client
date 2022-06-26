@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BoardLocation } from 'src/app/models/game-models';
-import { ResourceProcessor } from './resource-processor';
+import { ResourceProcessor } from '../../templates/resource-processor';
 import { ShortestPathCalculatorService } from './shortest-path-calculator.service';
 
 @Injectable({

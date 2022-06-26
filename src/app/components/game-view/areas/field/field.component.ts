@@ -3,8 +3,8 @@ import { combineLatest, Subscription } from 'rxjs';
 import { Field } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
-import { LocationSelectionService } from 'src/app/services/rx-logic/location-selection.service';
-import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { LocationSelectionService } from 'src/app/services/rx-logic/single-field-selection/location-selection.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
 
 @Component({

@@ -5,14 +5,14 @@ import { getNextTurnAttackingUnitsAtLocation } from 'src/app/utils/army-utils';
 import {
   DoubleFieldSelection,
   DoubleFieldSelectionService,
-} from './double-field-selection.service';
-import { GameContextService } from './game-context.service';
-import { ResourceProcessor } from './resource-processor';
+} from '../double-field-selection.service';
+import { GameContextService } from '../../shared/game-context.service';
+import { ResourceProcessor } from '../../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ToFieldAttackersService extends ResourceProcessor<Army> {
+export class ToFieldFromOtherFieldsAttackersService extends ResourceProcessor<Army> {
   constructor(
     private fieldSelectionService: DoubleFieldSelectionService,
     private gameContextService: GameContextService

@@ -11,13 +11,13 @@ import {
   ScarabsRange,
 } from 'src/app/utils/army-utils';
 import { getFogOfWarLevel } from 'src/app/utils/location-utils';
-import { CurrentScarabsGenerationService } from './current-scarabs-generation.service';
+import { CurrentScarabsGenerationService } from '../../shared/current-scarabs-generation.service';
 import {
   DoubleFieldSelection,
   DoubleFieldSelectionService,
-} from './double-field-selection.service';
-import { GameContextService } from './game-context.service';
-import { ResourceProcessor } from './resource-processor';
+} from '../double-field-selection.service';
+import { GameContextService } from '../../shared/game-context.service';
+import { ResourceProcessor } from '../../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',
@@ -80,6 +80,7 @@ export class ToFieldDefendersService extends ResourceProcessor<EstimatedArmy | n
   ): EstimatedArmy {
     const averageCase = Math.round((scarabsRange.min + scarabsRange.max) / 2);
     return new EstimatedArmy(
+      false,
       true,
       { droids: 0, tanks: 0, cannons: 0, scarabs: scarabsRange.min },
       { droids: 0, tanks: 0, cannons: 0, scarabs: averageCase },

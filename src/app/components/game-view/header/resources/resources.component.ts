@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 import { ResourceSet } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
-import { AvailableResourcesService } from 'src/app/services/rx-logic/available-resources.service';
-import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
+import { AvailableResourcesService } from 'src/app/services/rx-logic/shared/available-resources.service';
+import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 
 @Component({
   selector: 'app-resources',

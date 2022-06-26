@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 
 @Component({
   selector: 'app-right-panel',

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { FieldSelection } from 'src/app/models/game-utility-models';
-import { CurrentScarabsGenerationService } from 'src/app/services/rx-logic/current-scarabs-generation.service';
-import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
-import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { CurrentScarabsGenerationService } from 'src/app/services/rx-logic/shared/current-scarabs-generation.service';
+import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { ScarabsRange } from 'src/app/utils/army-utils';
 import {
   EnemyArmyPreviewState,

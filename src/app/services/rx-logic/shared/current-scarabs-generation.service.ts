@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GameContext } from 'src/app/models/game-utility-models';
 import { getScarabsRange, ScarabsRange } from 'src/app/utils/army-utils';
 import { GameContextService } from './game-context.service';
-import { ResourceProcessor } from './resource-processor';
+import { ResourceProcessor } from '../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',

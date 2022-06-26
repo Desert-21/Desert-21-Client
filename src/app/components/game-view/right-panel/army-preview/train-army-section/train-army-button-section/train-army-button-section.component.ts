@@ -14,9 +14,9 @@ import {
   FieldSelection,
   GameContext,
 } from 'src/app/models/game-utility-models';
-import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
-import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
-import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
+import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { canTrainUnits } from 'src/app/utils/army-utils';
 import { unitTypeToConfig } from 'src/app/utils/balance-utils';
 

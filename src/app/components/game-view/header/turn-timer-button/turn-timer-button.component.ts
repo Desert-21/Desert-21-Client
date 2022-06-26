@@ -5,8 +5,8 @@ import { PlayersAction } from 'src/app/models/actions';
 import { GameTurnRequest } from 'src/app/models/game-utility-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
-import { CurrentActionsService } from 'src/app/services/rx-logic/current-actions.service';
-import { GameContextService } from 'src/app/services/rx-logic/game-context.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
+import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import {
   formatSecondsToTimeString,
   millisecondsTo,

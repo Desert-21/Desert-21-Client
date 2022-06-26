@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FieldSelection } from 'src/app/models/game-utility-models';
-import { SelectedFieldService } from 'src/app/services/rx-logic/selected-field.service';
+import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
 
 @Component({

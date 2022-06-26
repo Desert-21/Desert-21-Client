@@ -2,10 +2,10 @@ import { Directive, HostListener, Input, OnDestroy } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { BoardLocation } from '../models/game-models';
 import { DirectedLocationPair } from '../models/game-utility-models';
-import { DragAndDropFieldsSelectionService } from '../services/rx-logic/drag-and-drop-fields-selection.service';
-import { DragAndDropIsOnService } from '../services/rx-logic/drag-and-drop-is-on.service';
-import { GameModalService } from '../services/rx-logic/game-modal.service';
-import { LastShortestPathCalculationService } from '../services/rx-logic/last-shortest-path-calculation.service';
+import { DragAndDropFieldsSelectionService } from '../services/rx-logic/double-field-selection/drag-and-drop/drag-and-drop-fields-selection.service';
+import { DragAndDropIsOnService } from '../services/rx-logic/double-field-selection/drag-and-drop/drag-and-drop-is-on.service';
+import { GameModalService } from '../services/rx-logic/shared/game-modal.service';
+import { LastShortestPathCalculationService } from '../services/rx-logic/double-field-selection/drag-and-drop/last-shortest-path-calculation.service';
 import { areLocationsEqual } from '../utils/location-utils';
 
 @Directive({

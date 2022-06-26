@@ -8,7 +8,7 @@ import { GameBalanceService } from 'src/app/services/http/game-balance.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
 import { WebSocketAPI } from 'src/app/services/websocket-api';
-import { MaxPowerService } from 'src/app/services/rx-logic/max-power.service';
+import { MaxPowerService } from 'src/app/services/rx-logic/shared/max-power.service';
 import { Subscription } from 'rxjs';
 
 @Component({

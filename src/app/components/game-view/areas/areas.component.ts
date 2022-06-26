@@ -5,7 +5,7 @@ import { GameStateService } from 'src/app/services/http/game-state.service';
 import {
   FieldLinking,
   FieldLinkingService,
-} from 'src/app/services/rx-logic/field-linking.service';
+} from 'src/app/services/rx-logic/double-field-selection/drag-and-drop/field-linking.service';
 import { generateEmptyTable } from 'src/app/utils/location-utils';
 import { Field } from '../../../models/game-models';
 

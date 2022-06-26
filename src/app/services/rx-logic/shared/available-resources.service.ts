@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { PlayersAction } from 'src/app/models/actions';
-import { Game, ResourceSet } from 'src/app/models/game-models';
+import { ResourceSet } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
-import { GameStateService } from '../http/game-state.service';
-import { CurrentActionsService } from './current-actions.service';
 import { GameContextService } from './game-context.service';
-import { ResourceProcessor } from './resource-processor';
+import { ResourceProcessor } from '../templates/resource-processor';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { BoardLocation } from 'src/app/models/game-models';
-import { RequestableResource } from './requestable-resource';
+import { RequestableResource } from '../templates/requestable-resource';
 
 @Injectable({
   providedIn: 'root',

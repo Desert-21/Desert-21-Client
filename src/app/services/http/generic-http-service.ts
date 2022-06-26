@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { RequestableResource } from '../rx-logic/requestable-resource';
+import { RequestableResource } from '../rx-logic/templates/requestable-resource';
 
 // generic service for http GET's, retrieving the data and sending further via pipelines
 export abstract class GenericHttpService <ResponseType> implements RequestableResource <ResponseType> {

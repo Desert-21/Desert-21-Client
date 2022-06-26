@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { RequestableResource } from './requestable-resource';
+import { RequestableResource } from '../templates/requestable-resource';
 
 export type ModalType = 'MOVEMENT' | 'ACTION';
 
