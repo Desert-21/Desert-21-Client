@@ -1,0 +1,29 @@
+.modal-size {
+  height: 70vh;
+  width: 70vw;
+}
+
+.lab-panels {
+  display: flex;
+}
+
+.left-panel {
+  width: 70%;
+  border-right: 2px solid white;
+}
+
+.right-panel {
+  padding-left: 16px;
+  width: 30%;
+}
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.branch-title {
+  margin-left: 24px;
+  font-size: x-large;
+}

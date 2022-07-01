@@ -1,6 +1,7 @@
 import {
   Army,
   BoardLocation,
+  LabUpgrade,
   ResourceSet,
   TrainingMode,
   UnitType,
@@ -106,9 +107,9 @@ export class MoveUnitsAction extends PlayersAction<MoveUnitsActionContent> {
   constructor(path: Array<BoardLocation>, army: Army) {
     super();
     this.path = path;
-    this.from = this.path[0],
-    this.to = this.path[this.path.length - 1],
-    this.army = army;
+    (this.from = this.path[0]),
+      (this.to = this.path[this.path.length - 1]),
+      (this.army = army);
   }
 
   getType(): ActionType {
@@ -136,9 +137,9 @@ export class AttackAction extends PlayersAction<AttackActionContent> {
   constructor(path: Array<BoardLocation>, army: Army) {
     super();
     this.path = path;
-    this.from = this.path[0],
-    this.to = this.path[this.path.length - 1],
-    this.army = army;
+    (this.from = this.path[0]),
+      (this.to = this.path[this.path.length - 1]),
+      (this.army = army);
   }
 
   getType(): ActionType {
@@ -158,6 +159,39 @@ export class AttackAction extends PlayersAction<AttackActionContent> {
     };
   }
 }
+
+export class LabAction extends PlayersAction<LabActionContent> {
+  upgrade: LabUpgrade;
+  electricityCost: number;
+
+  constructor(upgrade: LabUpgrade, electricityCost: number) {
+    super();
+    this.upgrade = upgrade;
+    this.electricityCost = electricityCost;
+  }
+
+  getType(): ActionType {
+    return 'LAB_EVENT';
+  }
+
+  getCost(): ResourceSet {
+    return {
+      metal: 0,
+      buildingMaterials: 0,
+      electricity: this.electricityCost,
+    };
+  }
+
+  protected toActionAPIRequestBody(): LabActionContent {
+    return {
+      upgrade: this.upgrade,
+    };
+  }
+}
+
+export type LabActionContent = {
+  upgrade: LabUpgrade;
+};
 
 export type UpgradeActionContent = {
   location: BoardLocation;

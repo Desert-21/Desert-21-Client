@@ -1,0 +1,58 @@
+.image-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upgrade-image-wrapper {
+  display: static;
+  height: 10vh;
+  width: 10vh;
+}
+
+.upgrade-image {
+  height: 10vh;
+  width: 10vh;
+}
+
+.tier-label-finished {
+  border-bottom: 2px solid #28a745;
+  color: #28a745;
+  padding-bottom: 4px;
+}
+
+.tier-label-unlocked {
+  border-bottom: 2px solid white;
+  color: white;
+  padding-bottom: 4px;
+}
+
+.tier-label-locked {
+  border-bottom: 2px solid gray;
+  color: gray;
+  padding-bottom: 4px;
+}
+
+
+.upgrades-tier-wrapper {
+  width: 70%;
+  margin-left: 30%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.darkened-black-and-white {
+  filter: brightness(0.4) grayscale(100%)
+}
+
+.black-and-white {
+  filter: grayscale(100%);
+}
+
+.spinner-inside {
+  position: relative;
+  left: calc(50% - 1vw);
+  bottom: calc(50% + 1vw);
+  height: 3vh;
+  width: 3vh;
+}

@@ -152,7 +152,7 @@ const getOptionalFactoryPowerBonuses = (
   }
   const towerConfig = balance.buildings.tower;
   const towerLevel =
-    balance.upgrades.control.controlBranchConfig.factoryTurretTowerLevel;
+    balance.upgrades.control.balanceConfig.factoryTurretTowerLevel;
   const baseProtection = getLeveledValueByLevel(
     towerConfig.baseProtection,
     towerLevel
@@ -183,7 +183,7 @@ const getOptionalImprovedDroidsPower = (
   if (!player.upgrades.includes('IMPROVED_DROIDS')) {
     return power;
   }
-  const combatConfig = balance.upgrades.combat.combatBranchConfig;
+  const combatConfig = balance.upgrades.combat.balanceConfig;
   const bonus = isDefensive(building)
     ? combatConfig.improvedDroidsBaseAtTowerDefenceBonus
     : combatConfig.improvedDroidsBaseDefenceBonus;
@@ -203,7 +203,7 @@ const getOptionalImprovedTanksPower = (
     return power;
   }
   const bonus =
-    balance.upgrades.combat.combatBranchConfig.improvedTanksPowerBonus;
+    balance.upgrades.combat.balanceConfig.improvedTanksPowerBonus;
   const { tanks } = power;
   return {
     ...power,
@@ -219,7 +219,7 @@ const getOptionalAdvancedTacticsPower = (
   if (!player.upgrades.includes('ADVANCED_TACTICS')) {
     return totalPower;
   }
-  const combatConfig = balance.upgrades.combat.combatBranchConfig;
+  const combatConfig = balance.upgrades.combat.balanceConfig;
   const step = combatConfig.advancedTacticsReferencePower;
   const bonusPerStep = combatConfig.advancedTacticsPowerBonusPerReferencePower;
   const totalSteps = Math.floor(totalPower / step);

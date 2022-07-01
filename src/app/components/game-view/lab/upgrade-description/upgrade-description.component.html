@@ -1,0 +1,111 @@
+<p *ngIf="upgrade === 'REUSABLE_PARTS'">
+  Build your army from reusable parts and loose
+  {{ combat.reusablePartsUnitsFractionSaved | percent: "2.0" }} less troops
+  after successfull attack.
+</p>
+<p *ngIf="upgrade === 'MEDIUM_PRODUCTION'">
+  Unlock medium production and produce a higher amount of units in a single
+  tower or homebase.
+</p>
+<p *ngIf="upgrade === 'IMPROVED_DROIDS'">
+  Improve your droids defensive skills and make them gain
+  {{ combat.improvedDroidsBaseDefenceBonus | percent: "2.0" }} power when
+  defending your fields against enemy. While defending towers or homebases, they
+  gain {{ combat.improvedDroidsBaseAtTowerDefenceBonus | percent: "2.0" }} bonus
+  instead.
+</p>
+<p *ngIf="upgrade === 'IMPROVED_TANKS'">
+  Make your tanks more tanky and let them gain additional
+  {{ combat.improvedTanksPowerBonus | percent: "2.0" }} power, whether they're
+  attackers or defenders.
+</p>
+<p *ngIf="upgrade === 'MASS_PRODUCTION'">
+  Unlock mass production, which means producing huge amounts of army in a single
+  tower or homebase.
+</p>
+<p *ngIf="upgrade === 'IMPROVED_CANNONS'">
+  Upgrade your cannons and make them able to perform a bombarding attack from
+  distance, hitting enemy from where they are and not receiving any damage, but
+  with {{ combat.improvedCannonsBombardingPowerFraction | percent: "2.0" }}
+  power.
+</p>
+<p *ngIf="upgrade === 'ADVANCED_TACTICS'">
+  Make your army improve it's tactics in large combats and gain additional crazy
+  {{ combat.advancedTacticsPowerBonusPerReferencePower | percent: "1.0" }} power
+  per each
+  {{ combat.advancedTacticsReferencePower }}
+  power it has.
+</p>
+
+<p *ngIf="upgrade === 'SCARAB_SCANNERS'">
+  Equip your army with devices that can detect scarabs, making them
+  {{ control.scarabScannersPowerDecreaseRatio | percent: "2.0" }}
+  less powerfull when defending unoccupied or enemy field!
+</p>
+<p *ngIf="upgrade === 'KING_OF_DESERT'">
+  Develop a way to cooperate with scarabs on your conquered fields, making them
+  defend every inch of them just like it was an unoccupied field.
+</p>
+<p *ngIf="upgrade === 'FACTORY_TURRET'">
+  Develop a defensive system for your factories, that will give them exactly the
+  same defensive bonuses as if they were level
+  {{ control.factoryTurretTowerLevel }} towers.
+</p>
+<p *ngIf="upgrade === 'GOLD_DIGGERS'">
+  Create machines that will obtain valuable resources from every single field,
+  increasing the production of each by
+  {{ control.goldDiggersProductionPerFieldBonus }} points.
+</p>
+<p *ngIf="upgrade === 'TOWER_CREATOR'">
+  Unlock a possibility to build your own towers on owned empty fields. You can
+  build up to {{ control.towerCreatorMaxTowersBuilt }} towers per game.
+</p>
+<p *ngIf="upgrade === 'THE_GREAT_FORTRESS'">
+  Unlock upgrading your towers and home bases to level 4, which gives them huge
+  defence bonuses and makes the army they protect untargetable by rockets.
+</p>
+<p *ngIf="upgrade === 'SUPER_SONIC_ROCKETS'">
+  Make your rockets fly faster than a sound, which allows you for targeting
+  other rocket launchers instead of enemy army, and in result destroying them.
+  Once and for all.
+</p>
+
+<p *ngIf="upgrade === 'HOME_SWEET_HOME'">
+  Make yourself really at home in your home base and increase its production by
+  {{ production.homeSweetHomeProductionBonus | percent: "2.0" }}.
+</p>
+<p *ngIf="upgrade === 'MORE_METAL'">
+  Develop a way to produce much more metal in your factories, increasing their
+  production by {{ production.moreMetalProductionStaticBonus }} per factory and
+  {{ production.moreMetalProductionRelativeBonus | percent: "2.0" }} of their
+  base production.
+</p>
+<p *ngIf="upgrade === 'MORE_BUILDING_MATERIALS'">
+  Develop a way to produce much more building materials in your factories,
+  increasing their production by
+  {{ production.moreBuildingMaterialsProductionStaticBonus }} per factory and
+  {{ production.moreBuildingMaterialsProductionRelativeBonus | percent: "2.0" }}
+  of their base production.
+</p>
+<p *ngIf="upgrade === 'MORE_ELECTRICITY'">
+  Develop a way to produce much more electricity in your factories, increasing
+  their production by {{ production.moreElectricityProductionStaticBonus }} per
+  factory and
+  {{ production.moreElectricityProductionRelativeBonus | percent: "2.0" }} of
+  their base production.
+</p>
+<p *ngIf="upgrade === 'PRODUCTION_MANAGERS'">
+  Produce your resources in a better managed way, increasing their total
+  production from all sources by
+  {{ production.productionManagersProductionBonus | percent: "2.0" }}.
+</p>
+<p *ngIf="upgrade === 'FACTORY_BUILDERS'">
+  Unlock a possibility to build new metal, building materials and electricity
+  factories. You can build up to
+  {{ production.factoryBuildingMaxFactoriesBuilt }} factories in a single game.
+</p>
+<p *ngIf="upgrade === 'PRODUCTION_AI'">
+  Create a powerfull AI that develops new ways to increase your production over
+  time, increasing you production of metal, building materials and electricity
+  by {{ production.productionAiIncreasePerTurn }} every single turn.
+</p>

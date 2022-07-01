@@ -78,7 +78,8 @@ export class AttackComponent implements OnInit, OnDestroy {
   onArmySelectionChange(army: Army): void {
     this.currentArmySelection = army;
     this.toFieldFromCurrentAttackersService.set(army);
-    this.isAttackDisabled = army.droids <= 0 && army.tanks <= 0 && army.cannons <= 0;
+    this.isAttackDisabled =
+      army.droids <= 0 && army.tanks <= 0 && army.cannons <= 0;
   }
 
   getSelectedArmyObservable(): Observable<Army> {
@@ -99,5 +100,10 @@ export class AttackComponent implements OnInit, OnDestroy {
     this.sub2.unsubscribe();
     this.sub3.unsubscribe();
     this.sub4.unsubscribe();
+    this.toFieldFromCurrentAttackersService.set({
+      droids: 0,
+      tanks: 0,
+      cannons: 0,
+    });
   }
 }

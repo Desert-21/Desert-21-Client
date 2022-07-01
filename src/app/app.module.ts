@@ -57,6 +57,11 @@ import { FireRocketComponent } from './components/game-view/movement-modal/fire-
 import { ArmyPickerComponent } from './components/common/army-picker/army-picker.component';
 import { ArmyDestinationPreviewComponent } from './components/common/army-destination-preview/army-destination-preview.component';
 import { ArmyPowerDisplayComponent } from './components/common/army-power-display/army-power-display.component';
+import { LabComponent } from './components/game-view/lab/lab.component';
+import { LabModalComponent } from './components/game-view/lab/lab-modal/lab-modal.component';
+import { UpgradeDescriptionComponent } from './components/game-view/lab/upgrade-description/upgrade-description.component';
+import { LabTierViewComponent } from './components/game-view/lab/lab-tier-view/lab-tier-view.component';
+import { LabUpgradeButtonComponent } from './components/game-view/lab/lab-upgrade-button/lab-upgrade-button.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +111,12 @@ import { ArmyPowerDisplayComponent } from './components/common/army-power-displa
     FireRocketComponent,
     ArmyPickerComponent,
     ArmyDestinationPreviewComponent,
-    ArmyPowerDisplayComponent
+    ArmyPowerDisplayComponent,
+    LabComponent,
+    LabModalComponent,
+    UpgradeDescriptionComponent,
+    LabTierViewComponent,
+    LabUpgradeButtonComponent
   ],
   imports: [
     BrowserModule,

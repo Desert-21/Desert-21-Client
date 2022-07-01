@@ -4,3 +4,11 @@
     background-image: url('/assets/popupBackground.png');
   }
 }
+
+::ng-deep .big-dark-modal {
+  color: white;
+  .modal-content {
+    background-image: url('/assets/popupBackground.png');
+    min-width: 70vh;
+  }
+}

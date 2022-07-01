@@ -1,3 +1,5 @@
+import { LabUpgrade } from './game-models';
+
 export type GameBalanceConfig = {
   buildings: AllBuildingsBalance;
   combat: AllCombatBalance;
@@ -19,7 +21,8 @@ export type AllUpgradesBalance = {
 };
 
 export type CombatBranch = Branch & {
-  combatBranchConfig: CombatBranchConfig;
+  balanceConfig: CombatBranchConfig;
+  costConfig: CombatBranchCostConfig;
 };
 
 export type CombatBranchConfig = {
@@ -32,8 +35,19 @@ export type CombatBranchConfig = {
   reusablePartsUnitsFractionSaved: number;
 };
 
+export type CombatBranchCostConfig = {
+  reusableParts: number;
+  mediumProduction: number;
+  improvedDroids: number;
+  improvedTanks: number;
+  massProduction: number;
+  improvedCannons: number;
+  advancedTactics: number;
+};
+
 export type ControlBranch = Branch & {
-  controlBranchConfig: ControlBranchConfig;
+  balanceConfig: ControlBranchConfig;
+  costConfig: ControlBranchCostConfig;
 };
 
 export type ControlBranchConfig = {
@@ -43,8 +57,19 @@ export type ControlBranchConfig = {
   towerCreatorMaxTowersBuilt: number;
 };
 
+export type ControlBranchCostConfig = {
+  scarabScanners: number;
+  kingOfDesert: number;
+  factoryTurret: number;
+  goldDiggers: number;
+  towerCreator: number;
+  theGreatFortress: number;
+  superSonicRockets: number;
+};
+
 export type ProductionBranch = Branch & {
-  productionBranchConfig: ProductionBranchConfig;
+  balanceConfig: ProductionBranchConfig;
+  costConfig: ProductionBranchCostConfig;
 };
 
 export type ProductionBranchConfig = {
@@ -60,11 +85,21 @@ export type ProductionBranchConfig = {
   productionManagersProductionBonus: number;
 };
 
+export type ProductionBranchCostConfig = {
+  homeSweetHome: number;
+  moreMetal: number;
+  moreBuildingMaterials: number;
+  moreElectricity: number;
+  productionManagers: number;
+  factoryBuilders: number;
+  productionAi: number;
+};
+
 export type Branch = {
-  baseUpgrade: string;
-  firstTierUpgrades: Array<string>;
-  secondTierUpgrades: Array<string>;
-  superUpgrade: string;
+  baseUpgrade: LabUpgrade;
+  firstTierUpgrades: Array<LabUpgrade>;
+  secondTierUpgrades: Array<LabUpgrade>;
+  superUpgrade: LabUpgrade;
 };
 
 export type AllBuildingsBalance = {

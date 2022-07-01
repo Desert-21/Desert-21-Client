@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h4 class="modal-title">My Lab</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="modal.close('')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="lab-panels">
+    <span class="left-panel">
+      <div class="header-wrapper">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button
+            (click)="selectBranch('combat')"
+            type="button"
+            class="btn btn-danger"
+          >
+            Combat
+          </button>
+          <button
+            (click)="selectBranch('control')"
+            type="button"
+            class="btn btn-warning"
+          >
+            Control
+          </button>
+          <button
+            (click)="selectBranch('production')"
+            type="button"
+            class="btn btn-success"
+          >
+            Production
+          </button>
+        </div>
+        <b class="branch-title">{{ branchTitle }} branch</b>
+      </div>
+
+      <div class="mt-4"></div>
+
+      <app-lab-tier-view
+        tierName="Super Upgrade"
+        [tier]="currentBranch.superUpgrade"
+      ></app-lab-tier-view>
+
+      <app-lab-tier-view
+        tierName="Tier 2"
+        [tier]="currentBranch.tier2"
+      ></app-lab-tier-view>
+
+      <app-lab-tier-view
+        tierName="Tier 1"
+        [tier]="currentBranch.tier1"
+      ></app-lab-tier-view>
+
+      <app-lab-tier-view
+        tierName="Base Upgrade"
+        [tier]="currentBranch.baseUpgrade"
+      ></app-lab-tier-view>
+    </span>
+
+    <span class="right-panel">
+      <h5 class="text-center">{{ labUpgrade?.title }}</h5>
+      <img class="img-fluid" src="/assets/buildings/electricity.png" />
+      <app-upgrade-description
+        [upgrade]="labUpgrade?.logicalName"
+      ></app-upgrade-description>
+
+      <app-lab-upgrade-button
+        [labUpgrade]="labUpgrade"
+        [selectedBranch]="currentBranch"
+      ></app-lab-upgrade-button>
+    </span>
+  </div>
+</div>

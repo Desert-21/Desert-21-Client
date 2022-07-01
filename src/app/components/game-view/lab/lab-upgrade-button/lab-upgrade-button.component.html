@@ -1,0 +1,13 @@
+<button
+  [disabled]="isDisabled"
+  [class.btn-success]="!isDisabled"
+  [class.btn-secondary]="isDisabled"
+  (click)="performLabUpgrade(labUpgrade)"
+  class="btn btn-block btn-success"
+>
+  UPGRADE
+  <span>
+    {{ labUpgrade?.cost }}
+    <img class="img-fluid" src="/assets/electricity2.png" />
+  </span>
+</button>

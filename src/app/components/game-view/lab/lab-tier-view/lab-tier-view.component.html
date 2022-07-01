@@ -1,0 +1,28 @@
+<h5
+  [class.tier-label-locked]="tier.isLocked"
+  [class.tier-label-finished]="tier.isCompleted"
+  [class.tier-label-unlocked]="!tier.isCompleted && !tier.isLocked"
+>
+  {{ tierName }}
+</h5>
+<div class="upgrades-tier-wrapper">
+  <div *ngFor="let upgrade of tier.upgrades" class="image-card-wrapper">
+    <div class="upgrade-image-wrapper">
+      <img
+        [class.darkened-black-and-white]="tier.isLocked"
+        [class.black-and-white]="!upgrade.isAlreadyUpgraded && !tier.isLocked"
+        appEnlighter
+        (click)="selectLabUpgrade(upgrade)"
+        class="upgrade-image"
+        src="/assets/buildings/electricity.png"
+      />
+      <div *ngIf="upgrade.isCurrentlyUpgrading" class="spinner-border text-primary spinner-inside" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <span>
+      <b>{{ upgrade.cost }}</b>
+      <img src="/assets/electricity2.png" />
+    </span>
+  </div>
+</div>
