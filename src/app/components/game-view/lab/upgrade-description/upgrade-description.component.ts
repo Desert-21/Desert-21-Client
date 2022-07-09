@@ -30,7 +30,6 @@ export class UpgradeDescriptionComponent implements OnInit, OnDestroy {
     this.sub1 = this.gameBalanceService
       .getStateUpdates()
       .subscribe((config) => {
-        console.log(config);
         this.combat = config.upgrades.combat.balanceConfig;
         this.control = config.upgrades.control.balanceConfig;
         this.production = config.upgrades.production.balanceConfig;

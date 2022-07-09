@@ -29,7 +29,6 @@ export class UpgradesWithContextService extends ResourceProcessor<LabConfig> {
     );
     this.enrichLabUpgradeConfigs(labConfig, context.currentActions, upgrades);
 
-    console.log(labConfig);
     return labConfig;
   }
 

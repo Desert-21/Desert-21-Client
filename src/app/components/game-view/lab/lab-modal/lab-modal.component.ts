@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { LabBranch, LabConfig, LabUpgradeConfig } from 'src/app/models/lab';
-import { SelectedUpgradeService } from 'src/app/services/rx-logic/lab/selected-upgrade.service';
+import { UpgradeSelectionService } from 'src/app/services/rx-logic/lab/upgrade-selection.service';
 import { UpgradesWithContextService } from 'src/app/services/rx-logic/lab/upgrades-with-context.service';
 import { capitalize } from 'src/app/utils/text-utils';
 
@@ -58,7 +58,7 @@ export class LabModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private upgradesWithContextService: UpgradesWithContextService,
-    private selectedUpgradeService: SelectedUpgradeService
+    private selectedUpgradeService: UpgradeSelectionService
   ) {}
 
   ngOnInit(): void {

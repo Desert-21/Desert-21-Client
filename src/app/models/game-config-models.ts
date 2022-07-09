@@ -12,6 +12,9 @@ export type GeneralUpgrades = {
   fogOfWar2: number;
   productionPerField: number;
   startingResources: number;
+  rocketStrikeDamage: number;
+  baseRocketStrikePrice: number;
+  rocketStrikePricePerUsage: number;
 };
 
 export type AllUpgradesBalance = {

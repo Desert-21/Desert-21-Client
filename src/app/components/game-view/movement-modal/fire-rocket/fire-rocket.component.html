@@ -1,1 +1,47 @@
-<p>fire-rocket works!</p>
+<h5 class="mt-2">Fire rockets</h5>
+<h6 class="mt-4 text-center">Units before strike</h6>
+<div class="army-preview-wrapper">
+  <div class="w-75">
+    <app-army-destination-preview
+      [army]="armyDescription"
+      [shouldShowArmy]="true"
+      [shouldShowScarabs]="false"
+    ></app-army-destination-preview>
+  </div>
+</div>
+
+<h6 class="mt-4 text-center">Units after strike</h6>
+<div class="army-preview-wrapper">
+  <div class="w-75">
+    <app-army-destination-preview
+      [army]="armyDescription"
+      [shouldShowArmy]="true"
+      [shouldShowScarabs]="false"
+    ></app-army-destination-preview>
+  </div>
+</div>
+
+<div class="button-wrapper mt-5">
+  <div
+    [ngbTooltip]="
+      isAlreadyFired ? 'Rocket has been already fired this turn!' : ''
+    "
+  >
+    <button
+      (click)="fireRocket()"
+      [disabled]="isAlreadyFired"
+      class="btn btn-danger"
+    >
+      <div class="button-content">
+        <div class="desert21-font">Fire rocket</div>
+        <div class="button-content-right desert21-font">
+          ( {{ rocketStrikeCost.current }} )
+          <img src="/assets/electricity2.png" />
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+<div class="text-right next-strike-description mt-2">
+  Next strike cost: {{ rocketStrikeCost.next }}
+</div>

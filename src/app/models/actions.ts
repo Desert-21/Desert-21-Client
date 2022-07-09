@@ -189,6 +189,47 @@ export class LabAction extends PlayersAction<LabActionContent> {
   }
 }
 
+export class FireRocketAction extends PlayersAction<FireRocketActionContent> {
+  target: BoardLocation;
+  isTargetingRocket: boolean;
+  electricityCost: number;
+
+  constructor(
+    target: BoardLocation,
+    isTargetingRocket: boolean,
+    electricityCost: number
+  ) {
+    super();
+    this.target = target;
+    this.isTargetingRocket = isTargetingRocket;
+    this.electricityCost = electricityCost;
+  }
+
+  getType(): ActionType {
+    return 'FIRE_ROCKET';
+  }
+
+  getCost(): ResourceSet {
+    return {
+      metal: 0,
+      buildingMaterials: 0,
+      electricity: this.electricityCost,
+    };
+  }
+
+  protected toActionAPIRequestBody(): FireRocketActionContent {
+    return {
+      target: this.target,
+      isTargetingRocket: this.isTargetingRocket,
+    };
+  }
+}
+
+export type FireRocketActionContent = {
+  target: BoardLocation;
+  isTargetingRocket: boolean;
+};
+
 export type LabActionContent = {
   upgrade: LabUpgrade;
 };

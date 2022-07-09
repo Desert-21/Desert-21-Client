@@ -50,6 +50,7 @@ export type Player = {
   nickname: string;
   resources: ResourceSet;
   upgrades: Array<LabUpgrade>;
+  rocketStrikesDone: number;
 };
 
 export type ResourceSet = {

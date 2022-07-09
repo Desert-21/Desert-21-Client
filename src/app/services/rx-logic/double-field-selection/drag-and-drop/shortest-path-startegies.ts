@@ -8,6 +8,7 @@ import { Deque } from 'src/app/utils/deque';
 import {
   areLocationsEqual,
   findByFieldLocation,
+  getGeometricDistanceBetween,
   getLevel1DistancedLocations,
 } from 'src/app/utils/location-utils';
 
@@ -46,10 +47,7 @@ export const attackStrategy: FindShortestPathStartegy = {
       return (
         neighbours
           .filter((n) => {
-            const field = findByFieldLocation(
-              n,
-              context.game.fields
-            );
+            const field = findByFieldLocation(n, context.game.fields);
             return field.ownerId === context.player.id;
           })
           .find((loc) => areLocationsEqual(location, loc)) !== undefined
@@ -70,7 +68,10 @@ export const attackStrategy: FindShortestPathStartegy = {
   },
 };
 
-export const validatePathsLength = (path: Array<BoardLocation> | null, context: GameContext): boolean => {
+export const validatePathsLength = (
+  path: Array<BoardLocation> | null,
+  context: GameContext
+): boolean => {
   if (path === null || path.length === 0) {
     return false;
   }
@@ -84,14 +85,25 @@ export const validatePathsLength = (path: Array<BoardLocation> | null, context: 
   return fastestUnitSpeed >= realLength;
 };
 
-
 export const rocketStrikeStrategy: FindShortestPathStartegy = {
   findShortestPath: (
     locations: DirectedLocationPair,
     context: GameContext
   ): Array<BoardLocation> | null => {
-    console.log('ROCKET');
-    return [];
+    const target = locations.to;
+    const path = [locations.from];
+    let current = locations.from;
+    while (!areLocationsEqual(current, target)) {
+      const availableLocations = getLevel1DistancedLocations(current);
+      const closestLocation = availableLocations.sort(
+        (first, second) =>
+          getGeometricDistanceBetween(first, target) -
+          getGeometricDistanceBetween(second, target)
+      )[0];
+      current = closestLocation;
+      path.push(current);
+    }
+    return path;
   },
 };
 

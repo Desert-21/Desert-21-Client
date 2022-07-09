@@ -1,6 +1,11 @@
 <div class="modal-header">
   <h4 class="modal-title">My Moves</h4>
-  <button type="button" class="close" aria-label="Close" (click)="modal.close('')">
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="modal.close('')"
+  >
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -48,10 +53,17 @@
     </button>
   </div>
   <div>
-    <app-move-units [modal]="modal" *ngIf="currentActionType == 'MOVE_UNITS'"></app-move-units>
-    <app-attack [modal]="modal" *ngIf="currentActionType == 'ATTACK'"></app-attack>
+    <app-move-units
+      [modal]="modal"
+      *ngIf="currentActionType == 'MOVE_UNITS'"
+    ></app-move-units>
+    <app-attack
+      [modal]="modal"
+      *ngIf="currentActionType == 'ATTACK'"
+    ></app-attack>
     <app-bombard *ngIf="currentActionType == 'BOMBARD'"></app-bombard>
     <app-fire-rocket
+      [modal]="modal"
       *ngIf="currentActionType == 'FIRE_ROCKET'"
     ></app-fire-rocket>
   </div>

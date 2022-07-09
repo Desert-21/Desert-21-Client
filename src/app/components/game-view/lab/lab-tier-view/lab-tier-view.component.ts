@@ -16,6 +16,6 @@ export class LabTierViewComponent implements OnInit {
   ngOnInit(): void {}
 
   selectLabUpgrade(upgradeConfig: LabUpgradeConfig): void {
-    this.selectedUpgradeService.set(upgradeConfig);
+    this.selectedUpgradeService.set(upgradeConfig.logicalName);
   }
 }

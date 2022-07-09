@@ -1,0 +1,33 @@
+.army-preview-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: large;
+}
+
+.button-content-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: large;
+  margin-left: 16px;
+
+  img {
+    margin-left: 0px;
+  }
+}
+
+.next-strike-description {
+  color: gray;
+}
