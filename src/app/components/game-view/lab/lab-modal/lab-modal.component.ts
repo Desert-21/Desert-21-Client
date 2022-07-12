@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { LabBranch, LabConfig, LabUpgradeConfig } from 'src/app/models/lab';
+import { SelectedUpgradeService } from 'src/app/services/rx-logic/lab/selected-upgrade.service';
 import { UpgradeSelectionService } from 'src/app/services/rx-logic/lab/upgrade-selection.service';
 import { UpgradesWithContextService } from 'src/app/services/rx-logic/lab/upgrades-with-context.service';
 import { capitalize } from 'src/app/utils/text-utils';
@@ -58,7 +59,8 @@ export class LabModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private upgradesWithContextService: UpgradesWithContextService,
-    private selectedUpgradeService: UpgradeSelectionService
+    private upgradeSelectionService: UpgradeSelectionService,
+    private selectedUpgradeService: SelectedUpgradeService
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class LabModalComponent implements OnInit, OnDestroy {
       this.currentBranch = labConfig[branch];
       this.branchTitle = capitalize(branch);
     });
-    this.sub2 = this.selectedUpgradeService
+    this.sub2 = this.upgradeSelectionService
       .getStateUpdates()
       .subscribe((upgrade) => {
         this.labUpgrade = upgrade;
@@ -79,7 +81,7 @@ export class LabModalComponent implements OnInit, OnDestroy {
 
     this.selectBranch('combat');
     this.upgradesWithContextService.requestState();
-    this.selectedUpgradeService.requestState();
+    this.upgradeSelectionService.requestState();
   }
 
   getBranchSelectionObservable(): Observable<Branch> {
@@ -93,5 +95,6 @@ export class LabModalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
     this.sub2.unsubscribe();
+    this.selectedUpgradeService.set(null);
   }
 }

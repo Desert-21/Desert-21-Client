@@ -1,4 +1,13 @@
 <h5 class="mt-2">Fire rockets</h5>
+<input
+  [disabled]="!canDestroyRocket"
+  type="checkbox"
+  id="targetRocket"
+  name="targetRocket"
+  (change)="isTargetingRocketLauncher = !isTargetingRocketLauncher"
+/>
+<label class="mx-3 mt-3" for="targetRocket">Target rocket instead of army</label
+><br />
 <h6 class="mt-4 text-center">Units before strike</h6>
 <div class="army-preview-wrapper">
   <div class="w-75">

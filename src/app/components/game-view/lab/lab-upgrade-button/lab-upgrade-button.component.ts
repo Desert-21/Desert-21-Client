@@ -36,7 +36,7 @@ export class LabUpgradeButtonComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
+    this.sub1 = combineLatest([
       this.availableResourcesService.getStateUpdates(),
       this.getBranchObservable(),
       this.upgradeSelectionService.getStateUpdates(),

@@ -17,7 +17,7 @@ export class MovementModalComponent implements OnInit, OnDestroy {
     false,
     false,
   ];
-  currentActionType: ModalActionType = 'MOVE_UNITS';
+  currentActionType: ModalActionType | null = null;
 
   @Input() modal: any;
 
@@ -34,13 +34,16 @@ export class MovementModalComponent implements OnInit, OnDestroy {
       const canBombard = actions.includes('BOMBARD');
       const canFireRocket = actions.includes('FIRE_ROCKET');
       this.isAvailable = [canMoveUnits, canAttack, canBombard, canFireRocket];
-      this.currentActionType = actions[0];
+      if (this.currentActionType === null) {
+        this.currentActionType = actions[0];
+      }
     });
     this.availableActionService.requestState();
   }
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
+    this.currentActionType = null;
   }
 
   selectActionType(actionType: ModalActionType): void {

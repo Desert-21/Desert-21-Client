@@ -63,15 +63,26 @@
     </span>
 
     <span class="right-panel">
-      <h5 class="text-center">{{ labUpgrade?.title }}</h5>
-      <img class="img-fluid" src="/assets/buildings/electricity.png" />
-      <app-upgrade-description
-        [upgrade]="labUpgrade?.logicalName"
-      ></app-upgrade-description>
+      <div *ngIf="!labUpgrade">
+        <h5 class="text-center">No upgrade selected</h5>
+        <p>Select an upgrade on the tree to view it here</p>
 
-      <app-lab-upgrade-button
-        [selectedBranch]="currentBranch"
-      ></app-lab-upgrade-button>
+        <div class="right-panel-image-wrapper">
+          <img class="img-fluid" src="/assets/buildings/unknownBuilding.png" />
+        </div>
+
+      </div>
+      <div *ngIf="labUpgrade">
+        <h5 class="text-center">{{ labUpgrade?.title }}</h5>
+        <img class="img-fluid" [src]="labUpgrade?.imagePath" />
+        <app-upgrade-description
+          [upgrade]="labUpgrade?.logicalName"
+        ></app-upgrade-description>
+
+        <app-lab-upgrade-button
+          [selectedBranch]="currentBranch"
+        ></app-lab-upgrade-button>
+      </div>
     </span>
   </div>
 </div>

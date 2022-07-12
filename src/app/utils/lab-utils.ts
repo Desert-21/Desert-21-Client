@@ -1,5 +1,5 @@
 import { LabUpgrade } from '../models/game-models';
-import { LabBranch, LabUpgradeConfig } from '../models/lab';
+import { LabBranch } from '../models/lab';
 
 export const isBranchContainingUpgrade = (
   currentBranch: LabBranch,
@@ -11,5 +11,14 @@ export const isBranchContainingUpgrade = (
     ...currentBranch.tier2.upgrades,
     ...currentBranch.superUpgrade.upgrades,
   ];
-  return allUpgrades.some(u => u.logicalName === labUpgrade);
+  return allUpgrades.some((u) => u.logicalName === labUpgrade);
+};
+
+export const labUpgradeToImagePath = (labUpgrade: LabUpgrade): string => {
+  switch (labUpgrade) {
+    case 'FACTORY_TURRET':
+      return '/assets/upgrades/factory-turret.jpg';
+    default:
+      return '/assets/buildings/electricity.png';
+  }
 };

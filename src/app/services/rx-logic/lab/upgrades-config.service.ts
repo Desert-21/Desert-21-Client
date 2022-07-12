@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Branch, GameBalanceConfig } from 'src/app/models/game-config-models';
 import { LabUpgrade } from 'src/app/models/game-models';
 import { LabBranch, LabConfig, LabUpgradeConfig } from 'src/app/models/lab';
+import { labUpgradeToImagePath } from 'src/app/utils/lab-utils';
 import {
   underscoreToLowerCamelCase,
   underscoreToRegular,
@@ -83,7 +84,7 @@ const getUpgradeTitle = (labUpgrade: LabUpgrade): string => {
 };
 
 const getImagePath = (labUpgrade: LabUpgrade): string => {
-  return '/assets/buildings/electricity.png';
+  return labUpgradeToImagePath(labUpgrade);
 };
 
 const upgradesToUpgradesConfig = (

@@ -14,7 +14,7 @@
         appEnlighter
         (click)="selectLabUpgrade(upgrade)"
         class="upgrade-image"
-        src="/assets/buildings/electricity.png"
+        [src]="upgrade?.imagePath"
       />
       <div *ngIf="upgrade.isCurrentlyUpgrading" class="spinner-border text-primary spinner-inside" role="status">
         <span class="sr-only">Loading...</span>
