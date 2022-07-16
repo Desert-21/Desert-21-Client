@@ -62,6 +62,7 @@ import { LabModalComponent } from './components/game-view/lab/lab-modal/lab-moda
 import { UpgradeDescriptionComponent } from './components/game-view/lab/upgrade-description/upgrade-description.component';
 import { LabTierViewComponent } from './components/game-view/lab/lab-tier-view/lab-tier-view.component';
 import { LabUpgradeButtonComponent } from './components/game-view/lab/lab-upgrade-button/lab-upgrade-button.component';
+import { BuildBuildingButtonComponent } from './components/game-view/right-panel/building-preview/build-building-button/build-building-button.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import { LabUpgradeButtonComponent } from './components/game-view/lab/lab-upgrad
     LabModalComponent,
     UpgradeDescriptionComponent,
     LabTierViewComponent,
-    LabUpgradeButtonComponent
+    LabUpgradeButtonComponent,
+    BuildBuildingButtonComponent
   ],
   imports: [
     BrowserModule,

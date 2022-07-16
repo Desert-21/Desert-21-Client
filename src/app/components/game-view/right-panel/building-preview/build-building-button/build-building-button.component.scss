@@ -1,0 +1,44 @@
+.image-wrapper {
+  height: 18vh;
+  width: 14vh;
+  border: 2px solid gray;
+
+  > img {
+    height: 14vh;
+    width: 14vh;
+  }
+
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    img {
+      margin-left: 8px;
+    }
+  }
+}
+
+:host ::ng-deep .popover {
+  background-color: black;
+  max-width: 100%;
+}
+
+:host ::ng-deep .arrow::after {
+  background-color: transparent !important;
+  border-left-color: black;
+  color: black !important;
+}
+
+.popover-content-wrapper {
+  height: 38vh;
+  width: 30vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.darkened {
+  filter: brightness(0.3);
+}

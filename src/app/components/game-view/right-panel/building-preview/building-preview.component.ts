@@ -17,6 +17,7 @@ export class BuildingPreviewComponent implements OnInit, OnDestroy {
   buildingDescription = '';
   buildingImage = 'assets/buildings/unknownBuilding.png';
   ownershipPrefix = '';
+  isOwned = false;
   level: number | null = null;
   isEmpty = true;
 
@@ -32,6 +33,7 @@ export class BuildingPreviewComponent implements OnInit, OnDestroy {
           this.buildingDescription = '';
           this.buildingImage = 'assets/buildings/unknownBuilding.png';
           this.ownershipPrefix = '';
+          this.isOwned = false;
           this.level = null;
           this.isEmpty = true;
           return;
@@ -42,6 +44,7 @@ export class BuildingPreviewComponent implements OnInit, OnDestroy {
         this.buildingName = underscoreToRegular(building.type);
         this.buildingDescription = this.getBuildingDescription(building.type);
         this.buildingImage = this.getBuildingImageSource(building.type);
+        this.isOwned = selectedFieldInfo.isOwned;
         this.ownershipPrefix = this.getOwnershipPrefix(selectedFieldInfo);
         this.level = building?.level;
         this.isEmpty = building?.type === 'EMPTY_FIELD';

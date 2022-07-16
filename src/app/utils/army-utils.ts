@@ -45,7 +45,7 @@ export const getArmyRanges = (
   balance: GameBalanceConfig,
   army: Army | null
 ): ArmyRange => {
-  const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance);
+  const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance) / 100;
   if (coefficient === null || army === null) {
     return {
       minArmy: { droids: 0, tanks: 0, cannons: 0 },

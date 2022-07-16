@@ -1,15 +1,15 @@
-<div *ngIf="isBuildingUpgradable" class="wrapper">
-  <span [ngbTooltip]="shouldShowTooltip ? tipContent : null" placement="left">
+<div *ngIf="upgradeBuildingInfo.shouldShowTheButton" class="wrapper">
+  <span [ngbTooltip]="upgradeBuildingInfo.shouldShowTooltip ? tipContent : upgradeBuildingInfo.availability.reason" placement="left">
     <button
       (click)="upgradeBuilding()"
-      [disabled]="isUpgradingLocked"
-      [class.btn-success]="!isUpgradingLocked"
-      [class.btn-secondary]="isUpgradingLocked"
+      [disabled]="!upgradeBuildingInfo.availability.isAvailable"
+      [class.btn-success]="upgradeBuildingInfo.availability.isAvailable"
+      [class.btn-secondary]="!upgradeBuildingInfo.availability.isAvailable"
     >
       <div class="button-content">
         <div class="desert21-font">UPGRADE</div>
         <div class="button-content-right desert21-font">
-          ( {{ buildingCost }} ) <img src="/assets/buildingMaterials2.png" />
+          ( {{ upgradeBuildingInfo.buildingMaterialsCost }} ) <img src="/assets/buildingMaterials2.png" />
         </div>
       </div>
     </button>
@@ -17,7 +17,7 @@
 </div>
 <ng-template #tipContent
   ><app-upgrade-tooltip
-    [balance]="balance"
-    [building]="building"
+    [balance]="upgradeBuildingInfo.balance"
+    [building]="upgradeBuildingInfo.building"
   ></app-upgrade-tooltip
 ></ng-template>

@@ -51,6 +51,8 @@ export type Player = {
   resources: ResourceSet;
   upgrades: Array<LabUpgrade>;
   rocketStrikesDone: number;
+  builtFactories: number;
+  builtTowers: number;
 };
 
 export type ResourceSet = {
@@ -73,7 +75,7 @@ export type BoardLocation = {
 
 export type GameEvent = {
   type: EventType;
-  content: TrainingEventContent; // todo: | other | oher (might be unnecessary)
+  content: TrainingEventContent | BuildBuildingEventContent;
 };
 
 export type TrainingEventContent = {
@@ -81,6 +83,12 @@ export type TrainingEventContent = {
   location: BoardLocation;
   unitType: UnitType;
   amount: number;
+};
+
+export type BuildBuildingEventContent = {
+  turnsToExecute: number;
+  location: BoardLocation;
+  buildingType: BuildingType;
 };
 
 export type EventType =

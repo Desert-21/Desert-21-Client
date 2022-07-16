@@ -100,6 +100,7 @@ export class TrainArmySectionComponent implements OnInit, OnDestroy {
     const optionalEvent = context.game.events
       .filter((event) => event.type === 'TRAINING')
       .map((event) => event.content)
+      .map((content) => content as TrainingEventContent)
       .find((content) => areLocationsEqual(content.location, fieldLocation));
     if (optionalEvent !== undefined) {
       return optionalEvent;

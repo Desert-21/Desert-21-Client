@@ -1,6 +1,7 @@
 import {
   Army,
   BoardLocation,
+  BuildingType,
   LabUpgrade,
   ResourceSet,
   TrainingMode,
@@ -225,6 +226,42 @@ export class FireRocketAction extends PlayersAction<FireRocketActionContent> {
   }
 }
 
+export class BuildBuildingAction extends PlayersAction<BuildBuildingActionContent> {
+  location: BoardLocation;
+  buildingType: BuildingType;
+  buildingMaterialsCost: number;
+
+  constructor(
+    location: BoardLocation,
+    buildingType: BuildingType,
+    buildingMaterialsCost: number
+  ) {
+    super();
+    this.location = location;
+    this.buildingType = buildingType;
+    this.buildingMaterialsCost = buildingMaterialsCost;
+  }
+
+  getType(): ActionType {
+    return 'BUILD';
+  }
+
+  getCost(): ResourceSet {
+    return {
+      metal: 0,
+      buildingMaterials: this.buildingMaterialsCost,
+      electricity: 0,
+    };
+  }
+
+  protected toActionAPIRequestBody(): BuildBuildingActionContent {
+    return {
+      location: this.location,
+      buildingType: this.buildingType,
+    };
+  }
+}
+
 export type FireRocketActionContent = {
   target: BoardLocation;
   isTargetingRocket: boolean;
@@ -256,4 +293,9 @@ export type AttackActionContent = {
   to: BoardLocation;
   path: Array<BoardLocation>;
   army: Army;
+};
+
+export type BuildBuildingActionContent = {
+  location: BoardLocation;
+  buildingType: BuildingType;
 };

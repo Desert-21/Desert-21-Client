@@ -1,0 +1,23 @@
+<button [ngbPopover]="buildPopover" placement="left" class="btn btn-primary">
+  Build
+</button>
+
+<ng-template #buildPopover>
+  <div class="popover-content-wrapper">
+    <div
+      *ngFor="let buildingOption of buildingOptions"
+      appEnlighter
+      [isEnlighterEnabled]="buildingOption.availability.isAvailable"
+      class="image-wrapper"
+      [ngClass]="{ darkened: !buildingOption.availability.isAvailable }"
+      [ngbTooltip]="buildingOption.availability.reason"
+      (click)="buildBuilding(buildingOption)"
+    >
+      <img class="img-fluid" [src]="buildingOption.imageSource" />
+      <div>
+        {{ buildingOption.buildingMaterialsCost
+        }}<img class="img-fluid" src="/assets/buildingMaterials2.png" />
+      </div>
+    </div>
+  </div>
+</ng-template>

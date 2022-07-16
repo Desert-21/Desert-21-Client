@@ -10,8 +10,8 @@ export const findByFieldLocation = (
   return fields[location.row][location.col];
 };
 
-const BOARD_ROWS = 11;
-const BOARD_COLS = 11;
+const BOARD_ROWS = 7;
+const BOARD_COLS = 7;
 
 export const isLocationValid = (location: BoardLocation) => {
   return (
