@@ -1,1 +1,28 @@
-<p>bombard works!</p>
+<h5 class="mt-2">Bombard field</h5>
+<div class="cannons-selector-position-wrapper">
+  <div class="cannons-selector-wrapper">
+    <img
+      appEnlighter
+      (click)="selectMax()"
+      class="w-100"
+      src="/assets/mechs/cannon-full.png"
+    />
+    <span>{{ selectedCannons }}</span>
+    <div class="input-wrapper">
+      <input
+        [(ngModel)]="selectedCannons"
+        value="0"
+        min="0"
+        [max]="maxCannons"
+        class="w-100"
+        type="number"
+        onkeydown="return false"
+      />
+    </div>
+    <div class="available-units-description">Available: {{ maxCannons }}</div>
+  </div>
+</div>
+
+<div class="bombard-button-wrapper">
+  <button [disabled]="selectedCannons <= 0" (click)="onBombardClick()" class="btn btn-warning">Bombard</button>
+</div>

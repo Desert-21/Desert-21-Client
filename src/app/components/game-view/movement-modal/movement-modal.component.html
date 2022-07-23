@@ -61,7 +61,10 @@
       [modal]="modal"
       *ngIf="currentActionType == 'ATTACK'"
     ></app-attack>
-    <app-bombard *ngIf="currentActionType == 'BOMBARD'"></app-bombard>
+    <app-bombard
+      [modal]="modal"
+      *ngIf="currentActionType == 'BOMBARD'"
+    ></app-bombard>
     <app-fire-rocket
       [modal]="modal"
       *ngIf="currentActionType == 'FIRE_ROCKET'"

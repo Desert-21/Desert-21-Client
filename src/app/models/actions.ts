@@ -29,7 +29,8 @@ export type ActionType =
   | 'TRAIN'
   | 'MOVE_UNITS'
   | 'ATTACK'
-  | 'FIRE_ROCKET';
+  | 'FIRE_ROCKET'
+  | 'BOMBARD';
 
 export class UpgradeAction extends PlayersAction<UpgradeActionContent> {
   buildingMaterialsCost: number;
@@ -261,6 +262,45 @@ export class BuildBuildingAction extends PlayersAction<BuildBuildingActionConten
     };
   }
 }
+
+export class BombardAction extends PlayersAction<BombardActionContent> {
+  from: BoardLocation;
+  to: BoardLocation;
+  path: Array<BoardLocation>;
+  cannonsAmount: number;
+
+  constructor(path: Array<BoardLocation>, cannonsAmount: number) {
+    super();
+    this.from = path[0];
+    this.to = path[path.length - 1];
+    this.path = path;
+    this.cannonsAmount = cannonsAmount;
+  }
+
+  getType(): ActionType {
+    return 'BOMBARD';
+  }
+
+  getCost(): ResourceSet {
+    return { metal: 0, buildingMaterials: 0, electricity: 0 };
+  }
+
+  protected toActionAPIRequestBody(): BombardActionContent {
+    return {
+      from: this.from,
+      to: this.to,
+      path: this.path,
+      cannonsAmount: this.cannonsAmount,
+    };
+  }
+}
+
+export type BombardActionContent = {
+  from: BoardLocation;
+  to: BoardLocation;
+  path: Array<BoardLocation>;
+  cannonsAmount: number;
+};
 
 export type FireRocketActionContent = {
   target: BoardLocation;

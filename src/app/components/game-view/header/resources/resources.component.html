@@ -7,7 +7,9 @@
         placement="bottom"
         ngbTooltip="Metal is used to build your army. The more you have, the more units you are able to produce!"
       />
-      <span class="unselectable">{{resourceSet.metal ? resourceSet.metal : '???'}}</span>
+      <span class="unselectable">{{
+        resourceSet.metal !== null ? resourceSet.metal : "???"
+      }}</span>
     </div>
     <div class="col-4">
       <img
@@ -16,7 +18,11 @@
         placement="bottom"
         ngbTooltip="Building materials are used to upgrade your buildings and make them produce more resources, train more types of units and more!"
       />
-      <span class="unselectable">{{resourceSet.buildingMaterials ? resourceSet.buildingMaterials : '???'}}</span>
+      <span class="unselectable">{{
+        resourceSet.buildingMaterials !== null
+          ? resourceSet.buildingMaterials
+          : "???"
+      }}</span>
     </div>
     <div class="col-4">
       <img
@@ -25,7 +31,9 @@
         placement="bottom"
         ngbTooltip="Electricity is a resource used in the lab to give you overall extra bonuses. It may be also used to fire rocket strikes at your opponents!"
       />
-      <span class="unselectable">{{resourceSet.electricity ? resourceSet.electricity : '???'}}</span>
+      <span class="unselectable">{{
+        resourceSet.electricity !== null ? resourceSet.electricity : "???"
+      }}</span>
     </div>
   </div>
 </div>

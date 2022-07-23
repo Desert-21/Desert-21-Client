@@ -1,0 +1,30 @@
+.cannons-selector-wrapper {
+  width: 20%;
+
+  > span {
+    position: relative;
+    bottom: 30px;
+    left: 4px;
+    font-size: larger;
+    color: greenyellow;
+  }
+}
+
+.cannons-selector-position-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.available-units-description {
+  font-size: small;
+  color: gray;
+}
+
+.input-wrapper {
+  margin-top: -20px;
+}
+
+.bombard-button-wrapper {
+  display: flex;
+  justify-content: right;
+}

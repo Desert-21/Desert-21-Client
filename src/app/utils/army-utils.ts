@@ -1,5 +1,6 @@
 import {
   AttackAction,
+  BombardAction,
   MoveUnitsAction,
   PlayersAction,
 } from '../models/actions';
@@ -88,7 +89,9 @@ export const getHostileArmyEstimation = (
     );
   }
   const hasDefensiveScarabs = player.upgrades.includes('KING_OF_DESERT');
-  const scarabRange: ScarabsRange = hasDefensiveScarabs ? scarabsRange : { min: 0, avg: 0, max: 0, };
+  const scarabRange: ScarabsRange = hasDefensiveScarabs
+    ? scarabsRange
+    : { min: 0, avg: 0, max: 0 };
   const minArmy: FightingArmy = {
     droids: Math.round(army.droids * (1 - coefficient)),
     tanks: Math.round(army.tanks * (1 - coefficient)),
@@ -174,17 +177,24 @@ export const getFastestUnitsSpeed = (
     }, 0);
 };
 
-// todo: apply also attacking/bombarding
 export const getFrozenUnitsAtLocation = (
   location: BoardLocation,
   actions: Array<PlayersAction<any>>
 ): Army => {
-  return actions
+  const fromArmyMovements = actions
     .filter((a) => ['MOVE_UNITS', 'ATTACK'].includes(a.getType()))
     .map((a) => a as MoveUnitsAction)
     .filter((a) => areLocationsEqual(a.from, location))
     .map((a) => a.army)
     .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+  const fromBombardings = actions
+    .filter((a) => a.getType() === 'BOMBARD')
+    .map((a) => a as BombardAction)
+    .map((a) => {
+      return { droids: 0, tanks: 0, cannons: a.cannonsAmount } as Army;
+    })
+    .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+  return sumArmies(fromArmyMovements, fromBombardings);
 };
 
 export const getNextTurnMovedUnitsAtLocation = (

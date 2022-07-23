@@ -32,8 +32,8 @@ export class ActionEntryComponent implements OnInit {
         return 'Rocket Strike';
       case 'BUILD':
         return 'Build Building';
-      default:
-        return 'Unknown';
+      case 'BOMBARD':
+        return 'Bombarding';
     }
   }
 

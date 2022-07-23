@@ -35,7 +35,6 @@ export class UpgradeBuildingButtonComponent implements OnInit, OnDestroy {
     this.sub1 = this.upgradeBuildingInfoService
       .getStateUpdates()
       .subscribe((info) => {
-        console.log(info)
         this.upgradeBuildingInfo = info;
       });
     this.upgradeBuildingInfoService.requestState();
