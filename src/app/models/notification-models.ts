@@ -1,3 +1,5 @@
+import { FightingArmy } from './army-ranges';
+
 export type AppNotification<T> = {
   type: string;
   content: T;
@@ -18,5 +20,15 @@ export type StartGameNotification = {
 };
 
 export type ResolutionPhaseNotification = {
-  timeout: Date, notifications: Array<AppNotification<any>>
+  timeout: Date;
+  notifications: Array<AppNotification<any>>;
+};
+
+export type BattleResult = {
+  attackersBefore: FightingArmy;
+  defendersBefore: FightingArmy;
+  attackersAfter: FightingArmy;
+  defendersAfter: FightingArmy;
+  haveAttackersWon: boolean;
+  wasUnoccupied: boolean;
 };

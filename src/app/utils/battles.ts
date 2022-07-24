@@ -1,8 +1,12 @@
 import { EstimatedArmy, FightingArmy } from '../models/army-ranges';
 import { GameBalanceConfig } from '../models/game-config-models';
 import { Army, Building, Player } from '../models/game-models';
+import { BattleResult } from '../models/notification-models';
 import {
-  calculateBombardingAttackersPower, calculateDefendingArmyPower,
+  calculateAttackingArmyPower,
+  calculateBombardingAttackersPower,
+  calculateDefendingArmyPower,
+  calculateDefendingFightingArmyPower,
 } from './army-power-calculator';
 
 export const damageArmyByRocket = (
@@ -53,7 +57,7 @@ export const performBombardingOnArmy = (
     balance,
     defenderPlayer,
     attackerPlayer,
-    building,
+    building
   );
   const attackersPower = calculateBombardingAttackersPower(
     attackerCannons,
@@ -69,6 +73,58 @@ export const performBombardingOnArmy = (
     balance
   );
   return calculateDefendersArmyAfter(defenders, false, destructionRatio);
+};
+
+export const performBattle = (
+  attackers: Army,
+  defenders: FightingArmy,
+  attackingPlayer: Player,
+  defendingPlayer: Player,
+  balance: GameBalanceConfig,
+  building: Building
+): BattleResult => {
+  const attackersPower = calculateAttackingArmyPower(
+    attackers,
+    balance,
+    attackingPlayer
+  );
+  const defendersPower = calculateDefendingFightingArmyPower(
+    defenders,
+    balance,
+    defendingPlayer,
+    attackingPlayer,
+    building
+  );
+  const attackerHaveWon = attackersPower > defendersPower;
+  const winnersPower = attackerHaveWon ? attackersPower : defendersPower;
+  const losersPower = attackerHaveWon ? defendersPower : attackersPower;
+
+  const destructionRatio = calculateDestructionRatio(
+    winnersPower,
+    losersPower,
+    balance
+  );
+
+  const attackersAfter = calculateAttackersArmyAfter(
+    attackers,
+    attackerHaveWon,
+    destructionRatio,
+    attackingPlayer,
+    balance
+  );
+  const defendersAfter = calculateDefendersArmyAfter(
+    defenders,
+    attackerHaveWon,
+    destructionRatio
+  );
+  return {
+    attackersBefore: { ...attackers, scarabs: 0 },
+    defendersBefore: defenders,
+    attackersAfter,
+    defendersAfter,
+    haveAttackersWon: attackerHaveWon,
+    wasUnoccupied: false,
+  };
 };
 
 const calculateDestructionRatio = (
@@ -111,4 +167,29 @@ const calculateDefendersArmyAfter = (
   const cannons = Math.floor(defendersBefore.cannons * remainingUnitsRatio);
   const scarabs = Math.floor(defendersBefore.scarabs * remainingUnitsRatio);
   return { droids, tanks, cannons, scarabs };
+};
+
+const calculateAttackersArmyAfter = (
+  attackersBefore: Army,
+  attackerHasWon: boolean,
+  destructionRatio: number,
+  attacker: Player,
+  gameBalance: GameBalanceConfig
+): FightingArmy => {
+  if (!attackerHasWon) {
+    return { droids: 0, tanks: 0, cannons: 0, scarabs: 0 };
+  }
+  const reusablePartsDamageRatio =
+    1 -
+    gameBalance.upgrades.combat.balanceConfig.reusablePartsUnitsFractionSaved;
+
+  const actualDestructionRatio = attacker.upgrades.includes('REUSABLE_PARTS')
+    ? destructionRatio * reusablePartsDamageRatio
+    : destructionRatio;
+  const remainingUnitsRatio = 1 - actualDestructionRatio;
+
+  const droids = Math.floor(attackersBefore.droids * remainingUnitsRatio);
+  const tanks = Math.floor(attackersBefore.tanks * remainingUnitsRatio);
+  const cannons = Math.floor(attackersBefore.cannons * remainingUnitsRatio);
+  return { droids, tanks, cannons, scarabs: 0 };
 };

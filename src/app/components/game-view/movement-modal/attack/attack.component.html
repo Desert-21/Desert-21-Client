@@ -1,39 +1,75 @@
 <h5 class="mt-2">Available units</h5>
-<div class="mt-4 army-picker-wrapper">
-  <div class="w-75">
-    <app-army-picker
-      (armySelectionChanges)="onArmySelectionChange($event)"
-      [maxArmy]="maxArmy"
-    ></app-army-picker>
+<div class="top-panel-wrapper">
+  <div class="mt-4 army-picker-wrapper">
+    <div class="w-75">
+      <app-army-picker
+        (armySelectionChanges)="onArmySelectionChange($event)"
+        [maxArmy]="maxArmy"
+      ></app-army-picker>
+    </div>
+  </div>
+  <div class="winning-analysis-wrapper">
+    <div class="text-center">
+      <b>Winning chance:</b>
+      <br />
+      <b
+        class="winning-percentage"
+        [class.text-danger]="winningChance < 0.3"
+        [class.text-warning]="winningChance >= 0.3 && winningChance < 0.7"
+        [class.text-success]="winningChance >= 0.7"
+        >{{ winningChance | percent }}</b
+      >
+    </div>
+    <button
+      class="btn btn-sm btn-primary mt-3"
+      [ngbPopover]="popContent"
+      placement="bottom"
+      [autoClose]="'outside'"
+    >
+      View Simulation
+    </button>
   </div>
 </div>
 
+<ng-template #popContent
+  ><app-battle-simulation></app-battle-simulation
+></ng-template>
+
 <div class="battle-wrapper">
   <h5 class="text-center">Battle</h5>
-  <div class="mt-4 army-picker-wrapper">
-    <div class="w-100">
+  <div class="mt-2">
+    <div class="army-preview-wrapper">
       <app-army-destination-preview
         [army]="toFieldArmyAfterMovement"
       ></app-army-destination-preview>
+    </div>
+    <div class="ml-4 mt-2 text-success">
+      <b>Attackers power: {{ attackersPower }}</b>
     </div>
   </div>
 
   <h5 class="mt-3 text-center">VS</h5>
 
-  <div class="mt-2 army-picker-wrapper">
-    <div class="w-100">
+  <div class="mt-2">
+    <div class="w-100" [class.only-scarabs-wrapper]="isUnoccupied">
       <app-army-destination-preview
         [army]="toFieldEnemyArmy"
         shouldShowScarabs="true"
         [shouldShowArmy]="!isUnoccupied"
       ></app-army-destination-preview>
     </div>
+    <div class="ml-4 mt-2 text-danger">
+      <b>Defenders power: {{ defendersPower }}</b>
+    </div>
   </div>
 </div>
 
 <div class="attack-button-wrapper">
-  <button [disabled]="isAttackDisabled" (click)="onAttackClick()" class="btn btn-danger">Attack</button>
+  <button
+    [disabled]="isAttackDisabled"
+    (click)="onAttackClick()"
+    class="btn btn-danger"
+  >
+    Attack
+  </button>
 </div>
-
-
-

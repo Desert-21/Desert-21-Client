@@ -1,0 +1,104 @@
+<div class="main-wrapper">
+  <h5 class="text-center">Battle Simulation</h5>
+
+  <h6 class="text-center">Attackers</h6>
+  <div class="attackers-army-wrapper">
+    <app-army-destination-preview
+      [army]="battleResult.attackersBefore"
+    ></app-army-destination-preview>
+  </div>
+  <div class="attackers-army-wrapper loses-wrapper mt-3">
+    <b>
+      {{
+        battleResult.attackersAfter.droids -
+          battleResult.attackersBefore.droids !==
+        0
+          ? battleResult.attackersAfter.droids -
+            battleResult.attackersBefore.droids
+          : ""
+      }}
+    </b>
+    <b>
+      {{
+        battleResult.attackersAfter.tanks -
+          battleResult.attackersBefore.tanks !==
+        0
+          ? battleResult.attackersAfter.tanks -
+            battleResult.attackersBefore.tanks
+          : ""
+      }}
+    </b>
+    <b>
+      {{
+        battleResult.attackersAfter.cannons -
+          battleResult.attackersBefore.cannons !==
+        0
+          ? battleResult.attackersAfter.cannons -
+            battleResult.attackersBefore.cannons
+          : ""
+      }}
+    </b>
+  </div>
+
+  <h6 class="text-center mt-4">Defenders</h6>
+  <app-army-destination-preview
+    [army]="battleResult.defendersBefore"
+    [shouldShowScarabs]="true"
+  ></app-army-destination-preview>
+  <div class="loses-wrapper mt-3">
+    <b>
+      {{
+        battleResult.defendersAfter.droids -
+          battleResult.defendersBefore.droids !==
+        0
+          ? battleResult.defendersAfter.droids -
+            battleResult.defendersBefore.droids
+          : ""
+      }}
+    </b>
+    <b>
+      {{
+        battleResult.defendersAfter.tanks -
+          battleResult.defendersBefore.tanks !==
+        0
+          ? battleResult.defendersAfter.tanks -
+            battleResult.defendersBefore.tanks
+          : ""
+      }}
+    </b>
+    <b>
+      {{
+        battleResult.defendersAfter.cannons -
+          battleResult.defendersBefore.cannons !==
+        0
+          ? battleResult.defendersAfter.cannons -
+            battleResult.defendersBefore.cannons
+          : ""
+      }}
+    </b>
+    <b>
+      {{
+        battleResult.defendersAfter.scarabs -
+          battleResult.defendersBefore.scarabs !==
+        0
+          ? battleResult.defendersAfter.scarabs -
+            battleResult.defendersBefore.scarabs
+          : ""
+      }}
+    </b>
+  </div>
+
+  <input
+    class="mt-4 w-100"
+    (input)="onRangeSelectionChange($event)"
+    type="range"
+    id="volume"
+    name="volume"
+    min="0"
+    max="100"
+  />
+  <div class="cases-wrapper">
+    <div>Best Case</div>
+    <div>Worst Case</div>
+  </div>
+</div>

@@ -1,12 +1,12 @@
 .army-picker-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  width: 70%;
 }
 
 .battle-wrapper {
   margin-top: 12px;
-  margin-left: 20%;
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -17,4 +17,44 @@
 .attack-button-wrapper {
   display: flex;
   justify-content: end;
+}
+
+.army-preview-wrapper {
+  max-width: 75%;
+  margin-left: 12.5%;
+  display: flex;
+  justify-content: center;
+}
+
+.only-scarabs-wrapper {
+  margin-left: 20%;
+  max-width: 60%;
+}
+
+.top-panel-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.winning-analysis-wrapper {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.winning-percentage {
+  font-size: xx-large;
+}
+
+:host ::ng-deep .popover {
+  background-color: black;
+  max-width: 30vw;
+}
+
+:host ::ng-deep .arrow::after {
+  background-color: transparent !important;
+  border-bottom-color: black;
+  color: black !important;
 }
