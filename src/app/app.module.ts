@@ -63,6 +63,8 @@ import { UpgradeDescriptionComponent } from './components/game-view/lab/upgrade-
 import { LabTierViewComponent } from './components/game-view/lab/lab-tier-view/lab-tier-view.component';
 import { LabUpgradeButtonComponent } from './components/game-view/lab/lab-upgrade-button/lab-upgrade-button.component';
 import { BuildBuildingButtonComponent } from './components/game-view/right-panel/building-preview/build-building-button/build-building-button.component';
+import { RocketDamageEstimationComponent } from './components/game-view/movement-modal/fire-rocket/rocket-damage-estimation/rocket-damage-estimation.component';
+import { RocketBuildingDestructionComponent } from './components/game-view/movement-modal/fire-rocket/rocket-building-destruction/rocket-building-destruction.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +120,9 @@ import { BuildBuildingButtonComponent } from './components/game-view/right-panel
     UpgradeDescriptionComponent,
     LabTierViewComponent,
     LabUpgradeButtonComponent,
-    BuildBuildingButtonComponent
+    BuildBuildingButtonComponent,
+    RocketDamageEstimationComponent,
+    RocketBuildingDestructionComponent
   ],
   imports: [
     BrowserModule,

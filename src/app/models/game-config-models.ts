@@ -117,6 +117,7 @@ export type AllCombatBalance = {
   tanks: CombatUnitConfig;
   cannons: CombatUnitConfig;
   scarabs: ScarabConfig;
+  general: GeneralCombatConfig;
 };
 
 export type ScarabConfig = {
@@ -124,6 +125,10 @@ export type ScarabConfig = {
   baseGeneration: number;
   additionalGenerationPerTurn: number;
   generationBias: number;
+};
+
+export type GeneralCombatConfig = {
+  destructionFunctionPolynomial: Array<number>;
 };
 
 export type LeveledValue = {

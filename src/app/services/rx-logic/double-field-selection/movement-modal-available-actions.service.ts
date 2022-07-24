@@ -3,7 +3,7 @@ import {
   AllCombatBalance,
   GameBalanceConfig,
 } from 'src/app/models/game-config-models';
-import { BoardLocation, Field, Player } from 'src/app/models/game-models';
+import { BoardLocation, Building, Field, Player } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
 import { getFastestUnitsSpeed } from 'src/app/utils/army-utils';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
@@ -70,6 +70,7 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
 
     const optionalFireRocket: ModalActionType = this.canFireRocket(
       fieldSelection.from.field,
+      fieldSelection.to.field,
       playersId
     )
       ? 'FIRE_ROCKET'
@@ -145,10 +146,16 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
     return true;
   }
 
-  private canFireRocket(fromField: Field, playerId: string): boolean {
+  private canFireRocket(fromField: Field, toField: Field, playerId: string): boolean {
     return (
       fromField.ownerId === playerId &&
+      !this.isLevel4Defensive(toField.building) &&
       fromField.building.type === 'ROCKET_LAUNCHER'
     );
+  }
+
+  private isLevel4Defensive(building: Building): boolean {
+    const isDefensive = building.type === 'TOWER' || building.type === 'HOME_BASE';
+    return isDefensive && building.level === 4;
   }
 }

@@ -1,7 +1,8 @@
 import { ArmyDescription } from '../components/game-view/right-panel/army-preview/army-preview-state';
+import { OwnershipType } from './game-utility-models';
 
 export class EstimatedArmy {
-  isEnemy: boolean;
+  ownership: OwnershipType;
   isRange: boolean;
 
   worstCase: FightingArmy;
@@ -9,17 +10,30 @@ export class EstimatedArmy {
   bestCase: FightingArmy;
 
   constructor(
-    isEnemy: boolean,
+    ownership: OwnershipType,
     isRange: boolean,
     worstCase: FightingArmy,
     averageCase: FightingArmy,
     bestCase: FightingArmy
   ) {
-    this.isEnemy = isEnemy;
+    this.ownership = ownership;
     this.isRange = isRange;
     this.worstCase = worstCase;
     this.averageCase = averageCase;
     this.bestCase = bestCase;
+  }
+
+  mapArmy(mapFunction: (army: FightingArmy) => FightingArmy): EstimatedArmy {
+    const worstCase = mapFunction(this.worstCase);
+    const averageCase = mapFunction(this.averageCase);
+    const bestCase = mapFunction(this.bestCase);
+    return new EstimatedArmy(
+      this.ownership,
+      this.isRange,
+      worstCase,
+      averageCase,
+      bestCase
+    );
   }
 
   toStringDescription(): ArmyDescription {

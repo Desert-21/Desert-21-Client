@@ -78,10 +78,10 @@ export const getHostileArmyEstimation = (
   player: Player,
   scarabsRange: ScarabsRange
 ): EstimatedArmy => {
-  const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance);
+  const coefficient = getFogOfWarCoefficient(fogOfWarLevel, balance) / 100;
   if (coefficient === null || army === null) {
     return new EstimatedArmy(
-      true,
+      'ENEMY',
       false,
       { droids: 0, tanks: 0, cannons: 0, scarabs: 0 },
       { droids: 0, tanks: 0, cannons: 0, scarabs: 0 },
@@ -110,7 +110,7 @@ export const getHostileArmyEstimation = (
     cannons: Math.round(army.cannons * (1 + coefficient)),
     scarabs: scarabRange.max,
   };
-  return new EstimatedArmy(true, true, minArmy, avgArmy, maxArmy);
+  return new EstimatedArmy('ENEMY', true, minArmy, avgArmy, maxArmy);
 };
 
 export const canTrainUnits = (
@@ -190,6 +190,7 @@ export const getFrozenUnitsAtLocation = (
   const fromBombardings = actions
     .filter((a) => a.getType() === 'BOMBARD')
     .map((a) => a as BombardAction)
+    .filter((a) => areLocationsEqual(a.from, location))
     .map((a) => {
       return { droids: 0, tanks: 0, cannons: a.cannonsAmount } as Army;
     })

@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import { GameContext } from 'src/app/models/game-utility-models';
+import {
+  ExplainedAvailability,
+  getAvailable,
+  getNotAvailable,
+} from 'src/app/utils/validation';
 import { GameContextService } from '../shared/game-context.service';
 import { ResourceProcessor } from '../templates/resource-processor';
 import {
@@ -10,7 +15,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class CanDestroyRocketService extends ResourceProcessor<boolean> {
+export class CanDestroyRocketService extends ResourceProcessor<ExplainedAvailability> {
   constructor(
     private fieldSelectionService: DoubleFieldSelectionService,
     private gameContextServ8ice: GameContextService
@@ -18,18 +23,25 @@ export class CanDestroyRocketService extends ResourceProcessor<boolean> {
     super([fieldSelectionService, gameContextServ8ice]);
   }
 
-  protected processData(dataElements: any[]): boolean {
+  protected processData(dataElements: any[]): ExplainedAvailability {
     const [fieldSelection, context] = dataElements as [
       DoubleFieldSelection,
       GameContext
     ];
     if (fieldSelection === null || fieldSelection.to === null) {
-      return false;
+      return getNotAvailable('');
     }
     if (!context.player.upgrades.includes('SUPER_SONIC_ROCKETS')) {
-      return false;
+      return getNotAvailable(
+        'Upgrade "Super Sonic Rockets" to unlock this feature.'
+      );
     }
     const building = fieldSelection.to.field.building;
-    return building.type === 'ROCKET_LAUNCHER';
+    if (building.type !== 'ROCKET_LAUNCHER') {
+      return getNotAvailable(
+        'Only rocket launcher can be destroyed by another rocket launcher.'
+      );
+    }
+    return getAvailable();
   }
 }

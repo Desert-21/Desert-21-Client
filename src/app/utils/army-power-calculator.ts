@@ -16,6 +16,17 @@ type Power = {
   constant: number;
 };
 
+export const calculateBombardingAttackersPower = (
+  cannons: number,
+  balance: GameBalanceConfig
+): number => {
+  const singleCannonPower = balance.combat.cannons.power;
+  const rawCannonsPower = cannons * singleCannonPower;
+  const bombardingPowerFraction = balance.upgrades.combat.balanceConfig
+          .improvedCannonsBombardingPowerFraction;
+  return Math.round(rawCannonsPower * bombardingPowerFraction);
+};
+
 export const calculateFightingArmyPower = (
   army: FightingArmy, // base army
   balance: GameBalanceConfig, // reference to balance
@@ -100,11 +111,11 @@ export const calculateArmyPower = (
     postImprovedTanksPower.tanks +
     postImprovedTanksPower.cannons +
     postImprovedTanksPower.constant;
-  return getOptionalAdvancedTacticsPower(
+  return Math.round(getOptionalAdvancedTacticsPower(
     totalPreAdvancedTacticsArmyPower,
     balance,
     player
-  );
+  ));
 };
 
 const getOptionalTowerPowerBonuses = (
@@ -158,7 +169,7 @@ const getOptionalFactoryPowerBonuses = (
     towerLevel
   );
   const unitBonus = getLeveledValueByLevel(
-    towerConfig.baseProtection,
+    towerConfig.unitBonus,
     towerLevel
   );
   const { droids, tanks, cannons, constant } = power;

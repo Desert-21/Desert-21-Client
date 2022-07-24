@@ -1,28 +1,81 @@
 <h5 class="mt-2">Bombard field</h5>
-<div class="cannons-selector-position-wrapper">
-  <div class="cannons-selector-wrapper">
-    <img
-      appEnlighter
-      (click)="selectMax()"
-      class="w-100"
-      src="/assets/mechs/cannon-full.png"
-    />
-    <span>{{ selectedCannons }}</span>
-    <div class="input-wrapper">
-      <input
-        [(ngModel)]="selectedCannons"
-        value="0"
-        min="0"
-        [max]="maxCannons"
-        class="w-100"
-        type="number"
-        onkeydown="return false"
-      />
+<div class="main-wrapper">
+  <div class="left-panel">
+    <div class="cannons-selector-position-wrapper">
+      <div class="cannons-selector-wrapper">
+        <img
+          appEnlighter
+          (click)="selectMax()"
+          class="w-100"
+          src="/assets/mechs/cannon-full.png"
+        />
+        <span>{{ selectedCannons }}</span>
+        <div class="input-wrapper">
+          <input
+            [(ngModel)]="selectedCannons"
+            value="0"
+            min="0"
+            [max]="maxCannons"
+            class="w-100"
+            type="number"
+            onkeydown="return false"
+          />
+        </div>
+        <div class="available-units-description">
+          Available: {{ maxCannons }}
+        </div>
+      </div>
     </div>
-    <div class="available-units-description">Available: {{ maxCannons }}</div>
+
+    <div class="mt-2 text-center">Combined attackers:</div>
+
+    <div class="cannons-selector-position-wrapper mt-2">
+      <div class="cannons-selector-wrapper">
+        <img class="w-100" src="/assets/mechs/cannon-full.png" />
+        <span>{{ otherActionsAttackers + selectedCannons }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="central-panel text-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="3vw"
+      height="3vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="text-danger"
+    >
+      <use xlink:href="#arrow" />
+    </svg>
+  </div>
+
+  <div class="right-panel">
+    <h6>Defenders before bombarding:</h6>
+    <app-army-destination-preview
+      [army]="armyDescriptionBefore"
+      [shouldShowArmy]="true"
+      [shouldShowScarabs]="false"
+    >
+    </app-army-destination-preview>
+
+    <h6 class="mt-5">Defenders after bombarding:</h6>
+    <app-army-destination-preview
+      [army]="armyDescriptionAfter"
+      [shouldShowArmy]="true"
+      [shouldShowScarabs]="false"
+    >
+    </app-army-destination-preview>
   </div>
 </div>
 
 <div class="bombard-button-wrapper">
-  <button [disabled]="selectedCannons <= 0" (click)="onBombardClick()" class="btn btn-warning">Bombard</button>
+  <button
+    [disabled]="selectedCannons <= 0"
+    (click)="onBombardClick()"
+    class="btn btn-warning"
+  >
+    Bombard
+  </button>
 </div>

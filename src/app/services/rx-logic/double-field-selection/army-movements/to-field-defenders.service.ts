@@ -42,7 +42,7 @@ export class ToFieldDefendersService extends ResourceProcessor<EstimatedArmy | n
     }
     const field = fieldSelection.to;
     if (field.isOwned) {
-      return null;
+      return this.getOwnedEstimatedDefenders(field, context, scarabsRange);
     }
     if (field.isEnemy) {
       return this.getEnemyEstimatedDefenders(
@@ -53,6 +53,43 @@ export class ToFieldDefendersService extends ResourceProcessor<EstimatedArmy | n
       );
     }
     return this.getUnocuppiedFieldEstimatedDefenders(scarabsRange);
+  }
+
+  private getOwnedEstimatedDefenders(
+    field: FieldSelection,
+    context: GameContext,
+    scarabRange: ScarabsRange
+  ): EstimatedArmy {
+    const army = field.field.army;
+    if (context.player.upgrades.includes('KING_OF_DESERT')) {
+      return new EstimatedArmy(
+        'OWNED',
+        true,
+        {
+          ...army,
+          scarabs: scarabRange.min,
+        },
+        {
+          ...army,
+          scarabs: scarabRange.avg,
+        },
+        {
+          ...army,
+          scarabs: scarabRange.max,
+        }
+      );
+    }
+    const fightingArmy = {
+      ...army,
+      scarabs: 0,
+    };
+    return new EstimatedArmy(
+      'OWNED',
+      false,
+      fightingArmy,
+      fightingArmy,
+      fightingArmy
+    );
   }
 
   private getEnemyEstimatedDefenders(
@@ -80,7 +117,7 @@ export class ToFieldDefendersService extends ResourceProcessor<EstimatedArmy | n
   ): EstimatedArmy {
     const averageCase = Math.round((scarabsRange.min + scarabsRange.max) / 2);
     return new EstimatedArmy(
-      false,
+      'UNOCCUPIED',
       true,
       { droids: 0, tanks: 0, cannons: 0, scarabs: scarabsRange.min },
       { droids: 0, tanks: 0, cannons: 0, scarabs: averageCase },

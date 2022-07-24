@@ -2,6 +2,8 @@ import { PlayersAction } from './actions';
 import { GameBalanceConfig } from './game-config-models';
 import { BoardLocation, Field, Game, Player } from './game-models';
 
+export type OwnershipType = 'OWNED' | 'ENEMY' | 'UNOCCUPIED';
+
 export type FieldSelection = {
   row: number;
   col: number;
