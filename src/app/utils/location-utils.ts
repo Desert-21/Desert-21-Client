@@ -80,6 +80,10 @@ export const getLevel2DistancedFields = (
     { row: row - 1, col: col + 1 },
     { row: row + 1, col: col - 1 },
     { row: row - 1, col: col + 1 },
+    { row: row + 2, col },
+    { row: row - 2, col },
+    { row, col: col + 2 },
+    { row, col: col - 2 },
   ]
     .filter((loc) => isLocationValid(loc))
     .map((loc) => findByFieldLocation(loc, fields));

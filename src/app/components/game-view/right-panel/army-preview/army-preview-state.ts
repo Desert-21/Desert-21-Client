@@ -147,9 +147,18 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       };
     }
     return {
-      droids: `${minArmy.droids} - ${maxArmy.droids}`,
-      tanks: `${minArmy.tanks} - ${maxArmy.tanks}`,
-      cannons: `${minArmy.cannons} - ${maxArmy.cannons}`,
+      droids:
+        minArmy.droids !== maxArmy.droids
+          ? `${minArmy.droids} - ${maxArmy.droids}`
+          : minArmy.droids.toString(),
+      tanks:
+        minArmy.tanks !== maxArmy.tanks
+          ? `${minArmy.tanks} - ${maxArmy.tanks}`
+          : minArmy.tanks.toString(),
+      cannons:
+        minArmy.cannons !== maxArmy.cannons
+          ? `${minArmy.cannons} - ${maxArmy.cannons}`
+          : minArmy.cannons.toString(),
     };
   },
   getArmyPowerDescription(

@@ -56,7 +56,9 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
       }
       this.fieldSelectionEmpty = false;
       this.currentState = this.getCurrentState(fieldSelection);
-      this.shouldShowImages = this.currentState.getVisibleImages(false); // todo: change!
+      const fieldOwner = context.game.players.find(p => p.id === fieldSelection.field.ownerId);
+      const ownerOwnsKingOfDesert = fieldOwner ? fieldOwner.upgrades.includes('KING_OF_DESERT') : false;
+      this.shouldShowImages = this.currentState.getVisibleImages(ownerOwnsKingOfDesert);
       const { row, col } = fieldSelection;
       this.armyDescription = this.currentState.getArmyDescription(
         fieldSelection.field.army,
