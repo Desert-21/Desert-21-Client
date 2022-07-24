@@ -2,9 +2,7 @@ import { EstimatedArmy, FightingArmy } from '../models/army-ranges';
 import { GameBalanceConfig } from '../models/game-config-models';
 import { Army, Building, Player } from '../models/game-models';
 import {
-  calculateArmyPower,
-  calculateBombardingAttackersPower,
-  calculateFightingArmyPower,
+  calculateBombardingAttackersPower, calculateDefendingArmyPower,
 } from './army-power-calculator';
 
 export const damageArmyByRocket = (
@@ -26,6 +24,7 @@ export const performBombardingOnEstimatedArmy = (
   estimatedDefenders: EstimatedArmy,
   balance: GameBalanceConfig,
   defenderPlayer: Player,
+  attackerPlayer: Player,
   building: Building
 ): EstimatedArmy => {
   return estimatedDefenders.mapArmy((army) => {
@@ -34,6 +33,7 @@ export const performBombardingOnEstimatedArmy = (
       army,
       balance,
       defenderPlayer,
+      attackerPlayer,
       building
     );
   });
@@ -44,14 +44,16 @@ export const performBombardingOnArmy = (
   defenders: FightingArmy,
   balance: GameBalanceConfig,
   defenderPlayer: Player,
+  attackerPlayer: Player,
   building: Building
 ): FightingArmy => {
-  const defendersPower = calculateFightingArmyPower(
+  const defendersPower = calculateDefendingArmyPower(
     defenders,
+    0,
     balance,
     defenderPlayer,
+    attackerPlayer,
     building,
-    true
   );
   const attackersPower = calculateBombardingAttackersPower(
     attackerCannons,

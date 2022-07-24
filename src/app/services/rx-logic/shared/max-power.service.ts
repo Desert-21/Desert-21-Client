@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Field } from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
-import { calculateArmyPower } from 'src/app/utils/army-power-calculator';
+import { calculateAttackingArmyPower } from 'src/app/utils/army-power-calculator';
 import { flattenFields } from 'src/app/utils/location-utils';
 import { GameContextService } from './game-context.service';
 import { ResourceProcessor } from '../templates/resource-processor';
@@ -28,13 +28,10 @@ export class MaxPowerService extends ResourceProcessor<number> {
 
   private fieldToArmyPower(field: Field, context: GameContext): number {
     const player = context.game.players.find((p) => p.id === field.ownerId);
-    return calculateArmyPower(
+    return calculateAttackingArmyPower(
       field.army,
-      0,
       context.balance,
       player,
-      field.building,
-      false
     );
   }
 

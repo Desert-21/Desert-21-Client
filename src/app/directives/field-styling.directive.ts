@@ -11,7 +11,7 @@ import { Field } from '../models/game-models';
 import { GameContext } from '../models/game-utility-models';
 import { GameContextService } from '../services/rx-logic/shared/game-context.service';
 import { MaxPowerService } from '../services/rx-logic/shared/max-power.service';
-import { calculateArmyPower } from '../utils/army-power-calculator';
+import { calculateAttackingArmyPower } from '../utils/army-power-calculator';
 
 @Directive({
   selector: '[appFieldStyling]',
@@ -68,13 +68,10 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     }
     const player = context.game.players.find((p) => field.ownerId === p.id);
     const isHostile = player.id !== context.player.id;
-    const armyPower = calculateArmyPower(
+    const armyPower = calculateAttackingArmyPower(
       field.army,
-      0,
       context.balance,
       player,
-      field.building,
-      false
     );
     const powerRatio = armyPower / maxPower;
     const opacityRatio = powerRatio * 0.7;

@@ -56,7 +56,6 @@ import { BombardComponent } from './components/game-view/movement-modal/bombard/
 import { FireRocketComponent } from './components/game-view/movement-modal/fire-rocket/fire-rocket.component';
 import { ArmyPickerComponent } from './components/common/army-picker/army-picker.component';
 import { ArmyDestinationPreviewComponent } from './components/common/army-destination-preview/army-destination-preview.component';
-import { ArmyPowerDisplayComponent } from './components/common/army-power-display/army-power-display.component';
 import { LabComponent } from './components/game-view/lab/lab.component';
 import { LabModalComponent } from './components/game-view/lab/lab-modal/lab-modal.component';
 import { UpgradeDescriptionComponent } from './components/game-view/lab/upgrade-description/upgrade-description.component';
@@ -114,7 +113,6 @@ import { RocketBuildingDestructionComponent } from './components/game-view/movem
     FireRocketComponent,
     ArmyPickerComponent,
     ArmyDestinationPreviewComponent,
-    ArmyPowerDisplayComponent,
     LabComponent,
     LabModalComponent,
     UpgradeDescriptionComponent,

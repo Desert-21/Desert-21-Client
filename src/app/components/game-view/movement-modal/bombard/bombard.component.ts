@@ -80,6 +80,7 @@ export class BombardComponent implements OnInit, OnDestroy {
         estimatedDefenders,
         context.balance,
         context.opponent,
+        context.player,
         fieldSelection.to.field.building,
       ).toStringDescription();
     });

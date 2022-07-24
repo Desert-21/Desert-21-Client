@@ -22,111 +22,118 @@ export const calculateBombardingAttackersPower = (
 ): number => {
   const singleCannonPower = balance.combat.cannons.power;
   const rawCannonsPower = cannons * singleCannonPower;
-  const bombardingPowerFraction = balance.upgrades.combat.balanceConfig
-          .improvedCannonsBombardingPowerFraction;
+  const bombardingPowerFraction =
+    balance.upgrades.combat.balanceConfig
+      .improvedCannonsBombardingPowerFraction;
   return Math.round(rawCannonsPower * bombardingPowerFraction);
 };
 
-export const calculateFightingArmyPower = (
+export const calculateDefendingFightingArmyPower = (
   army: FightingArmy, // base army
   balance: GameBalanceConfig, // reference to balance
-  player: Player, // mainly for upgrades, but who knows...
+  defender: Player, // mainly for upgrades, but who knows...
+  attacker: Player,
   building: Building, // for tower bonuses, etc.
-  isDefending: boolean // is defending, or attacking power?
 ): number => {
-  const basePower = getArmyBasePower(army, balance);
-  const postTowerPower = getOptionalTowerPowerBonuses(
-    basePower,
-    isDefending,
-    building,
-    balance
-  );
-  const postFactoryTurretPower = getOptionalFactoryPowerBonuses(
-    postTowerPower,
-    isDefending,
-    building,
+  return calculateDefendingArmyPower(
+    army,
+    army.scarabs,
     balance,
-    player
-  );
-  const postImprovedDroidsPower = getOptionalImprovedDroidsPower(
-    postFactoryTurretPower,
-    isDefending,
-    building,
-    balance,
-    player
-  );
-  const postImprovedTanksPower = getOptionalImprovedTanksPower(
-    postImprovedDroidsPower,
-    balance,
-    player
-  );
-  const totalPreAdvancedTacticsArmyPower =
-    postImprovedTanksPower.droids +
-    postImprovedTanksPower.tanks +
-    postImprovedTanksPower.cannons +
-    postImprovedTanksPower.constant;
-  return getOptionalAdvancedTacticsPower(
-    totalPreAdvancedTacticsArmyPower,
-    balance,
-    player
+    defender,
+    attacker,
+    building
   );
 };
 
-export const calculateArmyPower = (
+export const calculateAttackingArmyPower = (
   army: Army, // base army
-  scarabs: number, // are we generating some scarabs?
   balance: GameBalanceConfig, // reference to balance
-  player: Player, // mainly for upgrades, but who knows...
-  building: Building, // for tower bonuses, etc.
-  isDefending: boolean // is defending, or attacking power?
+  attacker: Player // mainly for upgrades, but who knows...
 ): number => {
   const basePower = getArmyBasePower(army, balance);
-  const postTowerPower = getOptionalTowerPowerBonuses(
-    basePower,
-    isDefending,
-    building,
-    balance
-  );
-  const postFactoryTurretPower = getOptionalFactoryPowerBonuses(
-    postTowerPower,
-    isDefending,
-    building,
-    balance,
-    player
-  );
-  const postImprovedDroidsPower = getOptionalImprovedDroidsPower(
-    postFactoryTurretPower,
-    isDefending,
-    building,
-    balance,
-    player
-  );
   const postImprovedTanksPower = getOptionalImprovedTanksPower(
-    postImprovedDroidsPower,
+    basePower,
     balance,
-    player
+    attacker
   );
   const totalPreAdvancedTacticsArmyPower =
     postImprovedTanksPower.droids +
     postImprovedTanksPower.tanks +
     postImprovedTanksPower.cannons +
     postImprovedTanksPower.constant;
-  return Math.round(getOptionalAdvancedTacticsPower(
+  return Math.round(
+    getOptionalAdvancedTacticsPower(
+      totalPreAdvancedTacticsArmyPower,
+      balance,
+      attacker
+    )
+  );
+};
+
+export const calculateDefendingArmyPower = (
+  army: Army, // base army
+  scarabs: number, // are we generating some scarabs?
+  balance: GameBalanceConfig, // reference to balance
+  defender: Player, // mainly for upgrades, but who knows...
+  attacker: Player,
+  building: Building // for tower bonuses, etc.
+): number => {
+  const basePower = getArmyBasePower(army, balance);
+  const postTowerPower = getOptionalTowerPowerBonuses(
+    basePower,
+    building,
+    balance
+  );
+  const postFactoryTurretPower = getOptionalFactoryPowerBonuses(
+    postTowerPower,
+    building,
+    balance,
+    defender
+  );
+  const postImprovedDroidsPower = getOptionalImprovedDroidsPower(
+    postFactoryTurretPower,
+    building,
+    balance,
+    defender
+  );
+  const postImprovedTanksPower = getOptionalImprovedTanksPower(
+    postImprovedDroidsPower,
+    balance,
+    defender
+  );
+  const totalPreAdvancedTacticsArmyPower =
+    postImprovedTanksPower.droids +
+    postImprovedTanksPower.tanks +
+    postImprovedTanksPower.cannons +
+    postImprovedTanksPower.constant;
+  const postAdvancedTacticsPower = getOptionalAdvancedTacticsPower(
     totalPreAdvancedTacticsArmyPower,
     balance,
-    player
+    defender
+  );
+  return Math.round(getOptionalScarabsPowerBonuses(
+    postAdvancedTacticsPower,
+    scarabs,
+    balance,
+    attacker
   ));
+};
+
+const getOptionalScarabsPowerBonuses = (
+  totalPower: number,
+  scarabs: number,
+  balance: GameBalanceConfig,
+  attacker: Player
+): number => {
+  const scarabsPower = calculateScarabsPower(scarabs, balance, attacker);
+  return totalPower + scarabsPower;
 };
 
 const getOptionalTowerPowerBonuses = (
   power: Power,
-  isDefending: boolean,
   building: Building,
   balance: GameBalanceConfig
 ): Power => {
-  if (!isDefending) {
-    return power;
-  }
   if (!isDefensive(building)) {
     return power;
   }
@@ -147,14 +154,10 @@ const getOptionalTowerPowerBonuses = (
 
 const getOptionalFactoryPowerBonuses = (
   power: Power,
-  isDefending: boolean,
   building: Building,
   balance: GameBalanceConfig,
   player: Player
 ): Power => {
-  if (!isDefending) {
-    return power;
-  }
   if (!isFactory(building)) {
     return power;
   }
@@ -168,10 +171,7 @@ const getOptionalFactoryPowerBonuses = (
     towerConfig.baseProtection,
     towerLevel
   );
-  const unitBonus = getLeveledValueByLevel(
-    towerConfig.unitBonus,
-    towerLevel
-  );
+  const unitBonus = getLeveledValueByLevel(towerConfig.unitBonus, towerLevel);
   const { droids, tanks, cannons, constant } = power;
   return {
     droids: droids + droids * unitBonus,
@@ -183,14 +183,10 @@ const getOptionalFactoryPowerBonuses = (
 
 const getOptionalImprovedDroidsPower = (
   power: Power,
-  isDefending: boolean,
   building: Building,
   balance: GameBalanceConfig,
   player: Player
 ): Power => {
-  if (!isDefending) {
-    return power;
-  }
   if (!player.upgrades.includes('IMPROVED_DROIDS')) {
     return power;
   }
@@ -213,8 +209,7 @@ const getOptionalImprovedTanksPower = (
   if (!player.upgrades.includes('IMPROVED_TANKS')) {
     return power;
   }
-  const bonus =
-    balance.upgrades.combat.balanceConfig.improvedTanksPowerBonus;
+  const bonus = balance.upgrades.combat.balanceConfig.improvedTanksPowerBonus;
   const { tanks } = power;
   return {
     ...power,
@@ -255,4 +250,24 @@ const getUnitsBasePower = (
   const config = unitTypeToConfig(balance.combat, unitType);
   const power = config.power;
   return amount * power;
+};
+
+export const calculateScarabsPower = (
+  numberOfScarabs: number,
+  balance: GameBalanceConfig,
+  attacker: Player
+): number => {
+  const singleScarabPower = balance.combat.scarabs.power;
+  const scarabsPower = numberOfScarabs * singleScarabPower;
+  const attackerOwnsScarabScanners =
+    attacker.upgrades.includes('SCARAB_SCANNERS');
+
+  if (!attackerOwnsScarabScanners) {
+    return scarabsPower;
+  }
+
+  const scarabScannersBonus =
+    balance.upgrades.control.balanceConfig.scarabScannersPowerDecreaseRatio;
+  const scarabsPowerRatio = 1 - scarabScannersBonus;
+  return Math.round(scarabsPower * scarabsPowerRatio);
 };

@@ -1,15 +1,13 @@
-import { GameBalanceConfig } from 'src/app/models/game-config-models';
-import {
-  Army,
-  BoardLocation,
-  Building,
-  Player,
-} from 'src/app/models/game-models';
+import { Army, BoardLocation } from 'src/app/models/game-models';
 import {
   FieldSelection,
   GameContext,
 } from 'src/app/models/game-utility-models';
-import { calculateArmyPower } from 'src/app/utils/army-power-calculator';
+import {
+  calculateAttackingArmyPower,
+  calculateDefendingArmyPower,
+  calculateScarabsPower,
+} from 'src/app/utils/army-power-calculator';
 import { getArmyRanges, getScarabsRange } from 'src/app/utils/army-utils';
 import { getFogOfWarLevel } from 'src/app/utils/location-utils';
 
@@ -70,13 +68,13 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
     gameContext: GameContext,
     selectedFieldInfo: FieldSelection
   ): ArmyPowerDescription {
-    const defendingPowerDefault = calculateArmyPower(
+    const defendingPowerDefault = calculateDefendingArmyPower(
       army,
       0,
       gameContext.balance,
       gameContext.player,
-      selectedFieldInfo.field.building,
-      true
+      gameContext.opponent,
+      selectedFieldInfo.field.building
     );
     let defendingPowerString = defendingPowerDefault.toString();
     if (gameContext.player.upgrades.includes('KING_OF_DESERT')) {
@@ -84,32 +82,29 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
         gameContext.game.stateManager.turnCounter,
         gameContext.balance.combat.scarabs
       );
-      const defendingPowerMin = calculateArmyPower(
+      const defendingPowerMin = calculateDefendingArmyPower(
         army,
         scarabsRange.min,
         gameContext.balance,
         gameContext.player,
-        selectedFieldInfo.field.building,
-        true
+        gameContext.opponent,
+        selectedFieldInfo.field.building
       );
-      const defendingPowerMax = calculateArmyPower(
+      const defendingPowerMax = calculateDefendingArmyPower(
         army,
         scarabsRange.max,
         gameContext.balance,
         gameContext.player,
-        selectedFieldInfo.field.building,
-        true
+        gameContext.opponent,
+        selectedFieldInfo.field.building
       );
       defendingPowerString = `${defendingPowerMin}-${defendingPowerMax}`;
     }
 
-    const attackingPower = calculateArmyPower(
+    const attackingPower = calculateAttackingArmyPower(
       army,
-      0,
       gameContext.balance,
-      gameContext.player,
-      selectedFieldInfo.field.building,
-      false
+      gameContext.player
     );
     return {
       defendingPower: defendingPowerString,
@@ -179,37 +174,41 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
         attackingPower: '???',
       };
     }
-    const minAttackingArmyPower = calculateArmyPower(
+    const minAttackingArmyPower = calculateAttackingArmyPower(
       minArmy,
-      0,
       gameContext.balance,
-      gameContext.opponent,
-      selectedFieldInfo.field.building,
-      false
+      gameContext.opponent
     );
-    const maxAttackingArmyPower = calculateArmyPower(
+    const maxAttackingArmyPower = calculateAttackingArmyPower(
       maxArmy,
-      0,
       gameContext.balance,
-      gameContext.opponent,
-      selectedFieldInfo.field.building,
-      false
+      gameContext.opponent
     );
-    const minDefendingArmyPower = calculateArmyPower(
+    let minScarabs = 0;
+    let maxScarabs = 0;
+    if (gameContext.opponent.upgrades.includes('KING_OF_DESERT')) {
+      const scarabsRange = getScarabsRange(
+        gameContext.game.stateManager.turnCounter,
+        gameContext.balance.combat.scarabs
+      );
+      minScarabs = scarabsRange.min;
+      maxScarabs = scarabsRange.max;
+    }
+    const minDefendingArmyPower = calculateDefendingArmyPower(
       minArmy,
-      0,
+      minScarabs,
       gameContext.balance,
       gameContext.opponent,
-      selectedFieldInfo.field.building,
-      true
+      gameContext.player,
+      selectedFieldInfo.field.building
     );
-    const maxDefendingArmyPower = calculateArmyPower(
+    const maxDefendingArmyPower = calculateDefendingArmyPower(
       maxArmy,
-      0,
+      maxScarabs,
       gameContext.balance,
       gameContext.opponent,
-      selectedFieldInfo.field.building,
-      true
+      gameContext.player,
+      selectedFieldInfo.field.building
     );
     return {
       attackingPower: `${minAttackingArmyPower} - ${maxAttackingArmyPower}`,
@@ -248,8 +247,16 @@ export const DesertArmyPreviewState: ArmyPreviewState = {
       gameContext.game.stateManager.turnCounter,
       config
     );
-    const minPower = scarabsRange.min * config.power;
-    const maxPower = scarabsRange.max * config.power;
+    const minPower = calculateScarabsPower(
+      scarabsRange.min,
+      gameContext.balance,
+      gameContext.player
+    );
+    const maxPower = calculateScarabsPower(
+      scarabsRange.max,
+      gameContext.balance,
+      gameContext.player
+    );
     return {
       defendingPower: `${minPower}-${maxPower}`,
       attackingPower: '0',
