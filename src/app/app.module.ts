@@ -65,6 +65,7 @@ import { BuildBuildingButtonComponent } from './components/game-view/right-panel
 import { RocketDamageEstimationComponent } from './components/game-view/movement-modal/fire-rocket/rocket-damage-estimation/rocket-damage-estimation.component';
 import { RocketBuildingDestructionComponent } from './components/game-view/movement-modal/fire-rocket/rocket-building-destruction/rocket-building-destruction.component';
 import { BattleSimulationComponent } from './components/game-view/movement-modal/attack/battle-simulation/battle-simulation.component';
+import { ResolutionPhaseModalComponent } from './components/game-view/resolution-phase-modal/resolution-phase-modal.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { BattleSimulationComponent } from './components/game-view/movement-modal
     BuildBuildingButtonComponent,
     RocketDamageEstimationComponent,
     RocketBuildingDestructionComponent,
-    BattleSimulationComponent
+    BattleSimulationComponent,
+    ResolutionPhaseModalComponent
   ],
   imports: [
     BrowserModule,

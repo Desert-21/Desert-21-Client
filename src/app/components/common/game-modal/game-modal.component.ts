@@ -25,6 +25,9 @@ export class GameModalComponent implements OnInit, OnDestroy {
   @ViewChild('lab', { read: TemplateRef })
   lab: TemplateRef<any>;
 
+  @ViewChild('resolution', { read: TemplateRef })
+  resolution: TemplateRef<any>;
+
   private sub1: Subscription;
 
   constructor(
@@ -60,6 +63,8 @@ export class GameModalComponent implements OnInit, OnDestroy {
         return this.lab;
       case 'MOVEMENT':
         return this.movement;
+      case 'RESOLUTION':
+        return this.resolution;
     }
   }
 
@@ -71,6 +76,8 @@ export class GameModalComponent implements OnInit, OnDestroy {
         return 'big-dark-modal';
       case 'MOVEMENT':
         return 'dark-modal';
+      case 'RESOLUTION':
+        return 'dark-modal';
     }
   }
 
@@ -81,6 +88,8 @@ export class GameModalComponent implements OnInit, OnDestroy {
       case 'LAB':
         return 'xl';
       case 'MOVEMENT':
+        return null;
+      case 'RESOLUTION':
         return null;
     }
   }

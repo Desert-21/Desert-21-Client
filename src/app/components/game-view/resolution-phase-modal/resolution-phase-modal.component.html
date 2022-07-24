@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title">Resolution Phase</h4>
+  <button
+  *ngIf="isCrossButtonAvailable"
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="modal.close('')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngIf="isProgressBarVisible" class="progress">
+    <div
+      class="progress-bar"
+      role="progressbar"
+      [style.width]="currentProgress.toString() + '%'"
+      [aria-valuenow]="currentProgress"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    ></div>
+  </div>
+  <div *ngIf="currentNotification !== null">{{currentNotification.type}}</div>
+</div>

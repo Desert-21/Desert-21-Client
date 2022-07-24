@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BombardAction } from 'src/app/models/actions';
 import { EstimatedArmy } from 'src/app/models/army-ranges';
 import { GameContext } from 'src/app/models/game-utility-models';
+import { getScarabsRange } from 'src/app/utils/army-utils';
 import { performBombardingOnEstimatedArmy } from 'src/app/utils/battles';
 import { areLocationsEqual } from 'src/app/utils/location-utils';
 import { GameContextService } from '../../shared/game-context.service';
@@ -54,7 +55,7 @@ export class ToFieldPostBombardingDefendersService extends ResourceProcessor<Est
       .filter((a) => areLocationsEqual(a.to, fieldSelection.to))
       .map((a) => a.cannonsAmount)
       .reduce((prev, next) => prev + next, 0);
-    return performBombardingOnEstimatedArmy(
+    const postBombarding = performBombardingOnEstimatedArmy(
       totalCannonAttackers,
       armyEstimateBefore,
       context.balance,
@@ -62,5 +63,15 @@ export class ToFieldPostBombardingDefendersService extends ResourceProcessor<Est
       context.opponent,
       fieldSelection.to.field.building
     );
+    if (context.opponent.upgrades.includes('KING_OF_DESERT')) {
+      const scarabs = getScarabsRange(
+        context.game.stateManager.turnCounter,
+        context.balance.combat.scarabs
+      );
+      postBombarding.worstCase.scarabs = scarabs.min;
+      postBombarding.averageCase.scarabs = scarabs.avg;
+      postBombarding.bestCase.scarabs = scarabs.max;
+    }
+    return postBombarding;
   }
 }

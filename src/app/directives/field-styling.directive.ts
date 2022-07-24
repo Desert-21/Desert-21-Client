@@ -7,8 +7,9 @@ import {
   Renderer2,
 } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
-import { Field } from '../models/game-models';
+import { Army, Field } from '../models/game-models';
 import { GameContext } from '../models/game-utility-models';
+import { PostMovementsArmyMapService } from '../services/rx-logic/double-field-selection/army-movements/post-movements-army-map.service';
 import { GameContextService } from '../services/rx-logic/shared/game-context.service';
 import { MaxPowerService } from '../services/rx-logic/shared/max-power.service';
 import { calculateAttackingArmyPower } from '../utils/army-power-calculator';
@@ -21,7 +22,8 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     private ref: ElementRef,
     private renderer: Renderer2,
     private contextService: GameContextService,
-    private maxPowerService: MaxPowerService
+    private maxPowerService: MaxPowerService,
+    private postMovementsArmyMapService: PostMovementsArmyMapService
   ) {}
 
   @Input() row = -1;
@@ -35,13 +37,16 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     this.sub1 = combineLatest([
       this.contextService.getStateUpdates(),
       this.maxPowerService.getStateUpdates(),
+      this.postMovementsArmyMapService.getStateUpdates()
     ]).subscribe((data) => {
-      const [context, maxPower] = data;
+      const [context, maxPower, armyMap] = data;
       const game = context.game;
       this.field = game.fields[this.row][this.col];
+      const army = armyMap[this.row][this.col];
       const backgroundColor = this.getBackgroundColorByArmyPower(
         context,
         this.field,
+        army,
         maxPower
       );
       if (backgroundColor !== null) {
@@ -61,6 +66,7 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
   private getBackgroundColorByArmyPower(
     context: GameContext,
     field: Field,
+    army: Army,
     maxPower: number
   ): string | null {
     if (field.ownerId === null || field.army === null) {
@@ -69,7 +75,7 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     const player = context.game.players.find((p) => field.ownerId === p.id);
     const isHostile = player.id !== context.player.id;
     const armyPower = calculateAttackingArmyPower(
-      field.army,
+      army,
       context.balance,
       player,
     );

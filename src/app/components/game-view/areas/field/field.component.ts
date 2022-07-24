@@ -3,6 +3,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { Field } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
+import { PostMovementsArmyMapService } from 'src/app/services/rx-logic/double-field-selection/army-movements/post-movements-army-map.service';
 import { LocationSelectionService } from 'src/app/services/rx-logic/single-field-selection/location-selection.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
