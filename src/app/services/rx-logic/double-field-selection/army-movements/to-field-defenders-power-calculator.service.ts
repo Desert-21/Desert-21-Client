@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { EstimatedArmy } from 'src/app/models/army-ranges';
 import { GameContext } from 'src/app/models/game-utility-models';
-import { calculateDefendingFightingArmyPower } from 'src/app/utils/army-power-calculator';
+import {
+  calculateDefendingFightingArmyPower,
+  calculateScarabsPower,
+} from 'src/app/utils/army-power-calculator';
 import { GameContextService } from '../../shared/game-context.service';
 import { ResourceProcessor } from '../../templates/resource-processor';
 import {
@@ -10,6 +13,7 @@ import {
 } from '../double-field-selection.service';
 import { ToFieldPostBombardingDefendersService } from './to-field-post-bombarding-defenders.service';
 import { FightingArmy } from '../../../../models/army-ranges';
+import { getScarabsRange } from 'src/app/utils/army-utils';
 
 export class PowerRange {
   min: number;
@@ -55,6 +59,21 @@ export class ToFieldDefendersPowerCalculatorService extends ResourceProcessor<Po
     const defender = context.opponent;
     const attacker = context.player;
     const building = fieldSelection.to.field.building;
+    if (!fieldSelection.to.isEnemy) {
+      const range = getScarabsRange(
+        context.game.stateManager.turnCounter,
+        context.balance.combat.scarabs
+      );
+      const calculateByScarabs = (scarabs: number) => {
+        return calculateScarabsPower(scarabs, context.balance, attacker);
+      };
+      return new PowerRange(
+        calculateByScarabs(range.min),
+        calculateByScarabs(range.avg),
+        calculateByScarabs(range.max)
+      );
+    }
+
     const calculateByArmy = (army: FightingArmy): number => {
       return calculateDefendingFightingArmyPower(
         army,
@@ -67,6 +86,7 @@ export class ToFieldDefendersPowerCalculatorService extends ResourceProcessor<Po
     const min = calculateByArmy(worstCase);
     const avg = calculateByArmy(averageCase);
     const max = calculateByArmy(bestCase);
+    console.log(worstCase, bestCase, min, max);
     return new PowerRange(min, avg, max);
   }
 }

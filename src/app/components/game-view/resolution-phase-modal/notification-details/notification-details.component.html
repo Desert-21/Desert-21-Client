@@ -1,0 +1,24 @@
+<app-resources-produced-notification
+  *ngIf="notification.type === 'RESOURCES_PRODUCED'"
+  [notification]="notification?.content"
+></app-resources-produced-notification>
+
+<app-building-built-notification
+  *ngIf="notification.type === 'BUILDING_BUILT'"
+></app-building-built-notification>
+
+<app-building-upgraded-notification
+  *ngIf="notification.type === 'BUILDING_UPGRADED'"
+></app-building-upgraded-notification>
+
+<app-lab-upgrade-notification
+  *ngIf="notification.type === 'LAB_UPGRADE'"
+></app-lab-upgrade-notification>
+
+<app-rocket-strike-notification
+  *ngIf="notification.type === 'ROCKET_STRIKE'"
+></app-rocket-strike-notification>
+
+<app-rocket-strike-on-rocket-notification
+  *ngIf="notification.type === 'ROCKET_STRIKE_DESTROYS_ROCKET_LAUNCHER'"
+></app-rocket-strike-on-rocket-notification>

@@ -1,0 +1,27 @@
+<h5 *ngIf="isPlayerProducer" class="text-center">
+  You have produced resources:
+</h5>
+<h5 *ngIf="!isPlayerProducer" class="text-center">
+  Your opponent has produced resources:
+</h5>
+<div class="resources-outer-wrapper">
+  <div class="resources-wrapper mt-3">
+    <div>
+      <img src="/assets/metal2.png" /><span class="ml-2">{{
+        resources.metal
+      }}</span>
+    </div>
+    <div>
+      <img src="/assets/buildingMaterials2.png" />
+      <span class="ml-2">
+        {{ resources.buildingMaterials }}
+      </span>
+    </div>
+    <div>
+      <img src="/assets/electricity2.png" />
+      <span class="ml-2">
+        {{ resources.electricity }}
+      </span>
+    </div>
+  </div>
+</div>

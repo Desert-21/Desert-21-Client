@@ -11,6 +11,11 @@
   </button>
 </div>
 <div class="modal-body">
+
+  <div *ngIf="currentNotification !== null">{{currentNotification.type}}
+    <app-notification-details [notification]="currentNotification"></app-notification-details>
+  </div>
+
   <div *ngIf="isProgressBarVisible" class="progress">
     <div
       class="progress-bar"
@@ -21,5 +26,4 @@
       aria-valuemax="100"
     ></div>
   </div>
-  <div *ngIf="currentNotification !== null">{{currentNotification.type}}</div>
 </div>

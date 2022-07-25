@@ -13,10 +13,12 @@
     <div
       *ngFor="let trainingOption of enrichedTrainingOptions"
       appEnlighter
-      [isEnlighterEnabled]="trainingOption.isAvailable"
+      [isEnlighterEnabled]="trainingOption.availability.isAvailable"
       class="image-wrapper"
-      [ngClass]="{darkened: !trainingOption.isAvailable}"
+      [ngClass]="{darkened: !trainingOption.availability.isAvailable}"
       (click)="saveArmyTraining(trainingOption)"
+      [ngbTooltip]="trainingOption.availability.reason"
+      placement="right"
     >
       <img class="img-fluid" [src]="trainingOption.imageSource" />
       <span>{{ trainingOption.amount }}</span>

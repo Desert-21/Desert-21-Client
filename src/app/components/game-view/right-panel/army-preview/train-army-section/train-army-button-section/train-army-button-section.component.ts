@@ -7,6 +7,7 @@ import {
 } from 'src/app/models/game-config-models';
 import {
   BoardLocation,
+  ResourceSet,
   TrainingMode,
   UnitType,
 } from 'src/app/models/game-models';
@@ -14,11 +15,13 @@ import {
   FieldSelection,
   GameContext,
 } from 'src/app/models/game-utility-models';
+import { AvailableResourcesService } from 'src/app/services/rx-logic/shared/available-resources.service';
 import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { canTrainUnits } from 'src/app/utils/army-utils';
 import { unitTypeToConfig } from 'src/app/utils/balance-utils';
+import { ExplainedAvailability } from 'src/app/utils/validation';
 
 type TrainingOption = {
   unitType: UnitType;
@@ -29,7 +32,7 @@ type EnrichedTrainingOption = TrainingOption & {
   amount: number;
   cost: number;
   imageSource: string;
-  isAvailable: boolean;
+  availability: ExplainedAvailability;
 };
 
 const trainingOptions: Array<TrainingOption> = [
@@ -60,15 +63,17 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
   constructor(
     private gameContextService: GameContextService,
     private selectedFieldService: SelectedFieldService,
-    private currentActionsService: CurrentActionsService
+    private currentActionsService: CurrentActionsService,
+    private availableResourcesService: AvailableResourcesService
   ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.gameContextService.getStateUpdates(),
       this.selectedFieldService.getStateUpdates(),
+      this.availableResourcesService.getStateUpdates(),
     ]).subscribe((updates) => {
-      const [context, fieldInfo] = updates;
+      const [context, fieldInfo, availableResources] = updates;
 
       if (fieldInfo === null) {
         return;
@@ -77,7 +82,7 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
       this.location = { row: fieldInfo.row, col: fieldInfo.col };
 
       this.enrichedTrainingOptions = trainingOptions.map((o) =>
-        this.enrichTrainingOption(o, context, fieldInfo)
+        this.enrichTrainingOption(o, context, fieldInfo, availableResources)
       );
     });
 
@@ -90,7 +95,7 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
   }
 
   saveArmyTraining(option: EnrichedTrainingOption): void {
-    if (!option.isAvailable) {
+    if (!option.availability.isAvailable) {
       return;
     }
     const action = new TrainAction(
@@ -106,7 +111,8 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
   private enrichTrainingOption(
     option: TrainingOption,
     context: GameContext,
-    fieldSelection: FieldSelection
+    fieldSelection: FieldSelection,
+    availableResources: ResourceSet
   ): EnrichedTrainingOption {
     const combatConfig = context.balance.combat;
     const config = unitTypeToConfig(combatConfig, option.unitType);
@@ -114,18 +120,20 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
     const cost = amount * config.cost;
     const imageSource = this.getImageSource(option.unitType);
 
-    const isAvailable = canTrainUnits(
+    const availability = canTrainUnits(
       context.player,
       fieldSelection.field.building,
       option.trainingMode,
-      option.unitType
+      option.unitType,
+      availableResources,
+      context.balance
     );
     return {
       ...option,
       amount,
       cost,
       imageSource,
-      isAvailable,
+      availability,
     };
   }
 

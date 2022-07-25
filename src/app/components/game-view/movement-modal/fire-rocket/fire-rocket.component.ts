@@ -5,6 +5,7 @@ import { BoardLocation } from 'src/app/models/game-models';
 import { CanDestroyRocketService } from 'src/app/services/rx-logic/double-field-selection/can-destroy-rocket.service';
 import { DoubleFieldSelectionService } from 'src/app/services/rx-logic/double-field-selection/double-field-selection.service';
 import { RocketAlreadyFiredService } from 'src/app/services/rx-logic/double-field-selection/rocket-already-fired.service';
+import { RocketAvailabilityService } from 'src/app/services/rx-logic/double-field-selection/rocket-availability.service';
 import {
   RocketStrikeCostDescription,
   RocketStrikeCostService,
@@ -19,7 +20,6 @@ import { ArmyDescription } from '../../right-panel/army-preview/army-preview-sta
   styleUrls: ['./fire-rocket.component.scss'],
 })
 export class FireRocketComponent implements OnInit, OnDestroy {
-  isAlreadyFired = false;
   armyDescriptionBefore: ArmyDescription = {
     droids: '?',
     tanks: '?',
@@ -34,6 +34,7 @@ export class FireRocketComponent implements OnInit, OnDestroy {
   isTargetingRocketLauncher = false;
   rocketStrikeCost: RocketStrikeCostDescription = { current: 0, next: 0 };
   rocketDestructionAvailability: ExplainedAvailability = getNotAvailable('');
+  rocketAvailability: ExplainedAvailability = getNotAvailable('');
 
   @Input() modal: any;
 
@@ -43,18 +44,18 @@ export class FireRocketComponent implements OnInit, OnDestroy {
   private sub4: Subscription;
 
   constructor(
-    private rocketAlreadyFiredService: RocketAlreadyFiredService,
+    private rocketAvailabilityService: RocketAvailabilityService,
     private currentActionsService: CurrentActionsService,
     private fieldSelectionService: DoubleFieldSelectionService,
     private rocketStrikeCostService: RocketStrikeCostService,
-    private canDestroyRocketService: CanDestroyRocketService
+    private canDestroyRocketService: CanDestroyRocketService,
   ) {}
 
   ngOnInit(): void {
-    this.sub1 = this.rocketAlreadyFiredService
+    this.sub1 = this.rocketAvailabilityService
       .getStateUpdates()
-      .subscribe((isAlreadyFired) => {
-        this.isAlreadyFired = isAlreadyFired;
+      .subscribe((availability) => {
+        this.rocketAvailability = availability;
       });
     this.sub2 = this.fieldSelectionService
       .getStateUpdates()
@@ -75,7 +76,7 @@ export class FireRocketComponent implements OnInit, OnDestroy {
       .subscribe((canDestroyRocket) => {
         this.rocketDestructionAvailability = canDestroyRocket;
       });
-    this.rocketAlreadyFiredService.requestState();
+    this.rocketAvailabilityService.requestState();
     this.fieldSelectionService.requestState();
     this.rocketStrikeCostService.requestState();
     this.canDestroyRocketService.requestState();

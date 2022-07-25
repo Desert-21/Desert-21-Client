@@ -3,7 +3,12 @@ import {
   AllCombatBalance,
   CombatUnitConfig,
 } from '../models/game-config-models';
-import { Building, BuildingType, UnitType } from '../models/game-models';
+import {
+  Building,
+  BuildingType,
+  TrainingMode,
+  UnitType,
+} from '../models/game-models';
 
 export const buildingToConfig = (
   buildingsBalance: AllBuildingsBalance,
@@ -56,5 +61,19 @@ export const unitTypeToConfig = (
       return combatBalance.tanks;
     case 'CANNON':
       return combatBalance.cannons;
+  }
+};
+
+export const trainingModeToAmount = (
+  trainingMode: TrainingMode,
+  combatUnitConfig: CombatUnitConfig
+): number => {
+  switch (trainingMode) {
+    case 'SMALL_PRODUCTION':
+      return combatUnitConfig.smallProduction;
+    case 'MEDIUM_PRODUCTION':
+      return combatUnitConfig.mediumProduction;
+    case 'MASS_PRODUCTION':
+      return combatUnitConfig.massProduction;
   }
 };

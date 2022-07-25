@@ -3,11 +3,19 @@ import {
   AllCombatBalance,
   GameBalanceConfig,
 } from 'src/app/models/game-config-models';
-import { BoardLocation, Building, Field, Player } from 'src/app/models/game-models';
+import {
+  BoardLocation,
+  Building,
+  Field,
+  Player,
+} from 'src/app/models/game-models';
 import { GameContext } from 'src/app/models/game-utility-models';
 import { getFastestUnitsSpeed } from 'src/app/utils/army-utils';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
-import { DoubleFieldSelection, DoubleFieldSelectionService } from './double-field-selection.service';
+import {
+  DoubleFieldSelection,
+  DoubleFieldSelectionService,
+} from './double-field-selection.service';
 import { GameContextService } from '../shared/game-context.service';
 import { LastShortestPathCalculationService } from './drag-and-drop/last-shortest-path-calculation.service';
 import { ResourceProcessor } from '../templates/resource-processor';
@@ -32,7 +40,10 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
   }
 
   protected processData(dataElements: any[]): ModalActionType[] {
-    const [context, fieldSelection] = dataElements as [GameContext, DoubleFieldSelection];
+    const [context, fieldSelection] = dataElements as [
+      GameContext,
+      DoubleFieldSelection
+    ];
     if (fieldSelection === null) {
       return [];
     }
@@ -53,7 +64,8 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
       fieldSelection.to.field,
       playersId,
       fieldSelection.path,
-      context.balance.combat
+      context.balance.combat,
+      context.game.fields
     )
       ? 'ATTACK'
       : null;
@@ -63,7 +75,8 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
       fieldSelection.to.field,
       context.player,
       fieldSelection.path,
-      context.balance.combat
+      context.balance.combat,
+      context.game.fields
     )
       ? 'BOMBARD'
       : null;
@@ -107,9 +120,13 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
     toField: Field,
     playersId: string,
     path: Array<BoardLocation>,
-    balanceConfig: AllCombatBalance
+    balanceConfig: AllCombatBalance,
+    board: Array<Array<Field>>
   ): boolean {
     if (fromField.ownerId !== playersId || toField.ownerId === playersId) {
+      return false;
+    }
+    if (!this.isPathAttackable(path, board, playersId)) {
       return false;
     }
     const maxSpeed = getFastestUnitsSpeed(fromField.army, balanceConfig);
@@ -125,10 +142,14 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
     toField: Field,
     player: Player,
     path: Array<BoardLocation>,
-    balanceConfig: AllCombatBalance
+    balanceConfig: AllCombatBalance,
+    board: Array<Array<Field>>
   ): boolean {
     const playersId = player.id;
     if (fromField.ownerId !== playersId || toField.ownerId === playersId) {
+      return false;
+    }
+    if (!this.isPathAttackable(path, board, playersId)) {
       return false;
     }
     const hasCannons = fromField.army.cannons > 0;
@@ -146,7 +167,11 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
     return true;
   }
 
-  private canFireRocket(fromField: Field, toField: Field, playerId: string): boolean {
+  private canFireRocket(
+    fromField: Field,
+    toField: Field,
+    playerId: string
+  ): boolean {
     return (
       fromField.ownerId === playerId &&
       !this.isLevel4Defensive(toField.building) &&
@@ -155,7 +180,24 @@ export class MovementModalAvailableActionsService extends ResourceProcessor<
   }
 
   private isLevel4Defensive(building: Building): boolean {
-    const isDefensive = building.type === 'TOWER' || building.type === 'HOME_BASE';
+    const isDefensive =
+      building.type === 'TOWER' || building.type === 'HOME_BASE';
     return isDefensive && building.level === 4;
+  }
+
+  private isPathAttackable(
+    path: Array<BoardLocation>,
+    board: Array<Array<Field>>,
+    playerId: string
+  ): boolean {
+    for (let i = 0; i < path.length - 1; i++) {
+      const location = path[i];
+      const field = findByFieldLocation(location, board);
+      const ownsField = field.ownerId === playerId;
+      if (!ownsField) {
+        return false;
+      }
+    }
+    return true;
   }
 }

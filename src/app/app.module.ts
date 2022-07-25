@@ -66,6 +66,13 @@ import { RocketDamageEstimationComponent } from './components/game-view/movement
 import { RocketBuildingDestructionComponent } from './components/game-view/movement-modal/fire-rocket/rocket-building-destruction/rocket-building-destruction.component';
 import { BattleSimulationComponent } from './components/game-view/movement-modal/attack/battle-simulation/battle-simulation.component';
 import { ResolutionPhaseModalComponent } from './components/game-view/resolution-phase-modal/resolution-phase-modal.component';
+import { NotificationDetailsComponent } from './components/game-view/resolution-phase-modal/notification-details/notification-details.component';
+import { ResourcesProducedNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/resources-produced-notification/resources-produced-notification.component';
+import { BuildingUpgradedNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/building-upgraded-notification/building-upgraded-notification.component';
+import { LabUpgradeNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/lab-upgrade-notification/lab-upgrade-notification.component';
+import { RocketStrikeNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/rocket-strike-notification/rocket-strike-notification.component';
+import { RocketStrikeOnRocketNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/rocket-strike-on-rocket-notification/rocket-strike-on-rocket-notification.component';
+import { BuildingBuiltNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/building-built-notification/building-built-notification.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +131,14 @@ import { ResolutionPhaseModalComponent } from './components/game-view/resolution
     RocketDamageEstimationComponent,
     RocketBuildingDestructionComponent,
     BattleSimulationComponent,
-    ResolutionPhaseModalComponent
+    ResolutionPhaseModalComponent,
+    NotificationDetailsComponent,
+    ResourcesProducedNotificationComponent,
+    BuildingUpgradedNotificationComponent,
+    LabUpgradeNotificationComponent,
+    RocketStrikeNotificationComponent,
+    RocketStrikeOnRocketNotificationComponent,
+    BuildingBuiltNotificationComponent,
   ],
   imports: [
     BrowserModule,

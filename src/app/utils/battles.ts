@@ -16,9 +16,9 @@ export const damageArmyByRocket = (
   return army.mapArmy((fightingArmy) => {
     const damage = balance.general.rocketStrikeDamage;
     const remainingUnitsRatio = 1 - damage;
-    const droids = fightingArmy.droids * remainingUnitsRatio;
-    const tanks = fightingArmy.tanks * remainingUnitsRatio;
-    const cannons = fightingArmy.cannons * remainingUnitsRatio;
+    const droids = Math.round(fightingArmy.droids * remainingUnitsRatio);
+    const tanks = Math.round(fightingArmy.tanks * remainingUnitsRatio);
+    const cannons = Math.round(fightingArmy.cannons * remainingUnitsRatio);
     return { droids, tanks, cannons, scarabs: fightingArmy.scarabs };
   });
 };

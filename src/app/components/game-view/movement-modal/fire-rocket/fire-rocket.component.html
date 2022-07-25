@@ -21,13 +21,11 @@
 
 <div class="button-wrapper mt-5">
   <div
-    [ngbTooltip]="
-      isAlreadyFired ? 'Rocket has been already fired this turn!' : ''
-    "
+    [ngbTooltip]="rocketAvailability.reason"
   >
     <button
       (click)="fireRocket()"
-      [disabled]="isAlreadyFired"
+      [disabled]="!rocketAvailability.isAvailable"
       class="btn btn-danger"
     >
       <div class="button-content">

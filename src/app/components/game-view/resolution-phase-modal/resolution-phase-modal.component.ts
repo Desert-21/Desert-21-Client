@@ -28,7 +28,7 @@ export class ResolutionPhaseModalComponent implements OnInit, OnDestroy {
   isProgressBarVisible = false;
   isCrossButtonAvailable = true;
   currentProgress = 0;
-  currentInterval: NodeJS.Timeout = null;
+  currentInterval = null;
   timeMap: Array<TimeMapEntry> = [];
 
   @Input() modal: any;

@@ -15,11 +15,18 @@ import {
   BoardLocation,
   Building,
   Player,
+  ResourceSet,
   TrainingMode,
   UnitType,
 } from '../models/game-models';
+import { trainingModeToAmount, unitTypeToConfig } from './balance-utils';
 import { isDefensive } from './building-utils';
 import { areLocationsEqual } from './location-utils';
+import {
+  ExplainedAvailability,
+  getAvailable,
+  getNotAvailable,
+} from './validation';
 
 export const getFogOfWarCoefficient = (
   fogOfWarLevel: number,
@@ -117,11 +124,36 @@ export const canTrainUnits = (
   player: Player,
   building: Building,
   trainingMode: TrainingMode,
-  unitType: UnitType
+  unitType: UnitType,
+  availableResources: ResourceSet,
+  balance: GameBalanceConfig
+): ExplainedAvailability => {
+  if (!canTrainInMode(player, trainingMode)) {
+    return getNotAvailable(
+      'You need to unlock this production mode in the lab.'
+    );
+  }
+  if (!canTrainUnitType(building, unitType)) {
+    return getNotAvailable(
+      'You need to upgrade your tower in order to train this unit.'
+    );
+  }
+  if (!canAffordUnits(availableResources, unitType, trainingMode, balance)) {
+    return getNotAvailable("You don't have enough metal.");
+  }
+  return getAvailable();
+};
+
+export const canAffordUnits = (
+  availableResources: ResourceSet,
+  unitType: UnitType,
+  trainingMode: TrainingMode,
+  balance: GameBalanceConfig
 ): boolean => {
-  return (
-    canTrainInMode(player, trainingMode) && canTrainUnitType(building, unitType)
-  );
+  const unitConfig = unitTypeToConfig(balance.combat, unitType);
+  const amount = trainingModeToAmount(trainingMode, unitConfig);
+  const unitCost = unitConfig.cost;
+  return availableResources.metal >= amount * unitCost;
 };
 
 export const canTrainInMode = (
