@@ -22,6 +22,13 @@ export class NotificationDetailsComponent implements OnInit {
     'PLAYER_BOMBARDING_SUCCEEDED',
   ];
 
+  battleAgainstScarabsNotifications: Array<NotificationType> = [
+    'UNOCCUPIED_FIELD_ENEMY_CONQUEST_FAILED',
+    'UNOCCUPIED_FIELD_ENEMY_CONQUEST_SUCCEEDED',
+    'UNOCCUPIED_FIELD_PLAYERS_CONQUEST_FAILED',
+    'UNOCCUPIED_FIELD_PLAYERS_CONQUEST_SUCCEEDED',
+  ];
+
   constructor() {}
 
   ngOnInit(): void {}

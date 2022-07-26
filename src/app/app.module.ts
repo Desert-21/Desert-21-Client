@@ -75,6 +75,8 @@ import { RocketStrikeOnRocketNotificationComponent } from './components/game-vie
 import { BuildingBuiltNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/building-built-notification/building-built-notification.component';
 import { UnitsTrainedNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/units-trained-notification/units-trained-notification.component';
 import { BombardingNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/bombarding-notification/bombarding-notification.component';
+import { BattleAgainstScarabsNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/battle-against-scarabs-notification/battle-against-scarabs-notification.component';
+import { BattleAgainstPlayerNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/battle-against-player-notification/battle-against-player-notification.component';
 
 @NgModule({
   declarations: [
@@ -143,6 +145,8 @@ import { BombardingNotificationComponent } from './components/game-view/resoluti
     BuildingBuiltNotificationComponent,
     UnitsTrainedNotificationComponent,
     BombardingNotificationComponent,
+    BattleAgainstScarabsNotificationComponent,
+    BattleAgainstPlayerNotificationComponent,
   ],
   imports: [
     BrowserModule,

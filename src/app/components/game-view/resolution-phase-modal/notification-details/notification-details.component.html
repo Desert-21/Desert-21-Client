@@ -37,3 +37,13 @@
   *ngIf="bombardingNotifications.includes(notification?.type)"
   [notification]="notification"
 ></app-bombarding-notification>
+
+<app-battle-against-player-notification
+  *ngIf="false"
+  [notification]="notification"
+></app-battle-against-player-notification>
+
+<app-battle-against-scarabs-notification
+  *ngIf="battleAgainstScarabsNotifications.includes(notification?.type)"
+  [notification]="notification"
+></app-battle-against-scarabs-notification>
