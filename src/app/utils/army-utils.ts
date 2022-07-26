@@ -28,6 +28,21 @@ import {
   getNotAvailable,
 } from './validation';
 
+export type AllUnitTypes = UnitType | 'SCARAB';
+
+export const getUnitImage = (unitType: AllUnitTypes): string => {
+  switch (unitType) {
+    case 'DROID':
+      return '/assets/mechs/droid-full.png';
+    case 'TANK':
+      return '/assets/mechs/tank-full.png';
+    case 'CANNON':
+      return '/assets/mechs/cannon-full.png';
+    case 'SCARAB':
+      return '/assets/mechs/desertbot-full.png';
+  }
+};
+
 export const getFogOfWarCoefficient = (
   fogOfWarLevel: number,
   balance: GameBalanceConfig

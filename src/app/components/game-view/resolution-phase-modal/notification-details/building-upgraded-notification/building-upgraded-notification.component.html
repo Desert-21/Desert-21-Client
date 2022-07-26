@@ -1,1 +1,29 @@
-<p>building-upgraded-notification works!</p>
+<h5 *ngIf="isPlayerWhoUpgraded" class="text-center">
+  You have upgraded: <b class="text-success">{{ buildingName }}</b>
+</h5>
+<h5 *ngIf="!isPlayerWhoUpgraded" class="text-center">
+  Your opponent has upgraded: <b class="text-danger">{{ buildingName }}</b>
+</h5>
+<div class="upgrade-visualization-wrapper">
+  <div class="image-wrapper">
+    <div class="text-center text-warning">Level {{levelFrom}}</div>
+    <img [src]="sourceFrom" class="img-fluid" />
+  </div>
+  <div class="arrow-wrapper">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="3vw"
+      height="3vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="text-success"
+    >
+      <use xlink:href="#arrow" />
+    </svg>
+  </div>
+  <div class="image-wrapper">
+    <div class="text-center text-success">Level {{levelTo}}</div>
+    <img [src]="sourceTo" class="img-fluid" />
+  </div>
+</div>

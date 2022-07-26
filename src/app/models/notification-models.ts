@@ -5,11 +5,13 @@ import {
   BuildingType,
   LabUpgrade,
   ResourceSet,
+  UnitType,
 } from './game-models';
 
 export type NotificationType =
   | 'BUILDING_UPGRADED'
   | 'RESOURCES_PRODUCED'
+  | 'UNITS_TRAINED'
   | 'UNOCCUPIED_FIELD_ENEMY_CONQUEST_FAILED'
   | 'UNOCCUPIED_FIELD_PLAYERS_CONQUEST_FAILED'
   | 'UNOCCUPIED_FIELD_ENEMY_CONQUEST_SUCCEEDED'
@@ -67,6 +69,12 @@ export type BuildingUpgradedNotification =
     toLevel: number;
     location: BoardLocation;
   };
+
+export type UnitsTrainedNotification = ResolutionPhaseNotificationContent & {
+  location: BoardLocation;
+  unitType: UnitType;
+  amount: number;
+};
 
 export type LabUpgradeNotification = ResolutionPhaseNotificationContent & {
   upgrade: LabUpgrade;

@@ -19,7 +19,7 @@ import { AvailableResourcesService } from 'src/app/services/rx-logic/shared/avai
 import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
-import { canTrainUnits } from 'src/app/utils/army-utils';
+import { canTrainUnits, getUnitImage } from 'src/app/utils/army-utils';
 import { unitTypeToConfig } from 'src/app/utils/balance-utils';
 import { ExplainedAvailability } from 'src/app/utils/validation';
 
@@ -118,7 +118,7 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
     const config = unitTypeToConfig(combatConfig, option.unitType);
     const amount = this.getProducedAmount(config, option.trainingMode);
     const cost = amount * config.cost;
-    const imageSource = this.getImageSource(option.unitType);
+    const imageSource = getUnitImage(option.unitType);
 
     const availability = canTrainUnits(
       context.player,
@@ -148,17 +148,6 @@ export class TrainArmyButtonSectionComponent implements OnInit, OnDestroy {
         return config.mediumProduction;
       case 'MASS_PRODUCTION':
         return config.massProduction;
-    }
-  }
-
-  private getImageSource(unitType: UnitType): string {
-    switch (unitType) {
-      case 'DROID':
-        return '/assets/mechs/droid-full.png';
-      case 'TANK':
-        return '/assets/mechs/tank-full.png';
-      case 'CANNON':
-        return '/assets/mechs/cannon-full.png';
     }
   }
 }

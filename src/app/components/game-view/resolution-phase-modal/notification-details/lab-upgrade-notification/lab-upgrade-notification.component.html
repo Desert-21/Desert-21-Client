@@ -1,1 +1,12 @@
-<p>lab-upgrade-notification works!</p>
+<h5 *ngIf="isPlayerWhoUpgraded" class="text-center">
+  You have unlocked a lab upgrade:
+  <span class="text-success">{{ upgradeName }}</span>
+</h5>
+<h5 *ngIf="!isPlayerWhoUpgraded" class="text-center">
+  Your opponent has unlocked a lab upgrade:
+  <span class="text-danger">{{ upgradeName }}</span>
+</h5>
+
+<div class="image-wrapper mt-4">
+  <img [src]="imageSource" class="img-fluid" />
+</div>

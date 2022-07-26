@@ -5,20 +5,30 @@
 
 <app-building-built-notification
   *ngIf="notification.type === 'BUILDING_BUILT'"
+  [notification]="notification?.content"
 ></app-building-built-notification>
 
 <app-building-upgraded-notification
   *ngIf="notification.type === 'BUILDING_UPGRADED'"
+  [notification]="notification?.content"
 ></app-building-upgraded-notification>
+
+<app-units-trained-notification
+  *ngIf="notification.type === 'UNITS_TRAINED'"
+  [notification]="notification?.content"
+></app-units-trained-notification>
 
 <app-lab-upgrade-notification
   *ngIf="notification.type === 'LAB_UPGRADE'"
+  [notification]="notification?.content"
 ></app-lab-upgrade-notification>
 
 <app-rocket-strike-notification
   *ngIf="notification.type === 'ROCKET_STRIKE'"
+  [notification]="notification?.content"
 ></app-rocket-strike-notification>
 
 <app-rocket-strike-on-rocket-notification
   *ngIf="notification.type === 'ROCKET_STRIKE_DESTROYS_ROCKET_LAUNCHER'"
+  [notification]="notification?.content"
 ></app-rocket-strike-on-rocket-notification>

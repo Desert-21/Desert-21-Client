@@ -1,0 +1,9 @@
+.image-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  > img {
+    width: 30%;
+  }
+}

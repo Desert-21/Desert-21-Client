@@ -1,5 +1,5 @@
 import { LeveledValue } from '../models/game-config-models';
-import { Building } from '../models/game-models';
+import { Building, BuildingType } from '../models/game-models';
 
 export const isDefensive = (building: Building): boolean => {
   const type = building.type;
@@ -32,3 +32,23 @@ export const getLeveledValueByLevel = (
       return 0;
   }
 };
+
+// todo: finish when graphics are there
+export const getBuildingImage = (buildingType: BuildingType, level: number) => {
+  switch (buildingType) {
+    case 'METAL_FACTORY':
+      return '/assets/buildings/metal.png';
+    case 'BUILDING_MATERIALS_FACTORY':
+      return '/assets/buildings/buildingMaterials.png';
+    case 'ELECTRICITY_FACTORY':
+      return '/assets/buildings/electricity.png';
+    case 'TOWER':
+      return '/assets/buildings/tower.png';
+    case 'HOME_BASE':
+      return '/assets/buildings/tower.png';
+    case 'ROCKET_LAUNCHER':
+      return '/assets/buildings/rocket.png';
+    default:
+      return '/assets/buildings/unknownBuilding.png';
+  }
+}

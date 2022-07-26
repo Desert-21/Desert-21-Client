@@ -1,1 +1,31 @@
-<p>building-built-notification works!</p>
+<h5 *ngIf="isPlayerWhoHasBuilt">
+  You have finished building
+  <span class="text-success">{{ buildingName }}</span>
+</h5>
+<h5 *ngIf="!isPlayerWhoHasBuilt">
+  Your opponent has finished building
+  <span class="text-danger">{{ buildingName }}</span>
+</h5>
+
+<div class="upgrade-visualization-wrapper">
+  <div class="image-wrapper">
+    <img src="/assets/buildings/unknownBuilding.png" class="img-fluid w-100" />
+  </div>
+  <div class="arrow-wrapper">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="3vw"
+      height="3vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      [class.text-success]="isPlayerWhoHasBuilt"
+      [class.text-danger]="!isPlayerWhoHasBuilt"
+    >
+      <use xlink:href="#arrow" />
+    </svg>
+  </div>
+  <div class="image-wrapper">
+    <img [src]="imageSource" class="img-fluid" />
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.upgrade-visualization-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 16px;
+}
+
+.image-wrapper {
+  width: 30%;
+}
+
+.arrow-wrapper {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}

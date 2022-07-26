@@ -73,6 +73,7 @@ import { LabUpgradeNotificationComponent } from './components/game-view/resoluti
 import { RocketStrikeNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/rocket-strike-notification/rocket-strike-notification.component';
 import { RocketStrikeOnRocketNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/rocket-strike-on-rocket-notification/rocket-strike-on-rocket-notification.component';
 import { BuildingBuiltNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/building-built-notification/building-built-notification.component';
+import { UnitsTrainedNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/units-trained-notification/units-trained-notification.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { BuildingBuiltNotificationComponent } from './components/game-view/resol
     RocketStrikeNotificationComponent,
     RocketStrikeOnRocketNotificationComponent,
     BuildingBuiltNotificationComponent,
+    UnitsTrainedNotificationComponent,
   ],
   imports: [
     BrowserModule,
