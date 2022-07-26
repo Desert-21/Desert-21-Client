@@ -32,3 +32,8 @@
   *ngIf="notification.type === 'ROCKET_STRIKE_DESTROYS_ROCKET_LAUNCHER'"
   [notification]="notification?.content"
 ></app-rocket-strike-on-rocket-notification>
+
+<app-bombarding-notification
+  *ngIf="bombardingNotifications.includes(notification?.type)"
+  [notification]="notification"
+></app-bombarding-notification>

@@ -1,13 +1,13 @@
 <h5 *ngIf="isPlayerWhoHasBuilt">
   You have finished building
-  <span class="text-success">{{ buildingName }}</span>
+  <b class="text-success">{{ buildingName }}</b>
 </h5>
 <h5 *ngIf="!isPlayerWhoHasBuilt">
   Your opponent has finished building
-  <span class="text-danger">{{ buildingName }}</span>
+  <b class="text-danger">{{ buildingName }}</b>
 </h5>
 
-<div class="upgrade-visualization-wrapper">
+<div class="building-visualization-wrapper">
   <div class="image-wrapper">
     <img src="/assets/buildings/unknownBuilding.png" class="img-fluid w-100" />
   </div>

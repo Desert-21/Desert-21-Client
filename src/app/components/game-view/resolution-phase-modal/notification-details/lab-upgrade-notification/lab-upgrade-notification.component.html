@@ -1,10 +1,10 @@
 <h5 *ngIf="isPlayerWhoUpgraded" class="text-center">
   You have unlocked a lab upgrade:
-  <span class="text-success">{{ upgradeName }}</span>
+  <b class="text-success">{{ upgradeName }}</b>
 </h5>
 <h5 *ngIf="!isPlayerWhoUpgraded" class="text-center">
   Your opponent has unlocked a lab upgrade:
-  <span class="text-danger">{{ upgradeName }}</span>
+  <b class="text-danger">{{ upgradeName }}</b>
 </h5>
 
 <div class="image-wrapper mt-4">

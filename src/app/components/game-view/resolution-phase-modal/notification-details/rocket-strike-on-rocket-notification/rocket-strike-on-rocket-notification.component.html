@@ -1,1 +1,33 @@
-<p>rocket-strike-on-rocket-notification works!</p>
+<h5 *ngIf="ownershipType === 'OWNED'">
+  <b class="text-danger">Your</b> rocket launcher has been destroyed
+</h5>
+<h5 *ngIf="ownershipType === 'ENEMY'">
+  <b class="text-success">Opponents</b> rocket launcher has been destroyed
+</h5>
+<h5 *ngIf="ownershipType === 'UNOCCUPIED'">
+  Your rocket launcher has been destroyed
+</h5>
+
+<div class="building-visualization-wrapper">
+  <div class="image-wrapper">
+    <img src="/assets/buildings/rocket.png" class="img-fluid w-100" />
+  </div>
+  <div class="arrow-wrapper">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="3vw"
+      height="3vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      [class.text-success]="ownershipType === 'ENEMY'"
+      [class.text-secondary]="ownershipType === 'UNOCCUPIED'"
+      [class.text-danger]="ownershipType === 'OWNED'"
+    >
+      <use xlink:href="#arrow" />
+    </svg>
+  </div>
+  <div class="image-wrapper">
+    <img src="/assets/buildings/unknownBuilding.png" class="img-fluid" />
+  </div>
+</div>

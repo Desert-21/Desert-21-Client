@@ -1,0 +1,20 @@
+.preview-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.damaged-units-wrapper {
+  display: flex;
+  justify-content: space-around;
+  font-size: large;
+}
+
+.cannons-wrapper {
+  > span {
+    position: relative;
+    bottom: 30px;
+    left: 4px;
+    font-size: larger;
+    color: greenyellow;
+  }
+}
