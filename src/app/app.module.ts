@@ -77,6 +77,9 @@ import { UnitsTrainedNotificationComponent } from './components/game-view/resolu
 import { BombardingNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/bombarding-notification/bombarding-notification.component';
 import { BattleAgainstScarabsNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/battle-against-scarabs-notification/battle-against-scarabs-notification.component';
 import { BattleAgainstPlayerNotificationComponent } from './components/game-view/resolution-phase-modal/notification-details/battle-against-player-notification/battle-against-player-notification.component';
+import { MinimapComponent } from './components/game-view/resolution-phase-modal/minimap/minimap.component';
+import { MinimapFieldComponent } from './components/game-view/resolution-phase-modal/minimap/minimap-field/minimap-field.component';
+import { MinimapWrapperComponent } from './components/game-view/resolution-phase-modal/minimap-wrapper/minimap-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -147,6 +150,9 @@ import { BattleAgainstPlayerNotificationComponent } from './components/game-view
     BombardingNotificationComponent,
     BattleAgainstScarabsNotificationComponent,
     BattleAgainstPlayerNotificationComponent,
+    MinimapComponent,
+    MinimapFieldComponent,
+    MinimapWrapperComponent,
   ],
   imports: [
     BrowserModule,

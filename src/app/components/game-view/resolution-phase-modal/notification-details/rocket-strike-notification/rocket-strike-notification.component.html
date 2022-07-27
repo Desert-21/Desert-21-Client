@@ -5,27 +5,29 @@
   A rocket has damaged <b class="text-success"> opponents </b> army
 </h5>
 
-<div class="army-outer-wrapper mt-4">
-  <div class="w-75">
-    <app-army-destination-preview
-      [shouldShowScarabs]="false"
-      [army]="armyBefore"
-    >
-    </app-army-destination-preview>
+<div class="mt-4"></div>
+<app-minimap-wrapper>
+  <div class="army-outer-wrapper">
+    <div class="w-75">
+      <app-army-destination-preview
+        [shouldShowScarabs]="false"
+        [army]="armyBefore"
+      >
+      </app-army-destination-preview>
+    </div>
   </div>
-</div>
 
-<div class="army-outer-wrapper">
-  <div class="damaged-units-wrapper mt-3 w-75">
-    <b class="text-danger">
-      {{ armyDestroyed.droids < 0 ? armyDestroyed.droids : 0 }}
-    </b>
-    <b class="text-danger">
-      {{ armyDestroyed.tanks < 0 ? armyDestroyed.tanks : 0 }}
-    </b>
-    <b class="text-danger">
-      {{ armyDestroyed.cannons < 0 ? armyDestroyed.cannons : 0 }}
-    </b>
+  <div class="army-outer-wrapper">
+    <div class="damaged-units-wrapper mt-3 w-75">
+      <b class="text-danger">
+        {{ armyDestroyed.droids < 0 ? armyDestroyed.droids : 0 }}
+      </b>
+      <b class="text-danger">
+        {{ armyDestroyed.tanks < 0 ? armyDestroyed.tanks : 0 }}
+      </b>
+      <b class="text-danger">
+        {{ armyDestroyed.cannons < 0 ? armyDestroyed.cannons : 0 }}
+      </b>
+    </div>
   </div>
-</div>
-
+</app-minimap-wrapper>

@@ -1,0 +1,12 @@
+<div class="minimap-wrapper">
+  <div
+    *ngFor="let row of fields; let i = index; trackBy: trackBy"
+    class="row-wrapper"
+  >
+    <app-minimap-field
+      *ngFor="let col of row; let j = index; trackBy: trackBy"
+      [location]="{ row: i, col: j }"
+    >
+    </app-minimap-field>
+  </div>
+</div>

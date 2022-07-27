@@ -47,3 +47,8 @@
   *ngIf="battleAgainstScarabsNotifications.includes(notification?.type)"
   [notification]="notification"
 ></app-battle-against-scarabs-notification>
+
+<app-battle-against-player-notification
+  *ngIf="battleAgainstPlayerNotification.includes(notification?.type)"
+  [notification]="notification"
+></app-battle-against-player-notification>

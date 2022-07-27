@@ -5,7 +5,13 @@ import {
   FieldConquestFullPictureNotification,
   FieldConquestNoInfoNotification,
 } from 'src/app/models/notification-models';
+import { MinimapSelectedLocationService } from 'src/app/services/rx-logic/resolution-phase/minimap-selected-location.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import {
+  armyToArmyDescription,
+  getArmyDamageDescription,
+  getUnitDamageDescription,
+} from 'src/app/utils/army-utils';
 import { ArmyDescription } from '../../../right-panel/army-preview/army-preview-state';
 
 type AgainstScarabsBattleNotificationContent =
@@ -17,6 +23,12 @@ type AgainstScarabsBattleNotificationType =
   | 'UNOCCUPIED_FIELD_PLAYERS_CONQUEST_FAILED'
   | 'UNOCCUPIED_FIELD_ENEMY_CONQUEST_SUCCEEDED'
   | 'UNOCCUPIED_FIELD_PLAYERS_CONQUEST_SUCCEEDED';
+
+const defaultAttackersDestroyed: ArmyDescription = {
+  droids: '???',
+  tanks: '???',
+  cannons: '???',
+};
 
 @Component({
   selector: 'app-battle-against-scarabs-notification',
@@ -33,23 +45,23 @@ export class BattleAgainstScarabsNotificationComponent
   notificationTitle = '';
 
   attackersBefore: ArmyDescription = { droids: '?', tanks: '?', cannons: '?' };
-  attackersDestroyed: ArmyDescription = {
-    droids: '???',
-    tanks: '???',
-    cannons: '???',
-  };
+  attackersDestroyed: ArmyDescription = defaultAttackersDestroyed;
   scarabsBefore = '?';
   scarabsDestroyed = '???';
 
   sub1: Subscription;
 
-  constructor(private gameContextService: GameContextService) {}
+  constructor(
+    private gameContextService: GameContextService,
+    private minimapLocationService: MinimapSelectedLocationService
+  ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.notificationSubject.asObservable(),
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([notification, context]) => {
+      this.minimapLocationService.set(notification.content.location);
       this.notificationTitle = this.getNotificationTitle(
         notification.type as AgainstScarabsBattleNotificationType
       );
@@ -70,14 +82,10 @@ export class BattleAgainstScarabsNotificationComponent
       return;
     }
     this.scarabsBefore = castContent.defendersBefore.scarabs.toString();
-    this.scarabsDestroyed =
-      castContent.defendersAfter.scarabs - castContent.defendersBefore.scarabs <
-      0
-        ? `${
-            castContent.defendersAfter.scarabs -
-            castContent.defendersBefore.scarabs
-          }`
-        : '';
+    this.scarabsDestroyed = getUnitDamageDescription(
+      castContent.defendersBefore.scarabs,
+      castContent.defendersAfter.scarabs
+    );
   }
 
   private enrichAttackersInfo(
@@ -86,42 +94,14 @@ export class BattleAgainstScarabsNotificationComponent
     const castContent = content as FieldConquestFullPictureNotification;
     if (!castContent.attackersAfter || !castContent.attackersBefore) {
       this.attackersBefore = { droids: '?', tanks: '?', cannons: '?' };
-      this.attackersDestroyed = {
-        droids: '- ???',
-        tanks: '- ???',
-        cannons: '- ???',
-      };
+      this.attackersDestroyed = defaultAttackersDestroyed;
       return;
     }
-    this.attackersBefore = {
-      droids: castContent.attackersBefore.droids.toString(),
-      tanks: castContent.attackersBefore.tanks.toString(),
-      cannons: castContent.attackersBefore.cannons.toString(),
-    };
-    this.attackersDestroyed = {
-      droids: `${
-        castContent.attackersAfter.droids -
-          castContent.attackersBefore.droids !==
-        0
-          ? castContent.attackersAfter.droids -
-            castContent.attackersBefore.droids
-          : ''
-      }`,
-      tanks: `${
-        castContent.attackersAfter.tanks - castContent.attackersBefore.tanks !==
-        0
-          ? castContent.attackersAfter.tanks - castContent.attackersBefore.tanks
-          : ''
-      }`,
-      cannons: `${
-        castContent.attackersAfter.cannons -
-          castContent.attackersBefore.cannons !==
-        0
-          ? castContent.attackersAfter.cannons -
-            castContent.attackersBefore.cannons
-          : ''
-      }`,
-    };
+    this.attackersBefore = armyToArmyDescription(castContent.attackersBefore);
+    this.attackersDestroyed = getArmyDamageDescription(
+      castContent.attackersBefore,
+      castContent.attackersAfter
+    );
   }
 
   private getNotificationTitle(

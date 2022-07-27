@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { Army } from 'src/app/models/game-models';
 import { RocketStrikeNotification } from 'src/app/models/notification-models';
+import { MinimapSelectedLocationService } from 'src/app/services/rx-logic/resolution-phase/minimap-selected-location.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
 
@@ -21,13 +22,17 @@ export class RocketStrikeNotificationComponent implements OnInit, OnDestroy {
 
   sub1: Subscription;
 
-  constructor(private gameContextService: GameContextService) {}
+  constructor(
+    private gameContextService: GameContextService,
+    private minimapLocationService: MinimapSelectedLocationService
+  ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.notificationSubject.asObservable(),
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([notification, context]) => {
+      this.minimapLocationService.set(notification.location);
       this.armyBefore = notification.defendersBefore;
       this.armyDestroyed = {
         droids:
@@ -40,7 +45,10 @@ export class RocketStrikeNotificationComponent implements OnInit, OnDestroy {
           notification.defendersAfter.cannons -
           notification.defendersBefore.cannons,
       };
-      const field = findByFieldLocation(notification.location, context.game.fields);
+      const field = findByFieldLocation(
+        notification.location,
+        context.game.fields
+      );
       this.isPlayerFieldOwner = field.ownerId === context.player.id;
     });
     this.gameContextService.requestState();

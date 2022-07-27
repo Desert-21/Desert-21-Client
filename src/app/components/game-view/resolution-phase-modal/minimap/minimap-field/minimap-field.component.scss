@@ -1,0 +1,57 @@
+.cell-wrapper {
+  width: 2vh;
+  height: 2vh;
+  border: 1px solid gray;
+}
+
+.top-friendly {
+  border-top: #a6ff00;
+  border-top-width: 2px;
+  border-top-style: solid;
+}
+
+.bottom-friendly {
+  border-bottom: #a6ff00;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.left-friendly {
+  border-left: #a6ff00;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+.right-friendly {
+  border-right: #a6ff00;
+  border-right-width: 2px;
+  border-right-style: solid;
+}
+
+.top-enemy {
+  border-top: #ee3800;
+  border-top-width: 2px;
+  border-top-style: solid;
+}
+
+.bottom-enemy {
+  border-bottom: #ee3800;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.left-enemy {
+  border-left: #ee3800;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+.right-enemy {
+  border-right: #ee3800;
+  border-right-width: 2px;
+  border-right-style: solid;
+}
+
+.selected-field {
+  background-color: cyan;
+}

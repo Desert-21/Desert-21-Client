@@ -5,7 +5,12 @@ import {
   FieldConquestAttackerOnlyNotification,
   FieldConquestFullPictureNotification,
 } from 'src/app/models/notification-models';
+import { MinimapSelectedLocationService } from 'src/app/services/rx-logic/resolution-phase/minimap-selected-location.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import {
+  armyToArmyDescription,
+  getArmyDamageDescription,
+} from 'src/app/utils/army-utils';
 import { ArmyDescription } from '../../../right-panel/army-preview/army-preview-state';
 
 type BombardingNotificationContent =
@@ -17,6 +22,12 @@ type BombardingNotificationType =
   | 'ENEMY_BOMBARDING_SUCCEEDED'
   | 'PLAYER_BOMBARDING_FAILED'
   | 'ENEMY_BOMBARDING_FAILED';
+
+const defaultDefendersDestroyed = {
+  droids: '?',
+  tanks: '?',
+  cannons: '?',
+};
 
 @Component({
   selector: 'app-bombarding-notification',
@@ -31,21 +42,21 @@ export class BombardingNotificationComponent implements OnInit, OnDestroy {
   notificationTitle = '';
   cannonsAmount = 0;
   defendersBefore: ArmyDescription = { droids: '?', tanks: '?', cannons: '?' };
-  defendersDestroyed: ArmyDescription = {
-    droids: '?',
-    tanks: '?',
-    cannons: '?',
-  };
+  defendersDestroyed: ArmyDescription = defaultDefendersDestroyed;
 
   sub1: Subscription;
 
-  constructor(private gameContextService: GameContextService) {}
+  constructor(
+    private gameContextService: GameContextService,
+    private minimapLocationService: MinimapSelectedLocationService
+  ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.notificationSubject.asObservable(),
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([notification, context]) => {
+      this.minimapLocationService.set(notification.content.location);
       const type = notification.type as BombardingNotificationType;
       this.notificationTitle = this.getNotificationMessage(type);
       const content = notification.content;
@@ -59,42 +70,14 @@ export class BombardingNotificationComponent implements OnInit, OnDestroy {
     const castContent = content as FieldConquestFullPictureNotification;
     if (!castContent.defendersAfter || !castContent.defendersBefore) {
       this.defendersBefore = { droids: '?', tanks: '?', cannons: '?' };
-      this.defendersDestroyed = {
-        droids: '- ???',
-        tanks: '- ???',
-        cannons: '- ???',
-      };
+      this.defendersDestroyed = defaultDefendersDestroyed;
       return;
     }
-    this.defendersBefore = {
-      droids: castContent.defendersBefore.droids.toString(),
-      tanks: castContent.defendersBefore.tanks.toString(),
-      cannons: castContent.defendersBefore.cannons.toString(),
-    };
-    this.defendersDestroyed = {
-      droids: `${
-        castContent.defendersAfter.droids -
-          castContent.defendersBefore.droids !==
-        0
-          ? castContent.defendersAfter.droids -
-            castContent.defendersBefore.droids
-          : ''
-      }`,
-      tanks: `${
-        castContent.defendersAfter.tanks - castContent.defendersBefore.tanks !==
-        0
-          ? castContent.defendersAfter.tanks - castContent.defendersBefore.tanks
-          : ''
-      }`,
-      cannons: `${
-        castContent.defendersAfter.cannons -
-          castContent.defendersBefore.cannons !==
-        0
-          ? castContent.defendersAfter.cannons -
-            castContent.defendersBefore.cannons
-          : ''
-      }`,
-    };
+    this.defendersBefore = armyToArmyDescription(castContent.defendersBefore);
+    this.defendersDestroyed = getArmyDamageDescription(
+      castContent.defendersBefore,
+      castContent.defendersAfter
+    );
   }
 
   private getNotificationMessage(

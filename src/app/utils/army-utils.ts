@@ -1,3 +1,4 @@
+import { ArmyDescription } from '../components/game-view/right-panel/army-preview/army-preview-state';
 import {
   AttackAction,
   BombardAction,
@@ -309,5 +310,73 @@ export const getScarabsRange = (
     min: minScarabs,
     avg: middleScarabsNumber,
     max: maxScarabs,
+  };
+};
+
+export const getUnitDamageDescription = (
+  before: number,
+  after: number
+): string => {
+  return after - before !== 0 ? `${after - before}` : '';
+};
+
+export const getArmyDamageDescription = (
+  before: Army,
+  after: Army
+): ArmyDescription => {
+  return {
+    droids:
+      after.droids - before.droids !== 0
+        ? `${after.droids - before.droids}`
+        : '',
+    tanks:
+      after.tanks - before.tanks !== 0 ? `${after.tanks - before.tanks}` : '',
+    cannons:
+      after.cannons - before.cannons !== 0
+        ? `${after.cannons - before.cannons}`
+        : '',
+  };
+};
+
+export const getFightingArmyDamageDescription = (
+  before: FightingArmy,
+  after: FightingArmy
+): ArmyDescription => {
+  return {
+    droids:
+      after.droids - before.droids !== 0
+        ? `${after.droids - before.droids}`
+        : '',
+    tanks:
+      after.tanks - before.tanks !== 0 ? `${after.tanks - before.tanks}` : '',
+    cannons:
+      after.cannons - before.cannons !== 0
+        ? `${after.cannons - before.cannons}`
+        : '',
+    scarabs:
+      after.scarabs - before.scarabs !== 0
+        ? `${after.scarabs - before.scarabs}`
+        : '',
+  };
+};
+
+export const armyToArmyDescription = (
+  army: Army
+): ArmyDescription => {
+  return {
+    droids: army.droids.toString(),
+    tanks: army.tanks.toString(),
+    cannons: army.cannons.toString(),
+  };
+};
+
+export const fightingArmyToArmyDescription = (
+  army: FightingArmy
+): ArmyDescription => {
+  return {
+    droids: army.droids.toString(),
+    tanks: army.tanks.toString(),
+    cannons: army.cannons.toString(),
+    scarabs: army.scarabs.toString(),
   };
 };

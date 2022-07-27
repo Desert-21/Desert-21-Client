@@ -1,0 +1,14 @@
+.minimap-wrapper {
+  width: 14vh;
+  height: 14vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+.row-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}

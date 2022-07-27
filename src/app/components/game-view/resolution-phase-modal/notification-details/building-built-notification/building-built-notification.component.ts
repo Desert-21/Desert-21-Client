@@ -4,6 +4,7 @@ import {
   BuildingBuiltNotification,
   UnitsTrainedNotification,
 } from 'src/app/models/notification-models';
+import { MinimapSelectedLocationService } from 'src/app/services/rx-logic/resolution-phase/minimap-selected-location.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import { getUnitImage } from 'src/app/utils/army-utils';
 import { getBuildingImage } from 'src/app/utils/building-utils';
@@ -26,15 +27,22 @@ export class BuildingBuiltNotificationComponent implements OnInit, OnDestroy {
 
   sub1: Subscription;
 
-  constructor(private gameContextService: GameContextService) {}
+  constructor(
+    private gameContextService: GameContextService,
+    private minimapLocationService: MinimapSelectedLocationService
+  ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.notificationSubject.asObservable(),
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([notification, context]) => {
+      this.minimapLocationService.set(notification.location);
       this.imageSource = getBuildingImage(notification.buildingType, 1);
-      const field = findByFieldLocation(notification.location, context.game.fields);
+      const field = findByFieldLocation(
+        notification.location,
+        context.game.fields
+      );
       this.isPlayerWhoHasBuilt = field.ownerId === context.player.id;
       this.buildingName = underscoreToRegular(notification.buildingType);
     });

@@ -29,6 +29,13 @@ export class NotificationDetailsComponent implements OnInit {
     'UNOCCUPIED_FIELD_PLAYERS_CONQUEST_SUCCEEDED',
   ];
 
+  battleAgainstPlayerNotification: Array<NotificationType> = [
+    'ENEMY_CONQUEST_FAILED',
+    'PLAYERS_CONQUEST_FAILED',
+    'ENEMY_CONQUEST_SUCCEEDED',
+    'PLAYERS_CONQUEST_SUCCEEDED',
+  ];
+
   constructor() {}
 
   ngOnInit(): void {}

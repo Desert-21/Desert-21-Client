@@ -1,51 +1,51 @@
 <h5 class="text-center">{{ notificationTitle }}</h5>
 
-<div class="preview-wrapper mt-4">
-  <div class="w-25 cannons-wrapper">
-    <img
-      class="img-fluid"
-      src="/assets/mechs/cannon-full.png"
-      alt="cannon-full"
-    />
-    <span>{{ cannonsAmount }}</span>
+<app-minimap-wrapper>
+  <div class="preview-wrapper mt-4">
+    <div class="cannons-wrapper">
+      <img
+        class="img-fluid"
+        src="/assets/mechs/cannon-full.png"
+        alt="cannon-full"
+      />
+      <span>{{ cannonsAmount }}</span>
+    </div>
   </div>
-</div>
 
-<div class="text-center">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="3vw"
-    height="3vw"
-    fill="currentColor"
-    class="bi bi-info-circle-fill"
-    viewBox="0 0 16 16"
-    class="text-danger"
-  >
-    <use xlink:href="#arrow-down" />
-  </svg>
-</div>
-
-<div class="preview-wrapper mt-4">
-  <div class="w-75">
-    <app-army-destination-preview
-      [shouldShowScarabs]="false"
-      [army]="defendersBefore"
-    ></app-army-destination-preview>
+  <div class="text-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1.5vw"
+      height="1.5vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="text-danger"
+    >
+      <use xlink:href="#arrow-down" />
+    </svg>
   </div>
-</div>
 
-
-<div class="preview-wrapper">
-  <div class="damaged-units-wrapper mt-3 w-75">
-    <b class="text-danger">
-      {{ defendersDestroyed.droids }}
-    </b>
-    <b class="text-danger">
-      {{ defendersDestroyed.tanks }}
-    </b>
-    <b class="text-danger">
-      {{ defendersDestroyed.cannons }}
-    </b>
+  <div class="preview-wrapper mt-4">
+    <div class="w-75">
+      <app-army-destination-preview
+        [shouldShowScarabs]="false"
+        [army]="defendersBefore"
+      ></app-army-destination-preview>
+    </div>
   </div>
-</div>
 
+  <div class="preview-wrapper">
+    <div class="damaged-units-wrapper mt-3 w-75">
+      <b class="text-danger">
+        {{ defendersDestroyed.droids }}
+      </b>
+      <b class="text-danger">
+        {{ defendersDestroyed.tanks }}
+      </b>
+      <b class="text-danger">
+        {{ defendersDestroyed.cannons }}
+      </b>
+    </div>
+  </div>
+</app-minimap-wrapper>

@@ -1,1 +1,66 @@
-<p>battle-against-player-notification works!</p>
+<h5 class="text-center">{{ notificationTitle }}</h5>
+
+<app-minimap-wrapper>
+  <div class="preview-wrapper mt-4">
+    <div class="smaller-display">
+      <app-army-destination-preview
+        [shouldShowScarabs]="false"
+        [army]="attackersBefore"
+      ></app-army-destination-preview>
+    </div>
+  </div>
+
+  <div class="preview-wrapper">
+    <div class="damaged-units-wrapper mt-2 smaller-display">
+      <b class="text-danger">
+        {{ attackersDestroyed.droids }}
+      </b>
+      <b class="text-danger">
+        {{ attackersDestroyed.tanks }}
+      </b>
+      <b class="text-danger">
+        {{ attackersDestroyed.cannons }}
+      </b>
+    </div>
+  </div>
+
+  <div class="text-center mt-2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1.5vw"
+      height="1.5vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="text-danger"
+    >
+      <use xlink:href="#arrow-down" />
+    </svg>
+  </div>
+
+  <div class="preview-wrapper mt-4">
+    <div class="w-75">
+      <app-army-destination-preview
+        [shouldShowScarabs]="true"
+        [army]="defendersBefore"
+      ></app-army-destination-preview>
+    </div>
+  </div>
+
+  <div class="preview-wrapper">
+    <div class="damaged-units-wrapper mt-2 w-75">
+      <b class="text-danger">
+        {{ defendersDestroyed.droids }}
+      </b>
+      <b class="text-danger">
+        {{ defendersDestroyed.tanks }}
+      </b>
+      <b class="text-danger">
+        {{ defendersDestroyed.cannons }}
+      </b>
+      <b class="text-danger">
+        {{ defendersDestroyed.scarabs }}
+      </b>
+    </div>
+  </div>
+</app-minimap-wrapper>

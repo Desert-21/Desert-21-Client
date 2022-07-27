@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { BuildingUpgradedNotification } from 'src/app/models/notification-models';
+import { MinimapSelectedLocationService } from 'src/app/services/rx-logic/resolution-phase/minimap-selected-location.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import { getBuildingImage } from 'src/app/utils/building-utils';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
@@ -11,7 +12,9 @@ import { underscoreToRegular } from 'src/app/utils/text-utils';
   templateUrl: './building-upgraded-notification.component.html',
   styleUrls: ['./building-upgraded-notification.component.scss'],
 })
-export class BuildingUpgradedNotificationComponent implements OnInit, OnDestroy {
+export class BuildingUpgradedNotificationComponent
+  implements OnInit, OnDestroy
+{
   private notificationSubject =
     new BehaviorSubject<BuildingUpgradedNotification>(null);
   sourceFrom = '';
@@ -23,7 +26,10 @@ export class BuildingUpgradedNotificationComponent implements OnInit, OnDestroy 
 
   sub1: Subscription;
 
-  constructor(private gameContextService: GameContextService) {}
+  constructor(
+    private gameContextService: GameContextService,
+    private minimapLocationService: MinimapSelectedLocationService
+  ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
@@ -31,6 +37,8 @@ export class BuildingUpgradedNotificationComponent implements OnInit, OnDestroy 
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([notification, context]) => {
       const location = notification.location;
+      this.minimapLocationService.set(location);
+
       const field = findByFieldLocation(location, context.game.fields);
       this.isPlayerWhoUpgraded = field.ownerId === context.player.id;
       this.sourceFrom = getBuildingImage(
