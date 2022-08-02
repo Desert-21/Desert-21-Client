@@ -1,0 +1,14 @@
+.modal-body-wrapper {
+  overflow: hidden;
+  height: 37vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-content-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

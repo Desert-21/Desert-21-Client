@@ -80,6 +80,7 @@ import { BattleAgainstPlayerNotificationComponent } from './components/game-view
 import { MinimapComponent } from './components/game-view/resolution-phase-modal/minimap/minimap.component';
 import { MinimapFieldComponent } from './components/game-view/resolution-phase-modal/minimap/minimap-field/minimap-field.component';
 import { MinimapWrapperComponent } from './components/game-view/resolution-phase-modal/minimap-wrapper/minimap-wrapper.component';
+import { AnimatedSlideWrapperComponent } from './components/game-view/resolution-phase-modal/animated-slide-wrapper/animated-slide-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -153,6 +154,7 @@ import { MinimapWrapperComponent } from './components/game-view/resolution-phase
     MinimapComponent,
     MinimapFieldComponent,
     MinimapWrapperComponent,
+    AnimatedSlideWrapperComponent,
   ],
   imports: [
     BrowserModule,

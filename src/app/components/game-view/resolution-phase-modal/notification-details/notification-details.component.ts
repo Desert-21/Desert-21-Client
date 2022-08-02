@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {
   AppNotification,
   NotificationType,
   ResolutionPhaseNotificationContent,
 } from 'src/app/models/notification-models';
+import { AnimatedSlideWrapperComponent } from '../animated-slide-wrapper/animated-slide-wrapper.component';
 
 @Component({
   selector: 'app-notification-details',
@@ -12,8 +13,10 @@ import {
   styleUrls: ['./notification-details.component.scss'],
 })
 export class NotificationDetailsComponent implements OnInit {
-  @Input()
-  notification: AppNotification<ResolutionPhaseNotificationContent>;
+  @ViewChild('slideWrapper')
+  slideWrapper: AnimatedSlideWrapperComponent;
+
+  private _notification: AppNotification<ResolutionPhaseNotificationContent>;
 
   bombardingNotifications: Array<NotificationType> = [
     'ENEMY_BOMBARDING_FAILED',
@@ -39,4 +42,22 @@ export class NotificationDetailsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  get notification(): AppNotification<ResolutionPhaseNotificationContent> {
+    return this._notification;
+  }
+
+  @Input()
+  set notification(
+    notification: AppNotification<ResolutionPhaseNotificationContent>
+  ) {
+    if (!this.notification) {
+      this._notification = notification;
+      return;
+    }
+    this.slideWrapper?.rollRight();
+    setTimeout(() => {
+      this._notification = notification;
+    }, 400);
+  }
 }

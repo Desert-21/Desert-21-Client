@@ -1,1 +1,9 @@
-<button (click)="openLab()" class="btn btn-primary">LAB</button>
+<button
+  (click)="openLab()"
+  class="btn btn-primary"
+  [ngClass]="classes"
+>
+  LAB
+</button>
+<br />
+<button (click)="reloadLab()">Reload</button>

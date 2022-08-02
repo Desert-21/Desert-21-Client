@@ -8,6 +8,8 @@ import { GameModalService } from 'src/app/services/rx-logic/shared/game-modal.se
 })
 export class LabComponent implements OnInit {
 
+  classes = '';
+
   constructor(private gameModalService: GameModalService) { }
 
   ngOnInit(): void {
@@ -15,5 +17,12 @@ export class LabComponent implements OnInit {
 
   openLab(): void {
     this.gameModalService.openModal('LAB');
+  }
+
+  reloadLab(): void {
+    this.classes = 'animate__animated animate__backOutRight animate__faster';
+    setTimeout(() => {
+      this.classes = 'animate__animated animate__backInLeft animate__faster';
+    }, 500);
   }
 }

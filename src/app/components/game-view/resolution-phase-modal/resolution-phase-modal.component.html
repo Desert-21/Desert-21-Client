@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">Resolution Phase</h4>
   <button
-  *ngIf="isCrossButtonAvailable"
+    *ngIf="isCrossButtonAvailable"
     type="button"
     class="close"
     aria-label="Close"
@@ -10,10 +10,15 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
-
-  <div *ngIf="currentNotification !== null">
-    <app-notification-details [notification]="currentNotification"></app-notification-details>
+<div class="modal-body modal-body-wrapper">
+  <div class="modal-content-container">
+    <app-notification-details
+      *ngIf="currentNotification !== null"
+      [notification]="currentNotification"
+    ></app-notification-details>
+    <h3 *ngIf="currentNotification === null" class="text-center">
+      Prepare for the next turn...
+    </h3>
   </div>
 
   <div *ngIf="isProgressBarVisible" class="progress">
