@@ -1,7 +1,12 @@
+.cross-negative-margin {
+  margin-top: -2vh;
+}
+
 .action-container {
+  border: 2px white solid;
   margin-left: 8px;
   margin-right: 8px;
-  background-color: lightgray;
+  margin-top: 8px;
   padding: 4px;
 
   > div {
@@ -24,4 +29,76 @@ h5 {
 .top-right-panel {
   display: flex;
   align-items: center;
+}
+
+.background-train {
+  background: rgb(50, 68, 110);
+  background: linear-gradient(
+    180deg,
+    rgba(50, 68, 110, 1) 0%,
+    rgba(41, 41, 41, 0) 100%
+  );
+}
+
+.background-upgrade {
+  background: rgb(0, 139, 35);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 139, 35, 1) 0%,
+    rgba(0, 139, 35, 0) 100%
+  );
+}
+
+.background-lab-event {
+  background: rgb(0, 139, 116);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 139, 116, 1) 0%,
+    rgba(0, 139, 116, 0) 100%
+  );
+}
+
+.background-build {
+  background: rgb(95, 0, 139);
+  background: linear-gradient(
+    180deg,
+    rgba(95, 0, 139, 1) 0%,
+    rgba(95, 0, 139, 0) 100%
+  );
+}
+
+.background-move-units {
+  background: rgb(189, 186, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(189, 186, 0, 1) 0%,
+    rgba(189, 186, 0, 0) 100%
+  );
+}
+
+.background-bombard {
+  background: rgb(228, 110, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(228, 110, 0, 1) 0%,
+    rgba(228, 110, 0, 0) 100%
+  );
+}
+
+.background-attack {
+  background: rgb(228, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(228, 0, 0, 1) 0%,
+    rgba(228, 0, 0, 0) 100%
+  );
+}
+
+.background-fire-rocket {
+  background: rgb(87, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(87, 0, 0, 1) 0%,
+    rgba(87, 0, 0, 0) 100%
+  );
 }

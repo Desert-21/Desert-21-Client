@@ -55,10 +55,18 @@ body {
   width: 100%;
 }
 
+.cross-wrapper {
+  color: white !important;
+}
+
 .enlightment {
   border-color: rgb(0, 128, 255) !important;
   border-style: solid;
   border-width: 2px;
+}
+
+.action-enlightment {
+  background-color: gray !important;
 }
 
 .selecting {

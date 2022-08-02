@@ -81,6 +81,8 @@ import { MinimapComponent } from './components/game-view/resolution-phase-modal/
 import { MinimapFieldComponent } from './components/game-view/resolution-phase-modal/minimap/minimap-field/minimap-field.component';
 import { MinimapWrapperComponent } from './components/game-view/resolution-phase-modal/minimap-wrapper/minimap-wrapper.component';
 import { AnimatedSlideWrapperComponent } from './components/game-view/resolution-phase-modal/animated-slide-wrapper/animated-slide-wrapper.component';
+import { ActionCostDisplayComponent } from './components/game-view/left-panel/players-actions/action-entry/action-cost-display/action-cost-display.component';
+import { ActionEnlighterDirective } from './directives/action-enlighter.directive';
 
 @NgModule({
   declarations: [
@@ -155,6 +157,8 @@ import { AnimatedSlideWrapperComponent } from './components/game-view/resolution
     MinimapFieldComponent,
     MinimapWrapperComponent,
     AnimatedSlideWrapperComponent,
+    ActionCostDisplayComponent,
+    ActionEnlighterDirective,
   ],
   imports: [
     BrowserModule,

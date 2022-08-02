@@ -1,0 +1,9 @@
+<div class="wrapper">
+  <div *ngIf="resource !== null" class="image-wrapper">
+    <span>{{ amount }}</span>
+    <img [src]="imageSource" class="img-fluid ml-1" />
+  </div>
+  <div *ngIf="resource === null">
+    ---
+  </div>
+</div>

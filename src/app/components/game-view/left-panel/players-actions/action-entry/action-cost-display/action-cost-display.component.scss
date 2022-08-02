@@ -1,0 +1,23 @@
+.wrapper {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  margin-left: 8px;
+}
+
+.image-wrapper {
+  height: 3vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  span {
+    display: flex;
+    flex-direction: row;
+  }
+
+  img {
+    height: 85%;
+  }
+}

@@ -1,12 +1,19 @@
-<div class="action-container">
+<div class="action-container" [ngClass]="backgroundClass" appActionEnlighter>
   <div>
-    <h5 class="desert21-font">{{ getActionHeader() }}</h5>
+    <h5 class="desert21-font">{{ actionHeader }}</h5>
 
     <div class="top-right-panel">
-      <button type="button" class="btn btn-link view-button">View</button>
-      <button (click)="removeFromActionsList()" type="button" class="close" aria-label="Close">
+      <button
+        (click)="removeFromActionsList()"
+        type="button"
+        class="close cross-wrapper cross-negative-margin"
+        aria-label="Close"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+  </div>
+  <div>
+    <app-action-cost-display [action]="action"></app-action-cost-display>
   </div>
 </div>

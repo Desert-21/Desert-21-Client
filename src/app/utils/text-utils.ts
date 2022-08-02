@@ -39,3 +39,7 @@ export const underscoreToLowerCamelCase = (s: string) => {
 export const capitalize = (s: string) => {
   return s.substring(0, 1).toUpperCase() + s.substring(1);
 };
+
+export const underscoreToKebabCase = (s: string) => {
+  return s.toLowerCase().replace(/_/, '-');
+};
