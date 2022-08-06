@@ -1,4 +1,10 @@
-<div class="action-container" [ngClass]="backgroundClass" appActionEnlighter>
+<div
+  class="action-container"
+  [ngClass]="backgroundClass"
+  appActionEnlighter
+  appActionFieldsSelector
+  [action]="action"
+>
   <div class="left-panel">
     <h5 class="desert21-font">{{ actionHeader }}</h5>
     <app-action-cost-display [action]="action"></app-action-cost-display>

@@ -7,12 +7,16 @@ import {
   Renderer2,
 } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
+import { ActionHoverFieldSelection } from '../models/actions';
 import { Army, Field } from '../models/game-models';
-import { GameContext } from '../models/game-utility-models';
+import { FieldSelection, GameContext } from '../models/game-utility-models';
 import { PostMovementsArmyMapService } from '../services/rx-logic/double-field-selection/army-movements/post-movements-army-map.service';
+import { ActionRelatedLocationsService } from '../services/rx-logic/shared/action-related-locations.service';
 import { GameContextService } from '../services/rx-logic/shared/game-context.service';
 import { MaxPowerService } from '../services/rx-logic/shared/max-power.service';
+import { SelectedFieldService } from '../services/rx-logic/single-field-selection/selected-field.service';
 import { calculateAttackingArmyPower } from '../utils/army-power-calculator';
+import { areLocationsEqual } from '../utils/location-utils';
 
 @Directive({
   selector: '[appFieldStyling]',
@@ -23,7 +27,9 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private contextService: GameContextService,
     private maxPowerService: MaxPowerService,
-    private postMovementsArmyMapService: PostMovementsArmyMapService
+    private postMovementsArmyMapService: PostMovementsArmyMapService,
+    private actionRelatedLocationService: ActionRelatedLocationsService,
+    private fieldSelectionService: SelectedFieldService
   ) {}
 
   @Input() row = -1;
@@ -37,17 +43,22 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     this.sub1 = combineLatest([
       this.contextService.getStateUpdates(),
       this.maxPowerService.getStateUpdates(),
-      this.postMovementsArmyMapService.getStateUpdates()
+      this.postMovementsArmyMapService.getStateUpdates(),
+      this.actionRelatedLocationService.getStateUpdates(),
+      this.fieldSelectionService.getStateUpdates(),
     ]).subscribe((data) => {
-      const [context, maxPower, armyMap] = data;
+      const [context, maxPower, armyMap, locations, currentFieldSelection] =
+        data;
       const game = context.game;
       this.field = game.fields[this.row][this.col];
       const army = armyMap[this.row][this.col];
-      const backgroundColor = this.getBackgroundColorByArmyPower(
+      const backgroundColor = this.getBackgroundColor(
         context,
-        this.field,
         army,
-        maxPower
+        this.field,
+        maxPower,
+        locations,
+        currentFieldSelection
       );
       if (backgroundColor !== null) {
         this.renderer.setStyle(
@@ -55,12 +66,72 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
           'background-color',
           backgroundColor
         );
+      } else {
+        this.renderer.setStyle(
+          this.ref.nativeElement,
+          'background-color',
+          ''
+        );
       }
     });
+    this.actionRelatedLocationService.requestState();
+    this.fieldSelectionService.requestState();
   }
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
+  }
+
+  private getBackgroundColor(
+    context: GameContext,
+    army: Army,
+    field: Field,
+    maxPower: number,
+    actionRelatedSelections: Array<ActionHoverFieldSelection>,
+    fieldSelection: FieldSelection
+  ): string {
+    const byActionRelatedSelections =
+      this.getBackgroundColorByActionRelatedSelections(actionRelatedSelections);
+    if (byActionRelatedSelections !== null) {
+      return byActionRelatedSelections;
+    }
+    const byFieldSelection =
+      this.getBackgroundColorByFieldSelection(fieldSelection);
+    if (byFieldSelection !== null) {
+      return byFieldSelection;
+    }
+    return this.getBackgroundColorByArmyPower(
+      context,
+      field,
+      army,
+      maxPower
+    );
+  }
+
+  private getBackgroundColorByActionRelatedSelections(
+    selections: Array<ActionHoverFieldSelection>
+  ): string | null {
+    const optionalSelection = selections.find((s) =>
+      areLocationsEqual({ row: this.row, col: this.col }, s.location)
+    );
+    if (optionalSelection === undefined) {
+      return null;
+    }
+    switch (optionalSelection.type) {
+      case 'SOURCE':
+        return 'rgb(255, 229, 33)';
+      case 'TARGET':
+        return 'rgb(212, 34, 6)';
+    }
+  }
+
+  private getBackgroundColorByFieldSelection(
+    selection: FieldSelection | null
+  ): string | null {
+    if (selection === null || !areLocationsEqual({ row: this.row, col: this.col }, selection)) {
+      return null;
+    }
+    return 'rgb(2, 132, 245)';
   }
 
   private getBackgroundColorByArmyPower(
@@ -77,7 +148,7 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     const armyPower = calculateAttackingArmyPower(
       army,
       context.balance,
-      player,
+      player
     );
     const powerRatio = armyPower / maxPower;
     const opacityRatio = powerRatio * 0.7;

@@ -22,7 +22,7 @@ export class CurrentActionsService implements RequestableResource<Array<PlayersA
   }
 
   pushAction(action: PlayersAction<any>): void {
-    this.currentActions.push(action);
+    this.currentActions.unshift(action);
     this.requestState();
   }
 

@@ -90,6 +90,7 @@ import { LabActionDetailsComponent } from './components/game-view/left-panel/pla
 import { BombardingActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/bombarding-action-details/bombarding-action-details.component';
 import { ArmyMovementActionsDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/army-movement-actions-details/army-movement-actions-details.component';
 import { FireRocketActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/fire-rocket-action-details/fire-rocket-action-details.component';
+import { ActionFieldsSelectorDirective } from './directives/action-fields-selector.directive';
 
 @NgModule({
   declarations: [
@@ -173,6 +174,7 @@ import { FireRocketActionDetailsComponent } from './components/game-view/left-pa
     BombardingActionDetailsComponent,
     ArmyMovementActionsDetailsComponent,
     FireRocketActionDetailsComponent,
+    ActionFieldsSelectorDirective,
   ],
   imports: [
     BrowserModule,

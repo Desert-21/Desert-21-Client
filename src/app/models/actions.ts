@@ -8,9 +8,17 @@ import {
   UnitType,
 } from './game-models';
 
+export type ActionHoverFieldSelectionType = 'SOURCE' | 'TARGET';
+
+export type ActionHoverFieldSelection = {
+  location: BoardLocation;
+  type: ActionHoverFieldSelectionType;
+};
+
 export abstract class PlayersAction<ActionContent> {
   abstract getType(): ActionType;
   abstract getCost(): ResourceSet;
+  abstract getRelatedLocations(): Array<ActionHoverFieldSelection>;
 
   protected abstract toActionAPIRequestBody(): ActionContent;
 
@@ -54,6 +62,10 @@ export class UpgradeAction extends PlayersAction<UpgradeActionContent> {
     return 'UPGRADE';
   }
 
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [{ location: this.location, type: 'SOURCE' }];
+  }
+
   protected toActionAPIRequestBody(): UpgradeActionContent {
     return {
       location: this.location,
@@ -91,6 +103,10 @@ export class TrainAction extends PlayersAction<TrainActionContent> {
     return { metal: this.metalCost, buildingMaterials: 0, electricity: 0 };
   }
 
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [{ location: this.location, type: 'SOURCE' }];
+  }
+
   protected toActionAPIRequestBody(): TrainActionContent {
     return {
       location: this.location,
@@ -117,9 +133,18 @@ export class MoveUnitsAction extends PlayersAction<MoveUnitsActionContent> {
   getType(): ActionType {
     return 'MOVE_UNITS';
   }
+
   getCost(): ResourceSet {
     return { metal: 0, buildingMaterials: 0, electricity: 0 };
   }
+
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [
+      { location: this.from, type: 'SOURCE' },
+      { location: this.to, type: 'TARGET' },
+    ];
+  }
+
   protected toActionAPIRequestBody(): MoveUnitsActionContent {
     return {
       from: this.from,
@@ -152,6 +177,13 @@ export class AttackAction extends PlayersAction<AttackActionContent> {
     return { metal: 0, buildingMaterials: 0, electricity: 0 };
   }
 
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [
+      { location: this.from, type: 'SOURCE' },
+      { location: this.to, type: 'TARGET' },
+    ];
+  }
+
   protected toActionAPIRequestBody(): AttackActionContent {
     return {
       from: this.from,
@@ -182,6 +214,10 @@ export class LabAction extends PlayersAction<LabActionContent> {
       buildingMaterials: 0,
       electricity: this.electricityCost,
     };
+  }
+
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [];
   }
 
   protected toActionAPIRequestBody(): LabActionContent {
@@ -217,6 +253,12 @@ export class FireRocketAction extends PlayersAction<FireRocketActionContent> {
       buildingMaterials: 0,
       electricity: this.electricityCost,
     };
+  }
+
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [
+      { location: this.target, type: 'TARGET' },
+    ];
   }
 
   protected toActionAPIRequestBody(): FireRocketActionContent {
@@ -255,6 +297,12 @@ export class BuildBuildingAction extends PlayersAction<BuildBuildingActionConten
     };
   }
 
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [
+      { location: this.location, type: 'SOURCE' },
+    ];
+  }
+
   protected toActionAPIRequestBody(): BuildBuildingActionContent {
     return {
       location: this.location,
@@ -283,6 +331,13 @@ export class BombardAction extends PlayersAction<BombardActionContent> {
 
   getCost(): ResourceSet {
     return { metal: 0, buildingMaterials: 0, electricity: 0 };
+  }
+
+  getRelatedLocations(): ActionHoverFieldSelection[] {
+    return [
+      { location: this.from, type: 'SOURCE' },
+      { location: this.to, type: 'TARGET' },
+    ];
   }
 
   protected toActionAPIRequestBody(): BombardActionContent {
