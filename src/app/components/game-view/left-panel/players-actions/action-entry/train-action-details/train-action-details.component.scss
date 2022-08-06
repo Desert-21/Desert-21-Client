@@ -1,0 +1,30 @@
+$image-hright: 10vh;
+
+.wrapper {
+  display: flex;
+  justify-content: right;
+  height: 100% !important;
+  align-items: center;
+}
+
+.inner-wrapper {
+  height: $image-hright;
+  width: $image-hright;
+
+  img {
+    position: relative;
+    height: $image-hright;
+    width: $image-hright;
+    z-index: 1;
+  }
+}
+
+.amount {
+  bottom: 30px;
+  left: 4px;
+  color: white;
+  position: relative;
+  z-index: 5;
+  font-size: 110%;
+  font-weight: bold;
+}

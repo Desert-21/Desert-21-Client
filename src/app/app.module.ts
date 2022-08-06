@@ -83,6 +83,13 @@ import { MinimapWrapperComponent } from './components/game-view/resolution-phase
 import { AnimatedSlideWrapperComponent } from './components/game-view/resolution-phase-modal/animated-slide-wrapper/animated-slide-wrapper.component';
 import { ActionCostDisplayComponent } from './components/game-view/left-panel/players-actions/action-entry/action-cost-display/action-cost-display.component';
 import { ActionEnlighterDirective } from './directives/action-enlighter.directive';
+import { UpgradeActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/upgrade-action-details/upgrade-action-details.component';
+import { BuildActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/build-action-details/build-action-details.component';
+import { TrainActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/train-action-details/train-action-details.component';
+import { LabActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/lab-action-details/lab-action-details.component';
+import { BombardingActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/bombarding-action-details/bombarding-action-details.component';
+import { ArmyMovementActionsDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/army-movement-actions-details/army-movement-actions-details.component';
+import { FireRocketActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/fire-rocket-action-details/fire-rocket-action-details.component';
 
 @NgModule({
   declarations: [
@@ -159,6 +166,13 @@ import { ActionEnlighterDirective } from './directives/action-enlighter.directiv
     AnimatedSlideWrapperComponent,
     ActionCostDisplayComponent,
     ActionEnlighterDirective,
+    UpgradeActionDetailsComponent,
+    BuildActionDetailsComponent,
+    TrainActionDetailsComponent,
+    LabActionDetailsComponent,
+    BombardingActionDetailsComponent,
+    ArmyMovementActionsDetailsComponent,
+    FireRocketActionDetailsComponent,
   ],
   imports: [
     BrowserModule,

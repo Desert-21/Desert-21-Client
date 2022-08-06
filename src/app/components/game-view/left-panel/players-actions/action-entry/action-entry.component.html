@@ -1,19 +1,48 @@
 <div class="action-container" [ngClass]="backgroundClass" appActionEnlighter>
-  <div>
+  <div class="left-panel">
     <h5 class="desert21-font">{{ actionHeader }}</h5>
-
-    <div class="top-right-panel">
-      <button
-        (click)="removeFromActionsList()"
-        type="button"
-        class="close cross-wrapper cross-negative-margin"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div>
     <app-action-cost-display [action]="action"></app-action-cost-display>
+  </div>
+
+  <div class="central-panel h-100">
+    <app-upgrade-action-details
+      *ngIf="action.getType() === 'UPGRADE'"
+      [action]="action"
+    ></app-upgrade-action-details>
+    <app-train-action-details
+      *ngIf="action.getType() === 'TRAIN'"
+      [action]="action"
+    ></app-train-action-details>
+    <app-build-action-details
+      *ngIf="action.getType() === 'BUILD'"
+      [action]="action"
+    ></app-build-action-details>
+    <app-lab-action-details
+      *ngIf="action.getType() === 'LAB_EVENT'"
+      [action]="action"
+    ></app-lab-action-details>
+    <app-bombarding-action-details
+      *ngIf="action.getType() === 'BOMBARD'"
+      [action]="action"
+    ></app-bombarding-action-details>
+    <app-army-movement-actions-details
+      *ngIf="['MOVE_UNITS', 'ATTACK'].includes(action.getType())"
+      [action]="action"
+    ></app-army-movement-actions-details>
+    <app-fire-rocket-action-details
+      *ngIf="action.getType() === 'FIRE_ROCKET'"
+      [action]="action"
+    ></app-fire-rocket-action-details>
+  </div>
+
+  <div class="right-panel">
+    <button
+      (click)="removeFromActionsList()"
+      type="button"
+      class="close cross-wrapper"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>

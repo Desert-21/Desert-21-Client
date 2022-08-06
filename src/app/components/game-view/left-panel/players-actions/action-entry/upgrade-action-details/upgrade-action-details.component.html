@@ -1,0 +1,23 @@
+<div class="upgrade-visualization-wrapper ml-4">
+  <div class="image-wrapper">
+    <div class="text-center">Level {{ levelFrom }}</div>
+    <img [src]="imageFrom" class="img-fluid" />
+  </div>
+  <div class="arrow-wrapper">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1.5vw"
+      height="1.5vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="text-warning"
+    >
+      <use xlink:href="#arrow" />
+    </svg>
+  </div>
+  <div class="image-wrapper">
+    <div class="text-center">Level {{ levelTo }}</div>
+    <img [src]="imageTo" class="img-fluid" />
+  </div>
+</div>
