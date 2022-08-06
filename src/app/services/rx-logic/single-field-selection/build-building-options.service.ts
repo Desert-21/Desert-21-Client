@@ -202,7 +202,7 @@ export class BuildBuildingOptionsService extends ResourceProcessor<
     const totalFactoriesBuilt = this.getTotalBuildingsBuilt(
       context,
       ['METAL_FACTORY', 'BUILDING_MATERIALS_FACTORY', 'ELECTRICITY_FACTORY'],
-      'builtTowers'
+      'builtFactories'
     );
     const maxFactoriesBuilt =
       context.balance.upgrades.production.balanceConfig
