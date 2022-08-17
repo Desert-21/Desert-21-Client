@@ -18,11 +18,4 @@ export class LabComponent implements OnInit {
   openLab(): void {
     this.gameModalService.openModal('LAB');
   }
-
-  reloadLab(): void {
-    this.classes = 'animate__animated animate__backOutRight animate__faster';
-    setTimeout(() => {
-      this.classes = 'animate__animated animate__backInLeft animate__faster';
-    }, 500);
-  }
 }

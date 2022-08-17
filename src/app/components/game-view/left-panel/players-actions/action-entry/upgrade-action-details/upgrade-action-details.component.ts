@@ -28,7 +28,6 @@ export class UpgradeActionDetailsComponent implements OnInit, OnDestroy {
       this.actionSubject.asObservable(),
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([action, context]) => {
-      console.log(action, context);
       const field = findByFieldLocation(action.location, context.game.fields);
       this.enrichLevelingInfo(field);
     });

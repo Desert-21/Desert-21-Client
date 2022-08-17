@@ -225,6 +225,26 @@ export const getFastestUnitsSpeed = (
     }, 0);
 };
 
+export const getSlowestUnitsSpeed = (
+  army: Army | null,
+  balanceConfig: AllCombatBalance
+): number => {
+  if (army === null) {
+    return 0;
+  }
+  const optionalDroidsBalance = army.droids > 0 ? balanceConfig.droids : null;
+  const optionalTanksBalance = army.tanks > 0 ? balanceConfig.tanks : null;
+  const optionalCannonsBalance =
+    army.cannons > 0 ? balanceConfig.cannons : null;
+
+  return [optionalDroidsBalance, optionalTanksBalance, optionalCannonsBalance]
+    .filter((balance) => balance !== null)
+    .map((balance) => balance.fieldsTraveledPerTurn)
+    .reduce((prev, next) => {
+      return next < prev ? next : prev;
+    }, Infinity);
+};
+
 export const getFrozenUnitsAtLocation = (
   location: BoardLocation,
   actions: Array<PlayersAction<any>>

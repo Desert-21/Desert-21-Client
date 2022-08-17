@@ -52,7 +52,6 @@ export class ResolutionPhaseModalComponent implements OnInit, OnDestroy {
     const startingTime = new Date();
     const millisecondsBetween = timeout.getTime() - startingTime.getTime();
     this.timeMap = this.constructSlidesTimeMap(millisecondsBetween);
-    console.log(millisecondsBetween, this.timeMap);
     this.currentProgress = 0;
     this.currentInterval = setInterval(() => {
       const currentTime = new Date();

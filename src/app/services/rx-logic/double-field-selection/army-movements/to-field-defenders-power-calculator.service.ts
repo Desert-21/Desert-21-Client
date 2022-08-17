@@ -86,7 +86,6 @@ export class ToFieldDefendersPowerCalculatorService extends ResourceProcessor<Po
     const min = calculateByArmy(worstCase);
     const avg = calculateByArmy(averageCase);
     const max = calculateByArmy(bestCase);
-    console.log(worstCase, bestCase, min, max);
     return new PowerRange(min, avg, max);
   }
 }
