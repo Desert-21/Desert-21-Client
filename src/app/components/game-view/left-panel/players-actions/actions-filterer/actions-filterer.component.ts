@@ -59,7 +59,6 @@ export class ActionsFiltererComponent implements OnInit {
       const invalidActionsFromFieldPerspective =
         this.validateActionsFromUnitsAvailabilityPerspective(actions, context);
 
-      console.log(selfValidatedInvalidActions, invalidActionsFromFieldPerspective);
       const totalInvalidActions =
         selfValidatedInvalidActions.length +
         invalidActionsFromFieldPerspective.length;

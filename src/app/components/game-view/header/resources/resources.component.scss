@@ -1,29 +1,38 @@
 .resources-container {
-  height: 100%;
-
-  > [class*='row'] {
+  > [class*="row"] {
     height: 100%;
 
-    > [class*='col'] {
-      height: 100%;
+    > [class*="col"] {
+      height: 6vh;
       display: flex;
       align-items: center;
-
-      > span {
-        text-align: center;
-        height: 100%;
-        color: lightgray;
-        font-size: 4vh;
-        text-shadow: 2px 2px #000000;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        text-decoration-style: solid;
-      }
     }
   }
+}
+
+$badge-theme-color: #007bff;
+
+.badge-container {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-width: 4px;
+  border-color: $badge-theme-color;
 
   img {
-    height: 6vh;
+    padding: 2px;
+    height: 80%;
+    background-color: $badge-theme-color;
+    border-radius: 50%;
   }
 
-
+  span {
+    margin-left: 8px;
+    color: lightgray;
+    font-size: 3vh;
+    text-shadow: 2px 2px #000000;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    text-decoration-style: solid;
+  }
 }
