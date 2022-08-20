@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title" [ngClass]="modalTitleClass">
+    {{ hasOpponentSurrenderedText }} {{ modalTitle }}
+  </h4>
+  <button
+    type="button"
+    class="close cross-wrapper"
+    aria-label="Close"
+    (click)="modal.close('')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <h5 *ngIf="hasPlayerWon">
+    It took you {{ gameTurn }} turns to break your opponent!
+  </h5>
+  <h5 *ngIf="!hasPlayerWon">
+    It took your opponent {{ gameTurn }} turns to break you!
+  </h5>
+
+  <br />
+
+  <i
+    >You can look around now if you need to or go back to main menu if you had
+    enough.</i
+  >
+
+  <br />
+  <div class="button-container">
+    <button (click)="redirectToMainMenu()" class="btn btn-warning">
+      Back to main menu
+    </button>
+  </div>
+</div>

@@ -66,6 +66,7 @@ export type StateManager = {
   timeout: string;
   currentPlayerId?: string;
   turnCounter: number;
+  winnerId?: string;
 };
 
 export type BoardLocation = {

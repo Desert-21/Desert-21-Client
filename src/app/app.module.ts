@@ -93,6 +93,8 @@ import { FireRocketActionDetailsComponent } from './components/game-view/left-pa
 import { ActionFieldsSelectorDirective } from './directives/action-fields-selector.directive';
 import { ActionsFiltererComponent } from './components/game-view/left-panel/players-actions/actions-filterer/actions-filterer.component';
 import { ClearActionsToastComponent } from './components/game-view/left-panel/players-actions/actions-filterer/clear-actions-toast/clear-actions-toast.component';
+import { GameEndModalComponent } from './components/game-view/game-end-modal/game-end-modal.component';
+import { ConfirmModalComponent } from './components/game-view/header/buttons-panel/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -179,6 +181,8 @@ import { ClearActionsToastComponent } from './components/game-view/left-panel/pl
     ActionFieldsSelectorDirective,
     ActionsFiltererComponent,
     ClearActionsToastComponent,
+    GameEndModalComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,7 @@
     *ngFor="let row of fields; let i = index; trackBy: trackBy"
   >
     <div
-      class="col-sm fields"
+      class="col-sm no-gutters fields cell"
       *ngFor="let cell of row; let j = index; trackBy: trackBy"
     >
       <app-field [field]="cell" [row]="i" [col]="j"></app-field>

@@ -10,6 +10,7 @@ import { UserInfoService } from 'src/app/services/http/user-info.service';
 import { WebSocketAPI } from 'src/app/services/websocket-api';
 import { MaxPowerService } from 'src/app/services/rx-logic/shared/max-power.service';
 import { Subscription } from 'rxjs';
+import { GameModalService } from 'src/app/services/rx-logic/shared/game-modal.service';
 
 @Component({
   selector: 'app-game-view',
@@ -22,11 +23,11 @@ export class GameViewComponent implements OnInit, OnDestroy {
   constructor(
     private notificationsService: NotificationsService,
     private route: ActivatedRoute,
-    private http: HttpClient,
     private gameIdService: GameIdService,
     private gameStateService: GameStateService,
     private gameBalanceService: GameBalanceService,
-    private maxPowerService: MaxPowerService
+    private maxPowerService: MaxPowerService,
+    // private gameModalService: GameModalService
   ) {}
 
   ngOnInit(): void {
@@ -36,10 +37,12 @@ export class GameViewComponent implements OnInit, OnDestroy {
       const gameId = params.gameId;
       this.gameIdService.saveId(gameId);
 
-      this.gameStateService.requestState();
+      this.gameStateService.fetchState();
     });
     this.maxPowerService.requestState();
     this.gameBalanceService.requestState();
+
+    // setTimeout(() => this.gameModalService.openModal('GAME_END'), 2000);
   }
 
   ngOnDestroy(): void {

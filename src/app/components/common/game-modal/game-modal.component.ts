@@ -11,7 +11,6 @@ import {
   GameModalService,
   ModalType,
 } from 'src/app/services/rx-logic/shared/game-modal.service';
-import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Component({
   selector: 'app-game-modal',
@@ -27,6 +26,12 @@ export class GameModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('resolution', { read: TemplateRef })
   resolution: TemplateRef<any>;
+
+  @ViewChild('gameEnd', { read: TemplateRef })
+  gameEnd: TemplateRef<any>;
+
+  @ViewChild('confirm', { read: TemplateRef })
+  confirm: TemplateRef<any>;
 
   private sub1: Subscription;
 
@@ -54,23 +59,24 @@ export class GameModalComponent implements OnInit, OnDestroy {
     this.sub1.unsubscribe();
   }
 
-  // temporary
   private getContentToDisplay(modalType: ModalType): TemplateRef<any> {
     switch (modalType) {
-      case 'ACTION':
-        return null;
+      case 'GAME_END':
+        return this.gameEnd;
       case 'LAB':
         return this.lab;
       case 'MOVEMENT':
         return this.movement;
       case 'RESOLUTION':
         return this.resolution;
+      case 'CONFIRM':
+        return this.confirm;
     }
   }
 
   private getModalClass(modalType: ModalType): string {
     switch (modalType) {
-      case 'ACTION':
+      case 'GAME_END':
         return 'dark-modal';
       case 'LAB':
         return 'big-dark-modal';
@@ -78,12 +84,14 @@ export class GameModalComponent implements OnInit, OnDestroy {
         return 'dark-modal';
       case 'RESOLUTION':
         return 'dark-modal';
+      case 'CONFIRM':
+        return 'dark-modal';
     }
   }
 
   private getModalSize(modalType: ModalType): string {
     switch (modalType) {
-      case 'ACTION':
+      case 'GAME_END':
         return null;
       case 'LAB':
         return 'xl';
@@ -91,6 +99,8 @@ export class GameModalComponent implements OnInit, OnDestroy {
         return null;
       case 'RESOLUTION':
         return null;
+      case 'CONFIRM':
+        return 'sm';
     }
   }
 }

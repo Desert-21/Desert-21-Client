@@ -24,28 +24,27 @@ export class AreasComponent implements OnInit, OnDestroy {
   numbers: Array<number>;
 
   fieldLinking: FieldLinking = {
-    horizontal: generateEmptyTable(11, 11),
-    vertical: generateEmptyTable(11, 11),
+    horizontal: generateEmptyTable(7, 7),
+    vertical: generateEmptyTable(7, 7),
   };
 
   private sub1: Subscription;
   private sub2: Subscription;
 
   constructor(
-    private http: HttpClient,
     private gameService: GameStateService,
     private fieldLinkingService: FieldLinkingService
   ) {
-    this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    this.numbers = [0, 1, 2, 3, 4, 5, 6];
   }
 
   fields: Array<Array<Field>>;
 
   initFields(): void {
     this.fields = [];
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 7; i++) {
       this.fields.push([]);
-      for (let j = 0; j < 11; j++) {
+      for (let j = 0; j < 7; j++) {
         const field: Field = {
           building: {
             type: 'EMPTY_FIELD',

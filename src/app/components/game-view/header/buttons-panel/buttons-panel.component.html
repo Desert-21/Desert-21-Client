@@ -1,4 +1,4 @@
-<button class="btn btn-secondary">
+<button class="btn btn-secondary" [ngbPopover]="popoverContent" placement="bottom-right">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
@@ -10,3 +10,10 @@
     <use xlink:href="#settings" />
   </svg>
 </button>
+
+<ng-template #popoverContent>
+  <div class="buttons-container">
+    <button (click)="onSurrenderClick()" class="btn-danger">Surrender</button>
+    <button class="btn-warning">Offer a draw</button>
+  </div>
+</ng-template>

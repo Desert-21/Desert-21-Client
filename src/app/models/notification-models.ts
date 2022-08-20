@@ -44,6 +44,14 @@ export type NextTurnNotification = {
   timeout: string;
 };
 
+export type SurrenderNotification = {
+  playerId: string;
+};
+
+export type GameEndNotification = {
+  winnerId: string;
+};
+
 export type StartGameNotification = {
   gameId: string;
 };

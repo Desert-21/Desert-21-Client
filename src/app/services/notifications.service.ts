@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BearerTokenService } from './bearer-token.service';
 import { UserInfoService } from './http/user-info.service';
+import { GameEndNotificationHandlerService } from './notification-handlers/game-end-notification-handler.service';
 import { NextTurnHandlerService } from './notification-handlers/next-turn-handler.service';
 import { ResolutionPhaseHandlerService } from './notification-handlers/resolution-phase-handler.service';
 import { StartGameHandlerService } from './notification-handlers/start-game-handler.service';
+import { SurrenderHandlerService } from './notification-handlers/surrender-handler.service';
 import { WebSocketAPI } from './websocket-api';
 
 @Injectable({
@@ -15,7 +17,9 @@ export class NotificationsService {
     private userInfoService: UserInfoService,
     private nextTurnHandler: NextTurnHandlerService,
     private startGameHandler: StartGameHandlerService,
-    private resolutionPhaseHandler: ResolutionPhaseHandlerService
+    private resolutionPhaseHandler: ResolutionPhaseHandlerService,
+    private gameEndHandler: GameEndNotificationHandlerService,
+    private surrenderHandler: SurrenderHandlerService
   ) {}
 
   webSocketApi: WebSocketAPI | null = null;
@@ -31,6 +35,8 @@ export class NotificationsService {
           this.nextTurnHandler,
           this.startGameHandler,
           this.resolutionPhaseHandler,
+          this.gameEndHandler,
+          this.surrenderHandler
         ]);
         this.webSocketApi._connect();
       }

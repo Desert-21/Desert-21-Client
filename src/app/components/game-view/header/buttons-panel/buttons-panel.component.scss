@@ -1,0 +1,19 @@
+:host ::ng-deep .popover {
+  background-color: black;
+}
+
+:host ::ng-deep .arrow::after {
+  background-color: transparent !important;
+  border-bottom-color: black;
+  color: black !important;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin: 4px;
+    font-size: large;
+  }
+}

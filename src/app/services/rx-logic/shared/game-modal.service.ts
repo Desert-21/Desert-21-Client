@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RequestableResource } from '../templates/requestable-resource';
 
-export type ModalType = 'MOVEMENT' | 'ACTION' | 'LAB' | 'RESOLUTION';
+export type ModalType = 'MOVEMENT' | 'GAME_END' | 'LAB' | 'RESOLUTION' | 'CONFIRM';
 
 @Injectable({
   providedIn: 'root'
