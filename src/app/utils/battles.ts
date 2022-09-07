@@ -162,10 +162,10 @@ const calculateDefendersArmyAfter = (
   }
   const remainingUnitsRatio = 1 - destructionRatio;
 
-  const droids = Math.floor(defendersBefore.droids * remainingUnitsRatio);
-  const tanks = Math.floor(defendersBefore.tanks * remainingUnitsRatio);
-  const cannons = Math.floor(defendersBefore.cannons * remainingUnitsRatio);
-  const scarabs = Math.floor(defendersBefore.scarabs * remainingUnitsRatio);
+  const droids = Math.ceil(defendersBefore.droids * remainingUnitsRatio);
+  const tanks = Math.ceil(defendersBefore.tanks * remainingUnitsRatio);
+  const cannons = Math.ceil(defendersBefore.cannons * remainingUnitsRatio);
+  const scarabs = Math.ceil(defendersBefore.scarabs * remainingUnitsRatio);
   return { droids, tanks, cannons, scarabs };
 };
 
@@ -188,8 +188,8 @@ const calculateAttackersArmyAfter = (
     : destructionRatio;
   const remainingUnitsRatio = 1 - actualDestructionRatio;
 
-  const droids = Math.floor(attackersBefore.droids * remainingUnitsRatio);
-  const tanks = Math.floor(attackersBefore.tanks * remainingUnitsRatio);
-  const cannons = Math.floor(attackersBefore.cannons * remainingUnitsRatio);
+  const droids = Math.ceil(attackersBefore.droids * remainingUnitsRatio);
+  const tanks = Math.ceil(attackersBefore.tanks * remainingUnitsRatio);
+  const cannons = Math.ceil(attackersBefore.cannons * remainingUnitsRatio);
   return { droids, tanks, cannons, scarabs: 0 };
 };
