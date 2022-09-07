@@ -35,4 +35,9 @@ export class CurrentActionsService implements RequestableResource<Array<PlayersA
     this.currentActions = [];
     this.requestState();
   }
+
+  setActions(actions: Array<PlayersAction<any>>): void {
+    this.currentActions = actions;
+    this.requestState();
+  }
 }

@@ -96,6 +96,7 @@ import { BearerTokenService } from './services/bearer-token.service';
 import { DragAndDropFieldsSelectionService } from './services/rx-logic/double-field-selection/drag-and-drop/drag-and-drop-fields-selection.service';
 import { ShortestPathCalculatorService } from './services/rx-logic/double-field-selection/drag-and-drop/shortest-path-calculator.service';
 import { BuildingQueueComponent } from './components/game-view/right-panel/building-preview/building-queue/building-queue.component';
+import { ActionsPersisterComponent } from './components/game-view/left-panel/players-actions/actions-persister/actions-persister.component';
 
 @NgModule({
   declarations: [
@@ -185,6 +186,7 @@ import { BuildingQueueComponent } from './components/game-view/right-panel/build
     GameEndModalComponent,
     ConfirmModalComponent,
     BuildingQueueComponent,
+    ActionsPersisterComponent,
   ],
   imports: [
     BrowserModule,
