@@ -1,6 +1,12 @@
-<button [ngbPopover]="buildPopover" placement="left" class="btn btn-primary">
-  Build
-</button>
+<div *ngIf="!isBuildingInProgress" class="wrapper mt-4">
+  <button
+    [ngbPopover]="buildPopover"
+    placement="left"
+    class="btn-primary btn-block button desert21-font"
+  >
+    BUILD
+  </button>
+</div>
 
 <ng-template #buildPopover>
   <div class="popover-content-wrapper">

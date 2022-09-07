@@ -9,7 +9,13 @@
   [col]="col"
 >
   <img
+    *ngIf="!shouldShowBuildInProgress"
     [src]="fieldToImagePath(field)"
+    class="unfocusable img-fluid unselectable"
+  />
+  <img
+    *ngIf="shouldShowBuildInProgress"
+    src="/assets/buildInProgress.png"
     class="unfocusable img-fluid unselectable"
   />
 </div>

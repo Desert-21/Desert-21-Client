@@ -20,6 +20,10 @@ export const labUpgradeToImagePath = (labUpgrade: LabUpgrade): string => {
       return '/assets/upgrades/factory-turret.jpg';
     case 'REUSABLE_PARTS':
       return '/assets/upgrades/reusable-parts.jpg';
+    case 'MEDIUM_PRODUCTION':
+      return '/assets/upgrades/medium-production.jpg';
+    case 'MASS_PRODUCTION':
+      return '/assets/upgrades/mass-production.jpg';
     default:
       return '/assets/buildings/electricity.png';
   }

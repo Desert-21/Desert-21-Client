@@ -1,0 +1,28 @@
+<div *ngIf="shouldShowTheQueue" class="mt-3 pt-3 main-wrapper">
+  <h6 class="text-center">Building in progress...</h6>
+
+  <div class="building-visualization-wrapper">
+    <div class="image-wrapper">
+      <img
+        src="/assets/buildings/unknownBuilding.png"
+        class="img-fluid w-100"
+      />
+    </div>
+    <div class="arrow-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="3vw"
+        height="3vw"
+        fill="currentColor"
+        class="bi bi-info-circle-fill text-success"
+        viewBox="0 0 16 16"
+      >
+        <use xlink:href="#arrow" />
+      </svg>
+    </div>
+    <div class="image-wrapper">
+      <img [src]="imageSource" class="img-fluid" />
+    </div>
+  </div>
+</div>
+

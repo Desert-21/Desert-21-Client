@@ -42,3 +42,13 @@
 .darkened {
   filter: brightness(0.3);
 }
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  width: 90%;
+  font-size: large;
+}

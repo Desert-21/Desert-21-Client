@@ -4,6 +4,7 @@ import { Field } from 'src/app/models/game-models';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
 import { PostMovementsArmyMapService } from 'src/app/services/rx-logic/double-field-selection/army-movements/post-movements-army-map.service';
+import { BuildingsBuiltMapService } from 'src/app/services/rx-logic/shared/buildings-built-map.service';
 import { LocationSelectionService } from 'src/app/services/rx-logic/single-field-selection/location-selection.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
@@ -18,7 +19,8 @@ export class FieldComponent implements OnInit, OnDestroy {
     private gameStateService: GameStateService,
     private userInfoService: UserInfoService,
     private selectedFieldService: SelectedFieldService,
-    private selectedLocationService: LocationSelectionService
+    private selectedLocationService: LocationSelectionService,
+    private buildingsBuiltMapService: BuildingsBuiltMapService
   ) {}
 
   @Input() row = -1;
@@ -33,6 +35,8 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   isSelected = false;
 
+  shouldShowBuildInProgress = false;
+
   private sub1: Subscription;
   private sub2: Subscription;
 
@@ -40,13 +44,13 @@ export class FieldComponent implements OnInit, OnDestroy {
     this.sub1 = combineLatest([
       this.gameStateService.getStateUpdates(),
       this.userInfoService.getStateUpdates(),
-    ]).subscribe((gameWithUsersData) => {
-      const game = gameWithUsersData[0];
-      const usersData = gameWithUsersData[1];
+      this.buildingsBuiltMapService.getStateUpdates()
+    ]).subscribe(([game, usersData, buildingsBuiltMap]) => {
       this.usersId = usersData.id;
       this.fields = game.fields;
       this.field = game?.fields[this.row][this.col];
       this.currentClasses = this.getStyling();
+      this.shouldShowBuildInProgress = buildingsBuiltMap[this.row][this.col];
     });
     this.sub2 = this.selectedFieldService.getStateUpdates().subscribe((field) => {
       if (field === null) {

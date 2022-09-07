@@ -7,6 +7,7 @@ import {
   BuildBuildingOptionsService,
   EnrichedBuildingOption,
 } from 'src/app/services/rx-logic/single-field-selection/build-building-options.service';
+import { CurrentlyBuiltBuildingService } from 'src/app/services/rx-logic/single-field-selection/currently-built-building.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 
 @Component({
@@ -18,13 +19,17 @@ export class BuildBuildingButtonComponent implements OnInit, OnDestroy {
   buildingOptions: Array<EnrichedBuildingOption> = [];
   location: BoardLocation | null = null;
 
+  isBuildingInProgress = false;
+
   private sub1: Subscription;
   private sub2: Subscription;
+  private sub3: Subscription;
 
   constructor(
     private buildingOptionsService: BuildBuildingOptionsService,
     private currentActionsService: CurrentActionsService,
-    private fieldSelectionService: SelectedFieldService
+    private fieldSelectionService: SelectedFieldService,
+    private currentlyBuiltBuildingService: CurrentlyBuiltBuildingService
   ) {}
 
   ngOnInit(): void {
@@ -36,14 +41,23 @@ export class BuildBuildingButtonComponent implements OnInit, OnDestroy {
     this.sub2 = this.fieldSelectionService
       .getStateUpdates()
       .subscribe((fieldSelection) => {
-        this.location = { row: fieldSelection.row, col: fieldSelection.col };
+        if (fieldSelection) {
+          this.location = { row: fieldSelection.row, col: fieldSelection.col };
+        }
+      });
+    this.sub3 = this.currentlyBuiltBuildingService
+      .getStateUpdates()
+      .subscribe((resp) => {
+        this.isBuildingInProgress = resp !== null;
       });
     this.buildingOptionsService.requestState();
+    this.currentlyBuiltBuildingService.requestState();
   }
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
     this.sub2.unsubscribe();
+    this.sub3.unsubscribe();
   }
 
   buildBuilding(option: EnrichedBuildingOption): void {
