@@ -1,0 +1,10 @@
+::ng-deep .error-modal {
+  // color: white;
+  .modal-content {
+    background: rgb(25,25,25);
+    background: linear-gradient(323deg, rgba(25,25,25,1) 0%, rgb(61, 61, 61) 100%);
+    border-color: blue;
+    border-width: 3px;
+    color: white;
+  }
+}

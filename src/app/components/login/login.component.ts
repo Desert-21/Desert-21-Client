@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BearerTokenService } from 'src/app/services/bearer-token.service';
+import { ErrorService } from 'src/app/services/error.service';
 import { LoginRequest } from './login-types';
 
 @Component({
@@ -20,12 +21,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private tokenService: BearerTokenService,
-    private router: Router
+    private router: Router,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
     const token = this.tokenService.getToken();
-    if (token !== '') {
+    if (token) {
       this.router.navigate(['menu']);
     }
   }
@@ -38,14 +40,16 @@ export class LoginComponent implements OnInit {
       })
       .subscribe({
         next: (resp) => {
-          this.isLoading = false;
           const headers = resp.headers;
           const token = headers.get('Authorization');
           this.tokenService.saveToken(token);
           this.router.navigate(['menu']);
         },
         error: (err) => {
-          alert('Login failed. Make sure your CAPS LOCK is down.');
+          this.isLoading = false;
+          this.errorService.showError('Login failed. Make sure your CAPS LOCK is down.');
+        },
+        complete: () => {
           this.isLoading = false;
         },
       });

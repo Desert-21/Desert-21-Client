@@ -155,7 +155,7 @@ export const canTrainUnits = (
     );
   }
   if (!canAffordUnits(availableResources, unitType, trainingMode, balance)) {
-    return getNotAvailable("You don't have enough metal.");
+    return getNotAvailable('You don\'t have enough metal.');
   }
   return getAvailable();
 };

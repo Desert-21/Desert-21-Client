@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { PlayersAction } from 'src/app/models/actions';
 import { GameTurnRequest } from 'src/app/models/game-utility-models';
+import { ErrorService } from 'src/app/services/error.service';
 import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import {
@@ -40,7 +41,8 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private gameContextService: GameContextService,
-    private currentActionsService: CurrentActionsService
+    private currentActionsService: CurrentActionsService,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +63,11 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
 
       this.currentOnClick = this.getCurrentOnClick(isMyTurn, gameState);
 
-      this.isButtonDisabled = this.getIsButtonDisabled(gameState, isMyTurn, hasAlreadyNotifiedAboutReadiness);
+      this.isButtonDisabled = this.getIsButtonDisabled(
+        gameState,
+        isMyTurn,
+        hasAlreadyNotifiedAboutReadiness
+      );
     });
     this.gameContextService.requestState();
     this.tickTheTime();
@@ -78,6 +84,7 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
       next: (resp) => {},
       error: (err) => {
         this.hasNotifiedAboutGameReadiness.next(false);
+        this.errorService.showError('Could not notify about game readiness! Is it too late?');
       },
     });
   }
@@ -88,8 +95,15 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
       gameId: this.gameId,
       actions: actionRequests,
     };
-    this.http.post('/games/turns', gameTurnRequest).subscribe((resp) => {
-      this.currentActionsService.clearActions();
+    this.http.post('/games/turns', gameTurnRequest).subscribe({
+      next: (resp) => {
+        this.currentActionsService.clearActions();
+      },
+      error: (err) => {
+        this.errorService.showError(
+          'You should NOT see this error. If you see it, congrats! It means, that you are either trying to cheat in this game or there is a real bug in the webpage. The game interface allowed you for performing an action that server correctly rejected - this should never actually take place! Wanna do me a favor? Please contact me and inform about what just happened. Thanks!'
+        );
+      },
     });
   }
 
@@ -149,10 +163,13 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getIsButtonDisabled(state: string, isMyTurn: boolean,  hasAlreadyNotifiedAboutReadiness: boolean): boolean {
+  private getIsButtonDisabled(
+    state: string,
+    isMyTurn: boolean,
+    hasAlreadyNotifiedAboutReadiness: boolean
+  ): boolean {
     const canStillNotfiyAboutGameReadiness =
-      state === 'WAITING_TO_START' &&
-      !hasAlreadyNotifiedAboutReadiness;
+      state === 'WAITING_TO_START' && !hasAlreadyNotifiedAboutReadiness;
     return (
       !canStillNotfiyAboutGameReadiness && !(state === 'AWAITING' && isMyTurn)
     );

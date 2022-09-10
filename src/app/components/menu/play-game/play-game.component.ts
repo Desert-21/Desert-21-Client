@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ErrorService } from 'src/app/services/error.service';
 import { StartGameHandlerService } from 'src/app/services/notification-handlers/start-game-handler.service';
 import {
   formatSecondsToTimeString,
   millisecondsFrom,
-  millisecondsTo,
 } from 'src/app/utils/date-utils';
 
 @Component({
@@ -30,17 +30,18 @@ export class PlayGameComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private startGameHandler: StartGameHandlerService,
-    private router: Router
+    private router: Router,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
     this.sub1 = this.startGameHandler.getStartGameUpdates().subscribe({
-      next: id => {
+      next: (id) => {
         this.isInTheQueue = false;
         this.isAddToQueueDisabled = true;
         this.isCancelQueueLoading = false;
         this.router.navigate(['game', id]);
-      }
+      },
     });
   }
 
@@ -60,6 +61,9 @@ export class PlayGameComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.isAddToQueueDisabled = false;
+        this.errorService.showError(
+          'Could not add you to the queue. Try again later!'
+        );
       },
       complete: () => {
         this.isAddToQueueLoading = false;
@@ -73,6 +77,11 @@ export class PlayGameComponent implements OnInit, OnDestroy {
       next: (resp) => {
         this.isInTheQueue = false;
         this.isAddToQueueDisabled = false;
+      },
+      error: () => {
+        this.errorService.showError(
+          'Something went wrong when removing you from the queue. You probably weren\'t even there!'
+        );
       },
       complete: () => {
         this.isCancelQueueLoading = false;

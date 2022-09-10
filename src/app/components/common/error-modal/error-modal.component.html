@@ -1,0 +1,23 @@
+<ng-template #errors let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-primary">Something went wrong!</h4>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="3vw"
+      height="3vw"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="text-primary"
+    >
+      <use xlink:href="#exclamation-circle" />
+    </svg>
+  </div>
+  <div class="modal-body">
+    <i>{{message}}</i>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+

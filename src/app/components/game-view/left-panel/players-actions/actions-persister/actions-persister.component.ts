@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { type } from 'os';
 import { Subscription } from 'rxjs';
 import {
   ActionType,
@@ -14,7 +13,6 @@ import {
   UpgradeAction,
 } from 'src/app/models/actions';
 import { GameContext } from 'src/app/models/game-utility-models';
-import { GameIdService } from 'src/app/services/game-id.service';
 import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 

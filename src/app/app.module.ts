@@ -97,6 +97,11 @@ import { DragAndDropFieldsSelectionService } from './services/rx-logic/double-fi
 import { ShortestPathCalculatorService } from './services/rx-logic/double-field-selection/drag-and-drop/shortest-path-calculator.service';
 import { BuildingQueueComponent } from './components/game-view/right-panel/building-preview/building-queue/building-queue.component';
 import { ActionsPersisterComponent } from './components/game-view/left-panel/players-actions/actions-persister/actions-persister.component';
+import { RetryInterceptor } from './interceptors/retry-interceptor';
+import { ConnectivityErrorInterceptor } from './interceptors/connectivity-error-interceptor';
+import { ErrorModalComponent } from './components/common/error-modal/error-modal.component';
+import { AuthorizationErrorInterceptor } from './interceptors/authorization-error-interceptor';
+import { ServerErrorInterceptor } from './interceptors/server-error-interceptor';
 
 @NgModule({
   declarations: [
@@ -187,6 +192,7 @@ import { ActionsPersisterComponent } from './components/game-view/left-panel/pla
     ConfirmModalComponent,
     BuildingQueueComponent,
     ActionsPersisterComponent,
+    ErrorModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -207,6 +213,27 @@ import { ActionsPersisterComponent } from './components/game-view/left-panel/pla
       useClass: HttpTokenInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ConnectivityErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RetryInterceptor,
+      multi: true,
+    },
+
     BearerTokenService,
     DragAndDropFieldsSelectionService,
     ShortestPathCalculatorService,

@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UsersData } from '../../models/profile-models.';
 import { GenericHttpService } from './generic-http-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserInfoService extends GenericHttpService<UsersData> {
-
   constructor(private http: HttpClient) {
     super();
   }

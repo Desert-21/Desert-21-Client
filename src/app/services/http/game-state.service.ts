@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Game } from '../../models/game-models';
 import { GameIdService } from '../game-id.service';
 import { GenericHttpService } from './generic-http-service';
