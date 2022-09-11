@@ -34,6 +34,10 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
 
   hasNotifiedAboutGameReadiness = new BehaviorSubject<boolean>(false);
 
+  hasStartedTurnExecution = new BehaviorSubject<boolean>(false);
+
+  canCallForTurnExecution = false;
+
   private sub1: Subscription;
 
   currentOnClick: () => void = () => {};
@@ -49,26 +53,45 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
     this.sub1 = combineLatest([
       this.gameContextService.getStateUpdates(),
       this.hasNotifiedAboutGameReadiness.asObservable(),
-    ]).subscribe(([context, hasAlreadyNotifiedAboutReadiness]) => {
-      const game = context.game;
-      const { currentPlayerId, gameState, timeout } = game.stateManager;
-      const isMyTurn =
-        currentPlayerId === null ? null : currentPlayerId === context.player.id;
+      this.hasStartedTurnExecution.asObservable(),
+    ]).subscribe(
+      ([
+        context,
+        hasAlreadyNotifiedAboutReadiness,
+        hasStartedTurnExecution,
+      ]) => {
+        const game = context.game;
+        const { currentPlayerId, gameState, timeout } = game.stateManager;
+        const isMyTurn =
+          currentPlayerId === null
+            ? null
+            : currentPlayerId === context.player.id;
 
-      this.timeOfNextTurn = parseDate(timeout);
-      this.buttonDisplay = this.getButtonText(gameState, isMyTurn);
-      this.gameId = game.gameId;
+        this.timeOfNextTurn = parseDate(timeout);
+        this.buttonDisplay = this.getButtonText(
+          gameState,
+          isMyTurn,
+          hasStartedTurnExecution
+        );
+        this.gameId = game.gameId;
 
-      this.currentActions = context.currentActions;
+        this.currentActions = context.currentActions;
 
-      this.currentOnClick = this.getCurrentOnClick(isMyTurn, gameState);
+        this.currentOnClick = this.getCurrentOnClick(isMyTurn, gameState);
 
-      this.isButtonDisabled = this.getIsButtonDisabled(
-        gameState,
-        isMyTurn,
-        hasAlreadyNotifiedAboutReadiness
-      );
-    });
+        this.isButtonDisabled = this.getIsButtonDisabled(
+          gameState,
+          isMyTurn,
+          hasAlreadyNotifiedAboutReadiness,
+          hasStartedTurnExecution
+        );
+
+        this.canCallForTurnExecution =
+          !this.isButtonDisabled &&
+          isMyTurn &&
+          game.stateManager.gameState === 'AWAITING';
+      }
+    );
     this.gameContextService.requestState();
     this.tickTheTime();
   }
@@ -84,12 +107,15 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
       next: (resp) => {},
       error: (err) => {
         this.hasNotifiedAboutGameReadiness.next(false);
-        this.errorService.showError('Could not notify about game readiness! Is it too late?');
+        this.errorService.showError(
+          'Could not notify about game readiness! Is it too late?'
+        );
       },
     });
   }
 
   endTurn(): void {
+    this.hasStartedTurnExecution.next(true);
     const actionRequests = this.currentActions.map((a) => a.toActionAPIBody());
     const gameTurnRequest: GameTurnRequest = {
       gameId: this.gameId,
@@ -98,8 +124,10 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
     this.http.post('/games/turns', gameTurnRequest).subscribe({
       next: (resp) => {
         this.currentActionsService.clearActions();
+        this.hasStartedTurnExecution.next(false);
       },
       error: (err) => {
+        this.hasStartedTurnExecution.next(false);
         this.errorService.showError(
           'You should NOT see this error. If you see it, congrats! It means, that you are either trying to cheat in this game or there is a real bug in the webpage. The game interface allowed you for performing an action that server correctly rejected - this should never actually take place! Wanna do me a favor? Please contact me and inform about what just happened. Thanks!'
         );
@@ -117,13 +145,17 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
     return () => {};
   }
 
-  private dateToRemainingTimeString(): string {
+  private getRemainingSeconds(): number {
     const msNextTurn = this.timeOfNextTurn?.getTime();
     const msNow = new Date().getTime();
     if (msNextTurn <= msNow) {
-      return '00:00';
+      return 0;
     }
-    const secToNextTurn = (msNextTurn - msNow) / 1000;
+    return (msNextTurn - msNow) / 1000;
+  }
+
+  private dateToRemainingTimeString(): string {
+    const secToNextTurn = this.getRemainingSeconds();
     return formatSecondsToTimeString(secToNextTurn);
   }
 
@@ -132,10 +164,21 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
     return new Promise(async (res, rej) => {
       while (this.shouldContinueTicking) {
         const timeToWait = this.getTimeToWait();
+        this.optionallyExecuteTurnLastSecond();
         await delay(timeToWait);
         this.timeDisplay = this.dateToRemainingTimeString();
       }
     });
+  }
+
+  private optionallyExecuteTurnLastSecond(): void {
+    if (
+      this.getRemainingSeconds() < 0.5 &&
+      this.canCallForTurnExecution &&
+      !this.hasStartedTurnExecution.getValue()
+    ) {
+      this.endTurn();
+    }
   }
 
   private getTimeToWait(): number {
@@ -150,7 +193,14 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
       : 200;
   }
 
-  private getButtonText(state: string, isMyTurn: boolean): string {
+  private getButtonText(
+    state: string,
+    isMyTurn: boolean,
+    hasStartedTurnExecution: boolean
+  ): string {
+    if (hasStartedTurnExecution) {
+      return 'Loading...';
+    }
     switch (state) {
       case 'WAITING_TO_START':
         return 'Ready!';
@@ -166,8 +216,12 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
   private getIsButtonDisabled(
     state: string,
     isMyTurn: boolean,
-    hasAlreadyNotifiedAboutReadiness: boolean
+    hasAlreadyNotifiedAboutReadiness: boolean,
+    hasStartedTurnExecution: boolean
   ): boolean {
+    if (hasStartedTurnExecution) {
+      return true;
+    }
     const canStillNotfiyAboutGameReadiness =
       state === 'WAITING_TO_START' && !hasAlreadyNotifiedAboutReadiness;
     return (
