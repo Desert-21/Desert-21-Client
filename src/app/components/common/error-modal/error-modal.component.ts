@@ -1,14 +1,14 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime } from 'rxjs';
 import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-error-modal',
   templateUrl: './error-modal.component.html',
-  styleUrls: ['./error-modal.component.scss']
+  styleUrls: ['./error-modal.component.scss'],
 })
 export class ErrorModalComponent implements OnInit {
-
   @ViewChild('errors', { read: TemplateRef })
   errors: TemplateRef<any>;
 
@@ -16,13 +16,19 @@ export class ErrorModalComponent implements OnInit {
 
   activeModal: NgbModalRef;
 
-  constructor(private modalService: NgbModal, private errorService: ErrorService) { }
+  constructor(
+    private modalService: NgbModal,
+    private errorService: ErrorService
+  ) {}
 
   ngOnInit(): void {
-    this.errorService.getErrorUpdates().subscribe(msg => {
-      this.message = msg;
-      this.openModal();
-    });
+    this.errorService
+      .getErrorUpdates()
+      .pipe(debounceTime(300))
+      .subscribe((msg) => {
+        this.message = msg;
+        this.openModal();
+      });
   }
 
   openModal(): void {
@@ -35,5 +41,4 @@ export class ErrorModalComponent implements OnInit {
       size: 'm',
     });
   }
-
 }

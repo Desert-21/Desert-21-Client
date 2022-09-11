@@ -11,6 +11,10 @@ export class BearerTokenService {
     localStorage.setItem(BEARER_TOKEN_LOCATION, token);
   }
 
+  clearToken(): void {
+    localStorage.removeItem(BEARER_TOKEN_LOCATION);
+  }
+
   getToken(): string {
     return localStorage.getItem(BEARER_TOKEN_LOCATION);
   }
