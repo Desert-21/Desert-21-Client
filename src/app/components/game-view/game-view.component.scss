@@ -34,7 +34,7 @@ $gradient-color: rgb(41, 48, 83);
 .side-panel {
   height: 100vh - $header-height - 1vh;
   flex-basis: calc(50vw - 46vh);
-  flex-grow: 0;
+  flex-grow: 1;
   background: rgb(82,115,105);
   background: linear-gradient(180deg, $gradient-color 0%, rgba(30,30,34,1) 100%);
 }
