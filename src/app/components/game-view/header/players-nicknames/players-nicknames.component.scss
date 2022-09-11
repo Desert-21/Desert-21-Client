@@ -7,14 +7,14 @@
 
 .player-nickname {
   color: rgb(182, 182, 182);
-  font-size: 2vh;
+  font-size: min(2vh, 1.2vw);
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   text-shadow: 2px 2px #000000;
 	text-decoration-style: dashed;
 }
 
 .vs {
-  font-size: 1.5vh;
+  font-size: min(1.5vh, 1.1vw);
   color: rgb(255, 0, 0);
 	text-shadow: 2px 2px #000000;
 	text-decoration-style: solid;

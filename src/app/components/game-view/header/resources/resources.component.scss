@@ -4,6 +4,7 @@
 
     > [class*="col"] {
       height: 6vh;
+      max-height: 3.5vw;
       display: flex;
       align-items: center;
     }
