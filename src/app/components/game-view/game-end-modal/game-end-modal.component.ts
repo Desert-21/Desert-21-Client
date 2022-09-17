@@ -44,7 +44,6 @@ export class GameEndModalComponent implements OnInit, OnDestroy {
         this.modalTitleClass = 'text-success';
         this.hasPlayerWon = true;
         this.hasOpponentSurrenderedText = bySurrender ? 'You opponent has surrendered.' : '';
-        console.log(this.hasOpponentSurrenderedText);
       }
       this.gameTurn = context.game.stateManager.turnCounter;
     });

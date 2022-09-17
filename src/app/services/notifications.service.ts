@@ -38,7 +38,7 @@ export class NotificationsService {
           this.gameEndHandler,
           this.surrenderHandler
         ]);
-        this.webSocketApi._connect();
+        this.webSocketApi.connect();
       }
     });
     this.userInfoService.requestState();

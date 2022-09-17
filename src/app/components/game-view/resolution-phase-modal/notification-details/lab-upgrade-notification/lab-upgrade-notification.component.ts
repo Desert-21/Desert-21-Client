@@ -26,10 +26,8 @@ export class LabUpgradeNotificationComponent implements OnInit, OnDestroy {
       this.gameContextService.getStateUpdates(),
     ]).subscribe(([notification, context]) => {
       this.isPlayerWhoUpgraded = context.player.id === notification.playerId;
-      console.log(notification);
       this.imageSource = labUpgradeToImagePath(notification.upgrade);
       this.upgradeName = underscoreToRegular(notification.upgrade);
-      console.log(this.imageSource, this.upgradeName);
     });
     this.gameContextService.requestState();
   }
