@@ -20,6 +20,6 @@ jobs:
       - name: Upload build
         uses: actions/upload-artifact@v2
         with:
-          name: build
+          name: build/Desert21
           path: dist
           retention-days: 1
