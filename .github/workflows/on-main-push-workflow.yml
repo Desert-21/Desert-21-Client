@@ -1,0 +1,5 @@
+name: on-main-push
+on: [pull_request]
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
