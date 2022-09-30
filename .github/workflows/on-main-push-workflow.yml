@@ -3,3 +3,9 @@ on: [pull_request]
 jobs:
   build:
     uses: ./.github/workflows/build.yml
+
+  create_image:
+    uses: ./.github/workflows/create_image.yml
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
