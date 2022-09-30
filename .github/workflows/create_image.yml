@@ -12,6 +12,11 @@ jobs:
     environment: dev
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: dist/Desert21
+
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
