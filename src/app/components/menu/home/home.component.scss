@@ -1,0 +1,13 @@
+h2, h4, h6, p, ul, li {
+  color: antiquewhite;
+}
+
+.narrow-container {
+  height: 100%;
+
+  > div {
+    width: 60%;
+    margin: auto;
+    height: 100%;
+  }
+}

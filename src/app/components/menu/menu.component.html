@@ -2,31 +2,61 @@
   <div class="row full-width">
     <div class="col-2">
       <div class="text-center">
-        <button [routerLink]="['./home']" type="button" class="btn btn-outline-success small-button">HOME</button>
+        <button
+          [routerLink]="['./home']"
+          type="button"
+          class="btn btn-outline-success small-button"
+        >
+          HOME
+        </button>
       </div>
     </div>
 
     <div class="col-2">
       <div class="text-center">
-        <button [routerLink]="['./how-to-play']" type="button" class="btn btn-outline-success small-button">HOW TO PLAY</button>
+        <button
+          [routerLink]="['./how-to-play']"
+          type="button"
+          class="btn btn-outline-success small-button"
+        >
+          HOW TO PLAY
+        </button>
       </div>
     </div>
 
     <div class="col-4">
       <div class="text-center">
-        <button [routerLink]="['./play-game']" type="button" class="btn btn-outline-success big-button">PLAY GAME</button>
+        <button
+          [routerLink]="['./play-game']"
+          type="button"
+          class="btn btn-outline-success big-button"
+        >
+          PLAY GAME
+        </button>
       </div>
     </div>
 
     <div class="col-2">
       <div class="text-center">
-        <button [routerLink]="['./account']" type="button" class="btn btn-outline-success small-button">ACCOUNT</button>
+        <button
+          [routerLink]="['./account']"
+          type="button"
+          class="btn btn-outline-success small-button"
+        >
+          ACCOUNT
+        </button>
       </div>
     </div>
 
     <div class="col-2">
       <div class="text-center">
-        <button (click)="logOut()" type="button" class="btn btn-outline-danger small-button">LOG OUT</button>
+        <button
+          (click)="logOut()"
+          type="button"
+          class="btn btn-outline-danger small-button"
+        >
+          LOG OUT
+        </button>
       </div>
     </div>
   </div>
@@ -37,3 +67,7 @@
     </div>
   </div>
 </div>
+
+<p class="version">
+  Version: 0.0.0-BETA
+</p>
