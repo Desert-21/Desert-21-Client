@@ -13,4 +13,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build project
-        run: num run build -- -c dev
+        run: npm run build -- -c dev
