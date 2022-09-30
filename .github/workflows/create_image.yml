@@ -23,13 +23,13 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Build container image
-        run: docker image build -t ${{ secrets.REGISTRY_NAME }}/backend:latest .
+        run: docker image build -t ${{ secrets.REGISTRY_NAME }}/frontend:latest .
 
       - name: Log in to DigitalOcean Container Registry
         run: doctl registry login --expiry-seconds 800
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push ${{ secrets.REGISTRY_NAME }}/backend:latest
+        run: docker push ${{ secrets.REGISTRY_NAME }}/frontend:latest
 
       - name: Logout from the registry
         run: doctl registry logout
