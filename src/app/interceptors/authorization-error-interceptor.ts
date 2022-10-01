@@ -29,9 +29,10 @@ export class AuthorizationErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         const isUnauthorizedIssue = this.errorCodes.includes(error.status);
-        if (!isUnauthorizedIssue) {
+        if (!isUnauthorizedIssue || request.url.includes('login')) {
           return throwError(() => error);
         }
+        console.log(request.url);
         this.errorService.showError(
           'Your session has expired. Please login again!'
         );
