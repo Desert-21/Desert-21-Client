@@ -23,6 +23,7 @@ export class NextTurnHandlerService implements NotificationHandler<NextTurnNotif
         gameState: 'AWAITING',
       }
     };
+    console.log('Received next turn notification with timeout: ', notification.timeout);
     this.gameStateService.updateState(newGameState);
   }
 }
