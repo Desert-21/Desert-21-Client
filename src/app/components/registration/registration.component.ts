@@ -64,6 +64,9 @@ export class RegistrationComponent implements OnInit {
         this.isLoading = false;
         this.errorService.showError(`Registration failed! ${err.error}`);
       },
+      complete: () => {
+        this.isLoading = false;
+      }
     });
   }
 }
