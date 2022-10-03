@@ -24,6 +24,10 @@ export const labUpgradeToImagePath = (labUpgrade: LabUpgrade): string => {
       return '/assets/upgrades/medium-production.jpg';
     case 'MASS_PRODUCTION':
       return '/assets/upgrades/mass-production.jpg';
+    case 'ADVANCED_TACTICS':
+      return '/assets/upgrades/advanced-tactics.jpg';
+    case 'FACTORY_BUILDERS':
+      return '/assets/upgrades/factory-builders.jpg';
     default:
       return '/assets/buildings/electricity.png';
   }
