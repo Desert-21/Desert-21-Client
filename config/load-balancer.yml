@@ -4,6 +4,10 @@ metadata:
   name: frontend-lb
   annotations:
     kubernetes.digitalocean.com/load-balancer-id: "frontend-load-balancer"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-tls-ports: "443"
+    service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: <CERTIFICATE_ID>
 spec:
   type: LoadBalancer
   selector:
@@ -13,3 +17,8 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 4201
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 4201
+
