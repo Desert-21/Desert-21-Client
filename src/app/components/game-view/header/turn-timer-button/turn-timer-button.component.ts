@@ -115,12 +115,14 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
   }
 
   endTurn(): void {
+    console.log('ENDING TURN');
     this.hasStartedTurnExecution.next(true);
     const actionRequests = this.currentActions.map((a) => a.toActionAPIBody());
     const gameTurnRequest: GameTurnRequest = {
       gameId: this.gameId,
       actions: actionRequests,
     };
+    console.log('REQUEST:', gameTurnRequest);
     this.http.post('/games/turns', gameTurnRequest).subscribe({
       next: (resp) => {
         this.currentActionsService.clearActions();
