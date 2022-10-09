@@ -67,6 +67,7 @@ export type StateManager = {
   currentPlayerId?: string;
   turnCounter: number;
   winnerId?: string;
+  firstPlayerId: string;
 };
 
 export type BoardLocation = {

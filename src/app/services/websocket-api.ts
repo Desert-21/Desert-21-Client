@@ -72,6 +72,7 @@ export class WebSocketAPI {
 
   onMessageReceived(message: any): void {
     const body = JSON.parse(message.body) as AppNotification<any>;
+    console.log(body);
     this.messageHandlers
       .filter((handler) => handler.type === body.type)
       .forEach((handler) => {

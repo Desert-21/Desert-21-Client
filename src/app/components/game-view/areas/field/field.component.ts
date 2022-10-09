@@ -141,13 +141,9 @@ export class FieldComponent implements OnInit, OnDestroy {
   }
 
   onFieldSelect(): void {
-    if (this.selectedLocationService.isCurrentSelection(this.row, this.col)) {
-      this.selectedLocationService.setLocation(null);
-    } else {
-      this.selectedLocationService.setLocation({
-        row: this.row,
-        col: this.col,
-      });
-    }
+    this.selectedLocationService.setLocation({
+      row: this.row,
+      col: this.col,
+    });
   }
 }

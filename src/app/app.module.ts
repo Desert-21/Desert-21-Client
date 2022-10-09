@@ -102,6 +102,7 @@ import { ConnectivityErrorInterceptor } from './interceptors/connectivity-error-
 import { ErrorModalComponent } from './components/common/error-modal/error-modal.component';
 import { AuthorizationErrorInterceptor } from './interceptors/authorization-error-interceptor';
 import { ServerErrorInterceptor } from './interceptors/server-error-interceptor';
+import { NoActionsModalComponent } from './components/game-view/areas/no-actions-modal/no-actions-modal.component';
 
 @NgModule({
   declarations: [
@@ -193,6 +194,7 @@ import { ServerErrorInterceptor } from './interceptors/server-error-interceptor'
     BuildingQueueComponent,
     ActionsPersisterComponent,
     ErrorModalComponent,
+    NoActionsModalComponent,
   ],
   imports: [
     BrowserModule,

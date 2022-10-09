@@ -27,6 +27,10 @@ export type ArmyPreviewState = {
     gameContext: GameContext,
     selectedFieldInfo: FieldSelection
   ): ArmyPowerDescription;
+  getTotalArmyDescription(
+    totalArmy: Army,
+    availableUnits: Army
+  ): ArmyDescription | null;
 };
 
 export type ArmyPowerDescription = {
@@ -111,12 +115,31 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
       attackingPower: attackingPower.toString(),
     };
   },
+  getTotalArmyDescription(
+    totalArmy: Army,
+    availableUnits: Army
+  ): ArmyDescription | null {
+    if (!totalArmy || !availableUnits) {
+      return null;
+    }
+    if (
+      totalArmy.droids === availableUnits.droids &&
+      totalArmy.tanks === availableUnits.tanks &&
+      totalArmy.cannons === availableUnits.cannons
+    ) {
+      return null;
+    }
+    return {
+      droids: totalArmy.droids.toString(),
+      tanks: totalArmy.tanks.toString(),
+      cannons: totalArmy.cannons.toString(),
+    };
+  },
 };
 
 export const EnemyArmyPreviewState: ArmyPreviewState = {
   headerContent: 'Enemy Army',
-  tooltipContent:
-    'Here you can see the approximated amount of troops on enemy field. The approximation gets less accurate the bigger the distance from one of the fields owned by you.',
+  tooltipContent: 'Here you can see the approximated amount of troops on enemy field. The approximation gets less accurate the bigger the distance from one of the fields owned by you.',
 
   getVisibleImages(
     hasKingOfTheDesert: boolean
@@ -147,18 +170,15 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       };
     }
     return {
-      droids:
-        minArmy.droids !== maxArmy.droids
-          ? `${minArmy.droids} - ${maxArmy.droids}`
-          : minArmy.droids.toString(),
-      tanks:
-        minArmy.tanks !== maxArmy.tanks
-          ? `${minArmy.tanks} - ${maxArmy.tanks}`
-          : minArmy.tanks.toString(),
-      cannons:
-        minArmy.cannons !== maxArmy.cannons
-          ? `${minArmy.cannons} - ${maxArmy.cannons}`
-          : minArmy.cannons.toString(),
+      droids: minArmy.droids !== maxArmy.droids
+        ? `${minArmy.droids} - ${maxArmy.droids}`
+        : minArmy.droids.toString(),
+      tanks: minArmy.tanks !== maxArmy.tanks
+        ? `${minArmy.tanks} - ${maxArmy.tanks}`
+        : minArmy.tanks.toString(),
+      cannons: minArmy.cannons !== maxArmy.cannons
+        ? `${minArmy.cannons} - ${maxArmy.cannons}`
+        : minArmy.cannons.toString(),
     };
   },
   getArmyPowerDescription(
@@ -224,6 +244,9 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       defendingPower: `${minDefendingArmyPower} - ${maxDefendingArmyPower}`,
     };
   },
+  getTotalArmyDescription(totalArmy: Army, availableUnits: Army): ArmyDescription {
+    return null;
+  }
 };
 
 export const DesertArmyPreviewState: ArmyPreviewState = {
@@ -271,4 +294,7 @@ export const DesertArmyPreviewState: ArmyPreviewState = {
       attackingPower: '0',
     };
   },
+  getTotalArmyDescription(totalArmy: Army, availableUnits: Army): ArmyDescription {
+    return null;
+  }
 };

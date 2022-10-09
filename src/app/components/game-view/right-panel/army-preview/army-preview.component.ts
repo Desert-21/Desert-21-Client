@@ -3,6 +3,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { FieldSelection } from 'src/app/models/game-utility-models';
 import { CurrentScarabsGenerationService } from 'src/app/services/rx-logic/shared/current-scarabs-generation.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import { AvailableUnitsService } from 'src/app/services/rx-logic/single-field-selection/available-units.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
 import { ScarabsRange } from 'src/app/utils/army-utils';
 import {
@@ -28,6 +29,7 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
     false,
   ];
   armyDescription: ArmyDescription = { droids: '?', tanks: '?', cannons: '?' };
+  totalArmyDescription: ArmyDescription | null = null;
   armyPowerDescription: ArmyPowerDescription = {
     defendingPower: '???',
     attackingPower: '???',
@@ -41,32 +43,44 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
   constructor(
     private selectedFieldService: SelectedFieldService,
     private gameContextService: GameContextService,
-    private scarabsGenerationService: CurrentScarabsGenerationService
+    private scarabsGenerationService: CurrentScarabsGenerationService,
+    private availableUnitsService: AvailableUnitsService
   ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.selectedFieldService.getStateUpdates(),
       this.gameContextService.getStateUpdates(),
+      this.availableUnitsService.getStateUpdates()
     ]).subscribe((data) => {
-      const [fieldSelection, context] = data;
+      const [fieldSelection, context, availableUnits] = data;
       if (fieldSelection === null) {
         this.fieldSelectionEmpty = true;
         return;
       }
       this.fieldSelectionEmpty = false;
       this.currentState = this.getCurrentState(fieldSelection);
-      const fieldOwner = context.game.players.find(p => p.id === fieldSelection.field.ownerId);
-      const ownerOwnsKingOfDesert = fieldOwner ? fieldOwner.upgrades.includes('KING_OF_DESERT') : false;
-      this.shouldShowImages = this.currentState.getVisibleImages(ownerOwnsKingOfDesert);
+      const fieldOwner = context.game.players.find(
+        (p) => p.id === fieldSelection.field.ownerId
+      );
+      const ownerOwnsKingOfDesert = fieldOwner
+        ? fieldOwner.upgrades.includes('KING_OF_DESERT')
+        : false;
+      this.shouldShowImages = this.currentState.getVisibleImages(
+        ownerOwnsKingOfDesert
+      );
       const { row, col } = fieldSelection;
       this.armyDescription = this.currentState.getArmyDescription(
-        fieldSelection.field.army,
+        availableUnits,
         context,
         {
           row,
           col,
         }
+      );
+      this.totalArmyDescription = this.currentState.getTotalArmyDescription(
+        fieldSelection.field.army,
+        availableUnits
       );
       this.armyPowerDescription = this.currentState.getArmyPowerDescription(
         fieldSelection.field.army,
@@ -74,9 +88,11 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
         fieldSelection
       );
     });
-    this.sub2 = this.scarabsGenerationService.getStateUpdates().subscribe(range => {
-      this.currentScarabsGeneration = range;
-    });
+    this.sub2 = this.scarabsGenerationService
+      .getStateUpdates()
+      .subscribe((range) => {
+        this.currentScarabsGeneration = range;
+      });
   }
 
   ngOnDestroy(): void {
