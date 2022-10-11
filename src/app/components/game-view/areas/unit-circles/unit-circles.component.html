@@ -1,0 +1,26 @@
+<div
+  *ngFor="let occurence of unitOccurences; let i = index"
+  [class]="'circular-progress-' + i"
+>
+  <div class="circular-progress-circle">
+    <div
+      *ngIf="occurence.quartile > 1"
+      [class]="'full-segment percent-over-25 ' + ownershipClass"
+    ></div>
+    <div
+      *ngIf="occurence.quartile > 2"
+      [class]="'full-segment percent-over-50 ' + ownershipClass"
+    ></div>
+    <div
+      *ngIf="occurence.quartile > 3"
+      [class]="'full-segment percent-over-75 ' + ownershipClass"
+    ></div>
+    <div
+      [class]="'segment quartile-' + occurence.quartile + ' ' + ownershipClass"
+      [ngStyle]="{
+        transform: 'skew(' + (90 - occurence.relativeAmount) + 'deg, 0deg)'
+      }"
+    ></div>
+    <img class="unit-icon" [src]="getImagePath(occurence.unitType)" />
+  </div>
+</div>

@@ -103,6 +103,7 @@ import { ErrorModalComponent } from './components/common/error-modal/error-modal
 import { AuthorizationErrorInterceptor } from './interceptors/authorization-error-interceptor';
 import { ServerErrorInterceptor } from './interceptors/server-error-interceptor';
 import { NoActionsModalComponent } from './components/game-view/areas/no-actions-modal/no-actions-modal.component';
+import { UnitCirclesComponent } from './components/game-view/areas/unit-circles/unit-circles.component';
 
 @NgModule({
   declarations: [
@@ -195,6 +196,7 @@ import { NoActionsModalComponent } from './components/game-view/areas/no-actions
     ActionsPersisterComponent,
     ErrorModalComponent,
     NoActionsModalComponent,
+    UnitCirclesComponent,
   ],
   imports: [
     BrowserModule,
