@@ -21,6 +21,8 @@
         transform: 'skew(' + (90 - occurence.relativeAmount) + 'deg, 0deg)'
       }"
     ></div>
-    <img class="unit-icon" [src]="getImagePath(occurence.unitType)" />
+    <div class="icon-wrapper">
+      <img class="unit-icon" [src]="getImagePath(occurence.unitType)" />
+    </div>
   </div>
 </div>

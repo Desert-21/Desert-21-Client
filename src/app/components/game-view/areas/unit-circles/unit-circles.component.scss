@@ -79,11 +79,17 @@ $circle-size: 3vh;
   transform-origin: 0 0;
 }
 
-.unit-icon {
+.icon-wrapper {
   position: relative;
-  bottom: -2%;
-  left: 10%;
-  width: 80%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.unit-icon {
+  width: $circle-size * 0.8;
   z-index: 1006;
   border-radius: 50%;
 }
