@@ -26,8 +26,8 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     private ref: ElementRef,
     private renderer: Renderer2,
     private contextService: GameContextService,
-    private maxPowerService: MaxPowerService,
-    private postMovementsArmyMapService: PostMovementsArmyMapService,
+    // private maxPowerService: MaxPowerService,
+    // private postMovementsArmyMapService: PostMovementsArmyMapService,
     private actionRelatedLocationService: ActionRelatedLocationsService,
     private fieldSelectionService: SelectedFieldService
   ) {}
@@ -42,21 +42,22 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.contextService.getStateUpdates(),
-      this.maxPowerService.getStateUpdates(),
-      this.postMovementsArmyMapService.getStateUpdates(),
+      // this.maxPowerService.getStateUpdates(),
+      // this.postMovementsArmyMapService.getStateUpdates(),
       this.actionRelatedLocationService.getStateUpdates(),
       this.fieldSelectionService.getStateUpdates(),
     ]).subscribe((data) => {
-      const [context, maxPower, armyMap, locations, currentFieldSelection] =
+      // const [context, maxPower, armyMap, locations, currentFieldSelection] =
+      const [context, locations, currentFieldSelection] =
         data;
       const game = context.game;
       this.field = game.fields[this.row][this.col];
-      const army = armyMap[this.row][this.col];
+      // const army = armyMap[this.row][this.col];
       const backgroundColor = this.getBackgroundColor(
-        context,
-        army,
-        this.field,
-        maxPower,
+        // context,
+        // army,
+        // this.field,
+        // maxPower,
         locations,
         currentFieldSelection
       );
@@ -83,10 +84,10 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
   }
 
   private getBackgroundColor(
-    context: GameContext,
-    army: Army,
-    field: Field,
-    maxPower: number,
+    // context: GameContext,
+    // army: Army,
+    // field: Field,
+    // maxPower: number,
     actionRelatedSelections: Array<ActionHoverFieldSelection>,
     fieldSelection: FieldSelection
   ): string {
@@ -100,12 +101,13 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     if (byFieldSelection !== null) {
       return byFieldSelection;
     }
-    return this.getBackgroundColorByArmyPower(
-      context,
-      field,
-      army,
-      maxPower
-    );
+    return '';
+    // return this.getBackgroundColorByArmyPower(
+    //   context,
+    //   field,
+    //   army,
+    //   maxPower
+    // );
   }
 
   private getBackgroundColorByActionRelatedSelections(
@@ -134,26 +136,28 @@ export class FieldStylingDirective implements OnInit, OnDestroy {
     return 'rgb(2, 132, 245)';
   }
 
-  private getBackgroundColorByArmyPower(
-    context: GameContext,
-    field: Field,
-    army: Army,
-    maxPower: number
-  ): string | null {
-    if (field.ownerId === null || field.army === null) {
-      return null;
-    }
-    const player = context.game.players.find((p) => field.ownerId === p.id);
-    const isHostile = player.id !== context.player.id;
-    const armyPower = calculateAttackingArmyPower(
-      army,
-      context.balance,
-      player
-    );
-    const powerRatio = armyPower / maxPower;
-    const opacityRatio = powerRatio * 0.7;
-    const red = isHostile ? 255 : 0;
-    const green = isHostile ? 0 : 255;
-    return `rgba(${red}, ${green}, 0, ${opacityRatio})`;
-  }
+  // commenting out in case of returning to previous idea
+
+  // private getBackgroundColorByArmyPower(
+  //   context: GameContext,
+  //   field: Field,
+  //   army: Army,
+  //   maxPower: number
+  // ): string | null {
+  //   if (field.ownerId === null || field.army === null) {
+  //     return null;
+  //   }
+  //   const player = context.game.players.find((p) => field.ownerId === p.id);
+  //   const isHostile = player.id !== context.player.id;
+  //   const armyPower = calculateAttackingArmyPower(
+  //     army,
+  //     context.balance,
+  //     player
+  //   );
+  //   const powerRatio = armyPower / maxPower;
+  //   const opacityRatio = powerRatio * 0.7;
+  //   const red = isHostile ? 255 : 0;
+  //   const green = isHostile ? 0 : 255;
+  //   return `rgba(${red}, ${green}, 0, ${opacityRatio})`;
+  // }
 }
