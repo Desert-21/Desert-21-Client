@@ -42,6 +42,7 @@ export interface NotificationHandler<T> {
 export type NextTurnNotification = {
   currentPlayerId: string;
   timeout: string;
+  turnCounter: number,
 };
 
 export type SurrenderNotification = {

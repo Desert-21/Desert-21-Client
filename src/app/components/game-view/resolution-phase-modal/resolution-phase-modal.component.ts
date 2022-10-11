@@ -63,9 +63,16 @@ export class ResolutionPhaseModalComponent implements OnInit, OnDestroy {
       if (this.currentProgress >= 100) {
         clearInterval(this.currentInterval);
         this.isCrossButtonAvailable = true;
+        this.closeModalDelayed();
       }
     }, 50);
     this.isProgressBarVisible = true;
+  }
+
+  private closeModalDelayed(): void {
+    setTimeout(() => {
+      this.modal.close('');
+    }, 8000);
   }
 
   private chooseCurrentSlide(

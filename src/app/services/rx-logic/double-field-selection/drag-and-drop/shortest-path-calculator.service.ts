@@ -31,8 +31,6 @@ export class ShortestPathCalculatorService extends ResourceProcessor<Array<Board
     this.gameContextService.requestState();
   }
 
-  private previous: Array<BoardLocation> = [];
-
   protected processData(dataElements: any[]): BoardLocation[] | null {
     const [selectedLocations, context] = dataElements as [
       DirectedLocationPair,
@@ -53,7 +51,6 @@ export class ShortestPathCalculatorService extends ResourceProcessor<Array<Board
         ? next.findShortestPath(selectedLocations, context)
         : prev;
     }, null) as Array<BoardLocation> | null;
-    this.previous = newPath;
     return newPath;
   }
 

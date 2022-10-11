@@ -63,6 +63,7 @@ body {
   border-color: rgb(0, 128, 255) !important;
   border-style: solid;
   border-width: 2px;
+  cursor: pointer;
 }
 
 .action-enlightment {
@@ -107,6 +108,12 @@ body {
     height: 12vh;
     width: 12vh;
   }
+}
+
+div, img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
 }
 
 /* Importing Bootstrap SCSS file. */

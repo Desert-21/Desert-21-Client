@@ -22,7 +22,12 @@
           src="/assets/mechs/droid-full.png"
           alt="droid-full"
         />
-        <span class="units-amount"> {{ armyDescription.droids }}</span>
+        <span class="units-amount"
+          >{{ armyDescription.droids }}
+          <span *ngIf="totalArmyDescription" class="total-units-amount"
+            >({{ totalArmyDescription.droids }})</span
+          ></span
+        >
       </div>
       <div *ngIf="shouldShowImages[1]" class="image-wrapper">
         <img
@@ -30,7 +35,12 @@
           src="/assets/mechs/tank-full.png"
           alt="tank-full"
         />
-        <span class="units-amount">{{ armyDescription.tanks }}</span>
+        <span class="units-amount"
+          >{{ armyDescription.tanks }}
+          <span *ngIf="totalArmyDescription" class="total-units-amount"
+            >({{ totalArmyDescription.tanks }})</span
+          ></span
+        >
       </div>
       <div *ngIf="shouldShowImages[2]" class="image-wrapper">
         <img
@@ -38,7 +48,12 @@
           src="/assets/mechs/cannon-full.png"
           alt="cannon-full"
         />
-        <span class="units-amount">{{ armyDescription.cannons }}</span>
+        <span class="units-amount"
+          >{{ armyDescription.cannons }}
+          <span *ngIf="totalArmyDescription" class="total-units-amount"
+            >({{ totalArmyDescription.cannons }})</span
+          ></span
+        >
       </div>
       <div *ngIf="shouldShowImages[3]" class="image-wrapper">
         <img
@@ -46,7 +61,11 @@
           src="/assets/mechs/desertbot-full.png"
           alt="scarab-full"
         />
-        <span class="units-amount">{{currentScarabsGeneration.min}}-{{currentScarabsGeneration.max}}</span>
+        <span class="units-amount"
+          >{{ currentScarabsGeneration.min }}-{{
+            currentScarabsGeneration.max
+          }}</span
+        >
       </div>
     </div>
     <div class="mt-4">

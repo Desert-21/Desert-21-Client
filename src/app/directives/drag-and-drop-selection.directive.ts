@@ -7,6 +7,7 @@ import { DragAndDropIsOnService } from '../services/rx-logic/double-field-select
 import { GameModalService } from '../services/rx-logic/shared/game-modal.service';
 import { LastShortestPathCalculationService } from '../services/rx-logic/double-field-selection/drag-and-drop/last-shortest-path-calculation.service';
 import { areLocationsEqual } from '../utils/location-utils';
+import { ModalActionType, MovementModalAvailableActionsService } from '../services/rx-logic/double-field-selection/movement-modal-available-actions.service';
 
 @Directive({
   selector: '[appDragAndDropSelection]',
@@ -17,6 +18,7 @@ export class DragAndDropSelectionDirective implements OnDestroy {
 
   currentSelection: DirectedLocationPair | null = null;
   isOn = false;
+  availableActions: Array<ModalActionType> = [];
 
   private sub1: Subscription;
 
@@ -24,15 +26,18 @@ export class DragAndDropSelectionDirective implements OnDestroy {
     private isOnService: DragAndDropIsOnService,
     private dragAndDropService: DragAndDropFieldsSelectionService,
     private gameModalService: GameModalService,
-    private lastShortestPathService: LastShortestPathCalculationService
+    private lastShortestPathService: LastShortestPathCalculationService,
+    private availableActionsService: MovementModalAvailableActionsService,
   ) {
     this.sub1 = combineLatest([
       isOnService.getStateUpdates(),
       dragAndDropService.getStateUpdates(),
+      availableActionsService.getStateUpdates(),
     ]).subscribe((update) => {
-      const [isOn, selection] = update;
+      const [isOn, selection, availableActions] = update;
       this.isOn = isOn;
       this.currentSelection = selection;
+      this.availableActions = availableActions;
     });
   }
 
@@ -75,7 +80,11 @@ export class DragAndDropSelectionDirective implements OnDestroy {
       this.currentSelection.from !== null &&
       !areLocationsEqual(this.currentSelection.from, this.currentSelection.to)
     ) {
-      this.gameModalService.openModal('MOVEMENT');
+      if (this.availableActions.length > 0) {
+        this.gameModalService.openModal('MOVEMENT');
+      } else {
+        this.gameModalService.openModal('NO_ACTIONS');
+      }
     }
     this.isOnService.setIsOn(false);
     this.dragAndDropService.unselect();

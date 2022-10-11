@@ -33,6 +33,9 @@ export class GameModalComponent implements OnInit, OnDestroy {
   @ViewChild('confirm', { read: TemplateRef })
   confirm: TemplateRef<any>;
 
+  @ViewChild('noActions', { read: TemplateRef })
+  noActions: TemplateRef<any>;
+
   private sub1: Subscription;
 
   constructor(
@@ -71,35 +74,34 @@ export class GameModalComponent implements OnInit, OnDestroy {
         return this.resolution;
       case 'CONFIRM':
         return this.confirm;
+      case 'NO_ACTIONS':
+        return this.noActions;
     }
   }
 
   private getModalClass(modalType: ModalType): string {
     switch (modalType) {
       case 'GAME_END':
+      case 'MOVEMENT':
+      case 'RESOLUTION':
+      case 'CONFIRM':
+      case 'NO_ACTIONS':
         return 'dark-modal';
       case 'LAB':
         return 'big-dark-modal';
-      case 'MOVEMENT':
-        return 'dark-modal';
-      case 'RESOLUTION':
-        return 'dark-modal';
-      case 'CONFIRM':
-        return 'dark-modal';
     }
   }
 
   private getModalSize(modalType: ModalType): string {
     switch (modalType) {
       case 'GAME_END':
+      case 'MOVEMENT':
+      case 'RESOLUTION':
         return null;
       case 'LAB':
         return 'xl';
-      case 'MOVEMENT':
-        return null;
-      case 'RESOLUTION':
-        return null;
       case 'CONFIRM':
+      case 'NO_ACTIONS':
         return 'sm';
     }
   }

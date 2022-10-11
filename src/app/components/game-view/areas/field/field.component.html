@@ -1,5 +1,5 @@
 <div
-  (click)="onFieldSelect()"
+  (mousedown)="onFieldSelect()"
   class="bordered cell unselectable"
   [ngClass]="currentClasses"
   appEnlighter
@@ -18,4 +18,6 @@
     src="/assets/buildInProgress.png"
     class="unfocusable img-fluid unselectable"
   />
+
+  <app-unit-circles [fieldLocation]="{ row: row, col: col }"></app-unit-circles>
 </div>

@@ -1,0 +1,103 @@
+$circle-size: 3vh;
+
+// Indexing from 0
+.circular-progress-0 {
+  position: absolute;
+  display: inline-block;
+  bottom: 0.5vh;
+  left: 0.5vh;
+}
+
+.circular-progress-1 {
+  position: absolute;
+  display: inline-block;
+  bottom: 0.5vh;
+  left: $circle-size + 1vh;
+}
+
+.circular-progress-2 {
+  position: absolute;
+  display: inline-block;
+  bottom: 0.5vh;
+  left: $circle-size * 2 + 1.5vh;
+}
+
+.circular-progress-circle {
+  position: relative;
+  width: $circle-size;
+  height: $circle-size;
+  background: rgb(56, 56, 56);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.full-segment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70vw;
+  height: 70vw;
+  transform-origin: 0 0;
+  transform: skew(0deg, 0deg);
+}
+
+.percent-over-25 {
+  rotate: 0deg;
+}
+
+.percent-over-50 {
+  rotate: 90deg;
+}
+
+.percent-over-75 {
+  rotate: 180deg;
+}
+
+// INdexing from 0
+.quartile-1 {
+  rotate: 0deg;
+}
+
+.quartile-2 {
+  rotate: 90deg;
+}
+
+.quartile-3 {
+  rotate: 180deg;
+}
+
+.quartile-4 {
+  rotate: 270deg;
+}
+
+.segment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70vw;
+  height: 70vw;
+  transform-origin: 0 0;
+}
+
+.icon-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.unit-icon {
+  width: $circle-size * 0.8;
+  z-index: 1006;
+  border-radius: 50%;
+}
+
+.owned {
+  background: rgb(0, 255, 0);
+}
+
+.enemy {
+  background: red;
+}
