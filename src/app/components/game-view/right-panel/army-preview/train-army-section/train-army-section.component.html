@@ -1,21 +1,23 @@
-<div *ngIf="showScarabInfo">
-  Unoccupied fields are defended by scarabs. Scarabs grow in strenght with every
-  turn, so don't delay with the conquest!
-</div>
-<div *ngIf="showEnemyInfo">
-  You don't know anything about enemy actions here. He might be training or
-  moving some units. Or he might be not.
-</div>
-<app-train-army-queue
-  *ngIf="showQueue"
-  [amount]="optionalPendingTraining.amount"
-  [unitType]="optionalPendingTraining.unitType"
-  [turnsToExecute]="optionalPendingTraining.turnsToExecute"
-></app-train-army-queue>
-<app-train-army-button-section
-  *ngIf="showButton"
-></app-train-army-button-section>
-<div *ngIf="showCantTrainHereInfo">
-  You can train your units in towers and home bases and reallocate them here if
-  necessary!
+<div class="section-wrapper">
+  <div *ngIf="showScarabInfo">
+    Unoccupied fields are defended by scarabs. Scarabs grow in strenght with every
+    turn, so don't delay with the conquest!
+  </div>
+  <div *ngIf="showEnemyInfo">
+    You don't know anything about enemy actions here. He might be training or
+    moving some units. Or he might be not.
+  </div>
+  <app-train-army-queue
+    *ngIf="showQueue"
+    [amount]="optionalPendingTraining.amount"
+    [unitType]="optionalPendingTraining.unitType"
+    [turnsToExecute]="optionalPendingTraining.turnsToExecute"
+  ></app-train-army-queue>
+  <app-train-army-button-section
+    *ngIf="showButton"
+  ></app-train-army-button-section>
+  <div *ngIf="showCantTrainHereInfo">
+    You can train your units in towers and home bases and reallocate them here if
+    necessary!
+  </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="game-panel wrapper">
-  <div *ngIf="!fieldSelectionEmpty">
+  <div *ngIf="!fieldSelectionEmpty" class="full-content-wrapper">
     <h5 class="text-center desert21-font">
       {{ currentState.headerContent }}
       <svg
@@ -15,73 +15,73 @@
         <use xlink:href="#info-fill" />
       </svg>
     </h5>
-    <div class="images-wrapper mt-4">
-      <div *ngIf="shouldShowImages[0]" class="image-wrapper">
-        <img
-          class="img-fluid"
-          src="/assets/mechs/droid-full.png"
-          alt="droid-full"
-        />
-        <span class="units-amount"
-          >{{ armyDescription.droids }}
-          <span *ngIf="totalArmyDescription" class="total-units-amount"
-            >({{ totalArmyDescription.droids }})</span
-          ></span
-        >
+    <div class="content-wrapper">
+      <div class="images-wrapper">
+        <div *ngIf="shouldShowImages[0]" class="image-wrapper">
+          <img
+            class="img-fluid"
+            src="/assets/mechs/droid-full.png"
+            alt="droid-full"
+          />
+          <span class="units-amount"
+            >{{ armyDescription.droids }}
+            <span *ngIf="totalArmyDescription" class="total-units-amount"
+              >({{ totalArmyDescription.droids }})</span
+            ></span
+          >
+        </div>
+        <div *ngIf="shouldShowImages[1]" class="image-wrapper">
+          <img
+            class="img-fluid"
+            src="/assets/mechs/tank-full.png"
+            alt="tank-full"
+          />
+          <span class="units-amount"
+            >{{ armyDescription.tanks }}
+            <span *ngIf="totalArmyDescription" class="total-units-amount"
+              >({{ totalArmyDescription.tanks }})</span
+            ></span
+          >
+        </div>
+        <div *ngIf="shouldShowImages[2]" class="image-wrapper">
+          <img
+            class="img-fluid"
+            src="/assets/mechs/cannon-full.png"
+            alt="cannon-full"
+          />
+          <span class="units-amount"
+            >{{ armyDescription.cannons }}
+            <span *ngIf="totalArmyDescription" class="total-units-amount"
+              >({{ totalArmyDescription.cannons }})</span
+            ></span
+          >
+        </div>
+        <div *ngIf="shouldShowImages[3]" class="image-wrapper">
+          <img
+            class="img-fluid"
+            src="/assets/mechs/desertbot-full.png"
+            alt="scarab-full"
+          />
+          <span class="units-amount"
+            >{{ currentScarabsGeneration.min }}-{{
+              currentScarabsGeneration.max
+            }}</span
+          >
+        </div>
       </div>
-      <div *ngIf="shouldShowImages[1]" class="image-wrapper">
-        <img
-          class="img-fluid"
-          src="/assets/mechs/tank-full.png"
-          alt="tank-full"
-        />
-        <span class="units-amount"
-          >{{ armyDescription.tanks }}
-          <span *ngIf="totalArmyDescription" class="total-units-amount"
-            >({{ totalArmyDescription.tanks }})</span
-          ></span
-        >
+      <div class="powers-wrapper">
+        <div class="mt-4 text-success power-description">
+          Defending power: {{ armyPowerDescription.defendingPower }}
+        </div>
+        <div class="text-danger power-description">
+          Attacking power: {{ armyPowerDescription.attackingPower }}
+        </div>
       </div>
-      <div *ngIf="shouldShowImages[2]" class="image-wrapper">
-        <img
-          class="img-fluid"
-          src="/assets/mechs/cannon-full.png"
-          alt="cannon-full"
-        />
-        <span class="units-amount"
-          >{{ armyDescription.cannons }}
-          <span *ngIf="totalArmyDescription" class="total-units-amount"
-            >({{ totalArmyDescription.cannons }})</span
-          ></span
-        >
-      </div>
-      <div *ngIf="shouldShowImages[3]" class="image-wrapper">
-        <img
-          class="img-fluid"
-          src="/assets/mechs/desertbot-full.png"
-          alt="scarab-full"
-        />
-        <span class="units-amount"
-          >{{ currentScarabsGeneration.min }}-{{
-            currentScarabsGeneration.max
-          }}</span
-        >
+      <div>
+        <app-train-army-section></app-train-army-section>
       </div>
     </div>
-    <div class="mt-4">
-      <b class="mt-2 ml-2 text-success"
-        >Defending power: {{ armyPowerDescription.defendingPower }}</b
-      >
     </div>
-    <div>
-      <b class="mt-2 ml-2 text-danger"
-        >Attacking power: {{ armyPowerDescription.attackingPower }}</b
-      >
-    </div>
-    <div class="mt-4">
-      <app-train-army-section></app-train-army-section>
-    </div>
-  </div>
   <div *ngIf="fieldSelectionEmpty" class="empty-game-panel desert21-font">
     Select a field on the board to view here some details about its army!
     <img src="/assets/buildings/unknownBuilding.png" />

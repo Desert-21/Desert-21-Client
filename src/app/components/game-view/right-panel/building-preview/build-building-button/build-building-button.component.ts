@@ -61,6 +61,9 @@ export class BuildBuildingButtonComponent implements OnInit, OnDestroy {
   }
 
   buildBuilding(option: EnrichedBuildingOption): void {
+    if (!option.availability.isAvailable) {
+      return;
+    }
     const action = new BuildBuildingAction(
       this.location,
       option.buildingType,

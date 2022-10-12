@@ -1,5 +1,27 @@
+h5 {
+  font-size: 2vh;
+}
+
+svg {
+  width: 2.5vh;
+}
+
 .wrapper {
   height: 38vh;
+}
+
+.full-content-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .images-wrapper {
@@ -25,4 +47,16 @@
   font-weight: normal;
   margin-left: 3px;
   font-size: small;
+}
+
+.power-description {
+  margin-left: 1vh;
+  margin-top: 0.5vh;
+  font-size: 1.7vh;
+  font-weight: bold;
+}
+
+.powers-wrapper {
+  margin-top: -1vh;
+  margin-bottom: 0.5vh;
 }
