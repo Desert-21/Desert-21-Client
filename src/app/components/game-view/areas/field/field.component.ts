@@ -37,6 +37,8 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   shouldShowBuildInProgress = false;
 
+  rank: string | null = null;
+
   private sub1: Subscription;
   private sub2: Subscription;
 
@@ -51,6 +53,7 @@ export class FieldComponent implements OnInit, OnDestroy {
       this.field = game?.fields[this.row][this.col];
       this.currentClasses = this.getStyling();
       this.shouldShowBuildInProgress = buildingsBuiltMap[this.row][this.col];
+      this.rank = this.getRankImageSource(this.field);
     });
     this.sub2 = this.selectedFieldService.getStateUpdates().subscribe((field) => {
       if (field === null) {
@@ -64,6 +67,14 @@ export class FieldComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
     this.sub2.unsubscribe();
+  }
+
+  getRankImageSource(field: Field): string | null {
+    const level = field?.building?.level || 1;
+    if (level < 2) {
+      return null;
+    }
+    return `/assets/ranks/rank-${level}.png`;
   }
 
   getStyling(): string {
