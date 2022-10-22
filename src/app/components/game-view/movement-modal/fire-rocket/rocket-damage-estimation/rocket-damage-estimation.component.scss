@@ -1,4 +1,10 @@
-.army-preview-wrapper {
+.army-preview-outer-wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.army-preview-wrapper {
+  max-width: 40vh;
 }
