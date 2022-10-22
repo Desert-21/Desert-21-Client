@@ -53,6 +53,12 @@ export type Player = {
   rocketStrikesDone: number;
   builtFactories: number;
   builtTowers: number;
+  ai: ProductionAI;
+};
+
+export type ProductionAI = {
+  activated: boolean;
+  currentProduction: number;
 };
 
 export type ResourceSet = {
