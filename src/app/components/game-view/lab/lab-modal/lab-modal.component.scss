@@ -21,11 +21,15 @@
   display: flex;
   align-items: center;
   justify-content: left;
+
+  button {
+    font-size: 1.7vh;
+  }
 }
 
 .branch-title {
   margin-left: 24px;
-  font-size: x-large;
+  font-size: 2.5vh;
 }
 
 .right-panel-image-wrapper {
