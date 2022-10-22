@@ -8,7 +8,14 @@ import {
   calculateDefendingArmyPower,
   calculateScarabsPower,
 } from 'src/app/utils/army-power-calculator';
-import { getArmyRanges, getScarabsRange } from 'src/app/utils/army-utils';
+import {
+  getArmyRanges,
+  getArrivingBackupAtLocation,
+  getOnlyArmyMovementFrozenUnitsAtLocation,
+  getScarabsRange,
+  subtractArmies,
+  sumArmies,
+} from 'src/app/utils/army-utils';
 import { getFogOfWarLevel } from 'src/app/utils/location-utils';
 
 export type ArmyPreviewState = {
@@ -46,7 +53,6 @@ export type ArmyDescription = {
   scarabs?: string;
 };
 
-// todo: do really that logic with king of desert
 export const OwnedArmyPreviewState: ArmyPreviewState = {
   headerContent: 'Your Army',
   tooltipContent:
@@ -72,8 +78,21 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
     gameContext: GameContext,
     selectedFieldInfo: FieldSelection
   ): ArmyPowerDescription {
+    const frozenUnits = getOnlyArmyMovementFrozenUnitsAtLocation(
+      selectedFieldInfo,
+      gameContext.currentActions
+    );
+    const arrivingBackup = getArrivingBackupAtLocation(
+      selectedFieldInfo,
+      gameContext.currentActions
+    );
+    const armyIncludingMovementsFreeze = subtractArmies(army, frozenUnits);
+    const armyIncludingMovementsFreezeAndArrivingBackup = sumArmies(
+      armyIncludingMovementsFreeze,
+      arrivingBackup
+    );
     const defendingPowerDefault = calculateDefendingArmyPower(
-      army,
+      armyIncludingMovementsFreezeAndArrivingBackup,
       0,
       gameContext.balance,
       gameContext.player,
@@ -87,7 +106,7 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
         gameContext.balance.combat.scarabs
       );
       const defendingPowerMin = calculateDefendingArmyPower(
-        army,
+        armyIncludingMovementsFreezeAndArrivingBackup,
         scarabsRange.min,
         gameContext.balance,
         gameContext.player,
@@ -95,7 +114,7 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
         selectedFieldInfo.field.building
       );
       const defendingPowerMax = calculateDefendingArmyPower(
-        army,
+        armyIncludingMovementsFreezeAndArrivingBackup,
         scarabsRange.max,
         gameContext.balance,
         gameContext.player,
@@ -106,7 +125,7 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
     }
 
     const attackingPower = calculateAttackingArmyPower(
-      army,
+      armyIncludingMovementsFreeze,
       gameContext.balance,
       gameContext.player
     );
@@ -139,7 +158,8 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
 
 export const EnemyArmyPreviewState: ArmyPreviewState = {
   headerContent: 'Enemy Army',
-  tooltipContent: 'Here you can see the approximated amount of troops on enemy field. The approximation gets less accurate the bigger the distance from one of the fields owned by you.',
+  tooltipContent:
+    'Here you can see the approximated amount of troops on enemy field. The approximation gets less accurate the bigger the distance from one of the fields owned by you.',
 
   getVisibleImages(
     hasKingOfTheDesert: boolean
@@ -170,15 +190,18 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       };
     }
     return {
-      droids: minArmy.droids !== maxArmy.droids
-        ? `${minArmy.droids} - ${maxArmy.droids}`
-        : minArmy.droids.toString(),
-      tanks: minArmy.tanks !== maxArmy.tanks
-        ? `${minArmy.tanks} - ${maxArmy.tanks}`
-        : minArmy.tanks.toString(),
-      cannons: minArmy.cannons !== maxArmy.cannons
-        ? `${minArmy.cannons} - ${maxArmy.cannons}`
-        : minArmy.cannons.toString(),
+      droids:
+        minArmy.droids !== maxArmy.droids
+          ? `${minArmy.droids} - ${maxArmy.droids}`
+          : minArmy.droids.toString(),
+      tanks:
+        minArmy.tanks !== maxArmy.tanks
+          ? `${minArmy.tanks} - ${maxArmy.tanks}`
+          : minArmy.tanks.toString(),
+      cannons:
+        minArmy.cannons !== maxArmy.cannons
+          ? `${minArmy.cannons} - ${maxArmy.cannons}`
+          : minArmy.cannons.toString(),
     };
   },
   getArmyPowerDescription(
@@ -244,9 +267,12 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       defendingPower: `${minDefendingArmyPower} - ${maxDefendingArmyPower}`,
     };
   },
-  getTotalArmyDescription(totalArmy: Army, availableUnits: Army): ArmyDescription {
+  getTotalArmyDescription(
+    totalArmy: Army,
+    availableUnits: Army
+  ): ArmyDescription {
     return null;
-  }
+  },
 };
 
 export const DesertArmyPreviewState: ArmyPreviewState = {
@@ -294,7 +320,10 @@ export const DesertArmyPreviewState: ArmyPreviewState = {
       attackingPower: '0',
     };
   },
-  getTotalArmyDescription(totalArmy: Army, availableUnits: Army): ArmyDescription {
+  getTotalArmyDescription(
+    totalArmy: Army,
+    availableUnits: Army
+  ): ArmyDescription {
     return null;
-  }
+  },
 };

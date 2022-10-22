@@ -155,7 +155,7 @@ export const canTrainUnits = (
     );
   }
   if (!canAffordUnits(availableResources, unitType, trainingMode, balance)) {
-    return getNotAvailable('You don\'t have enough metal.');
+    return getNotAvailable("You don't have enough metal.");
   }
   return getAvailable();
 };
@@ -245,16 +245,38 @@ export const getSlowestUnitsSpeed = (
     }, Infinity);
 };
 
-export const getFrozenUnitsAtLocation = (
+export const getArrivingBackupAtLocation = (
   location: BoardLocation,
   actions: Array<PlayersAction<any>>
 ): Army => {
-  const fromArmyMovements = actions
+  return actions
+    .filter((a) => a.getType() === 'MOVE_UNITS')
+    .map((a) => a as MoveUnitsAction)
+    .filter((a) => areLocationsEqual(a.to, location))
+    .map((a) => a.army)
+    .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+}
+
+export const getOnlyArmyMovementFrozenUnitsAtLocation = (
+  location: BoardLocation,
+  actions: Array<PlayersAction<any>>
+): Army => {
+  return actions
     .filter((a) => ['MOVE_UNITS', 'ATTACK'].includes(a.getType()))
     .map((a) => a as MoveUnitsAction)
     .filter((a) => areLocationsEqual(a.from, location))
     .map((a) => a.army)
     .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
+};
+
+export const getFrozenUnitsAtLocation = (
+  location: BoardLocation,
+  actions: Array<PlayersAction<any>>
+): Army => {
+  const fromArmyMovements = getOnlyArmyMovementFrozenUnitsAtLocation(
+    location,
+    actions
+  );
   const fromBombardings = actions
     .filter((a) => a.getType() === 'BOMBARD')
     .map((a) => a as BombardAction)
@@ -380,9 +402,7 @@ export const getFightingArmyDamageDescription = (
   };
 };
 
-export const armyToArmyDescription = (
-  army: Army
-): ArmyDescription => {
+export const armyToArmyDescription = (army: Army): ArmyDescription => {
   return {
     droids: army.droids.toString(),
     tanks: army.tanks.toString(),
