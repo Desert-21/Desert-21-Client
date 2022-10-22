@@ -10,7 +10,7 @@
   </div>
   <div class="winning-analysis-wrapper">
     <div class="text-center">
-      <b>Winning chance:</b>
+      <b class="winning-chance">Winning chance:</b>
       <br />
       <b
         class="winning-percentage"
@@ -21,7 +21,7 @@
       >
     </div>
     <button
-      class="btn btn-sm btn-primary mt-3"
+      class="btn btn-sm btn-primary mt-3 view-simulation"
       [ngbPopover]="popContent"
       placement="bottom"
       [autoClose]="'outside'"
@@ -38,12 +38,14 @@
 <div class="battle-wrapper">
   <h5 class="text-center">Battle</h5>
   <div class="mt-2">
-    <div class="army-preview-wrapper">
-      <app-army-destination-preview
-        [army]="toFieldArmyAfterMovement"
-      ></app-army-destination-preview>
+    <div class="army-preview-outer-wrapper">
+      <div class="army-preview-wrapper">
+        <app-army-destination-preview
+          [army]="toFieldArmyAfterMovement"
+        ></app-army-destination-preview>
+      </div>
     </div>
-    <div class="ml-4 mt-2 text-success">
+    <div class="ml-4 mt-2 text-success power-description">
       <b>Attackers power: {{ attackersPower }}</b>
     </div>
   </div>
@@ -51,14 +53,19 @@
   <h5 class="mt-3 text-center">VS</h5>
 
   <div class="mt-2">
-    <div class="w-100" [class.only-scarabs-wrapper]="isUnoccupied">
-      <app-army-destination-preview
-        [army]="toFieldEnemyArmy"
-        shouldShowScarabs="true"
-        [shouldShowArmy]="!isUnoccupied"
-      ></app-army-destination-preview>
+    <div
+      class="army-preview-outer-wrapper"
+      [class.only-scarabs-wrapper]="isUnoccupied"
+    >
+      <div class="army-preview-wrapper-2">
+        <app-army-destination-preview
+          [army]="toFieldEnemyArmy"
+          shouldShowScarabs="true"
+          [shouldShowArmy]="!isUnoccupied"
+        ></app-army-destination-preview>
+      </div>
     </div>
-    <div class="ml-4 mt-2 text-danger">
+    <div class="ml-4 mt-2 text-danger power-description">
       <b>Defenders power: {{ defendersPower }}</b>
     </div>
   </div>

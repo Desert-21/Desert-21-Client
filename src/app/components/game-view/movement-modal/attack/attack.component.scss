@@ -2,6 +2,7 @@
   display: flex;
   justify-content: left;
   width: 70%;
+  max-width: 40vh;
 }
 
 .battle-wrapper {
@@ -19,9 +20,23 @@
   justify-content: end;
 }
 
+.army-preview-outer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .army-preview-wrapper {
-  max-width: 75%;
-  margin-left: 12.5%;
+  max-width: 35vh;
+  display: flex;
+  justify-content: center;
+}
+
+.winning-chance {
+  font-size: 1.8vh;
+}
+
+.army-preview-wrapper-2 {
+  max-width: 45vh;
   display: flex;
   justify-content: center;
 }
@@ -45,7 +60,19 @@
 }
 
 .winning-percentage {
-  font-size: xx-large;
+  font-size: 4vh;
+}
+
+.power-description {
+  font-size: 1.7vh;
+}
+
+h5 {
+  font-size: 2vh;
+}
+
+.view-simulation {
+  font-size: 1.5vh;
 }
 
 :host ::ng-deep .popover {
