@@ -4,12 +4,12 @@ import { ModifiableResource } from '../templates/modifiable-resource';
 @Injectable({
   providedIn: 'root'
 })
-export class HasWonBySurrenderService extends ModifiableResource<boolean | null> {
-  protected initialize(): boolean {
-    return false;
-  }
-
+export class IsDrawRequestedService extends ModifiableResource<boolean> {
   constructor() {
     super();
+  }
+
+  protected initialize(): boolean {
+    return false;
   }
 }

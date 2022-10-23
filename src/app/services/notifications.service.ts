@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BearerTokenService } from './bearer-token.service';
 import { UserInfoService } from './http/user-info.service';
+import { DrawAcceptedNotificationHandlerService } from './notification-handlers/draw-accepted-notification-handler.service';
+import { DrawRejectedNotificationHandlerService } from './notification-handlers/draw-rejected-notification-handler.service';
+import { DrawRequestedNotificationHandlerService } from './notification-handlers/draw-requested-notification-handler.service';
 import { GameEndNotificationHandlerService } from './notification-handlers/game-end-notification-handler.service';
 import { NextTurnHandlerService } from './notification-handlers/next-turn-handler.service';
 import { ResolutionPhaseHandlerService } from './notification-handlers/resolution-phase-handler.service';
@@ -19,7 +22,10 @@ export class NotificationsService {
     private startGameHandler: StartGameHandlerService,
     private resolutionPhaseHandler: ResolutionPhaseHandlerService,
     private gameEndHandler: GameEndNotificationHandlerService,
-    private surrenderHandler: SurrenderHandlerService
+    private surrenderHandler: SurrenderHandlerService,
+    private drawRequestedHandler: DrawRequestedNotificationHandlerService,
+    private drawAcceptedHandler: DrawAcceptedNotificationHandlerService,
+    private drawRejectedHandler: DrawRejectedNotificationHandlerService,
   ) {}
 
   webSocketApi: WebSocketAPI | null = null;
@@ -36,7 +42,10 @@ export class NotificationsService {
           this.startGameHandler,
           this.resolutionPhaseHandler,
           this.gameEndHandler,
-          this.surrenderHandler
+          this.surrenderHandler,
+          this.drawRequestedHandler,
+          this.drawAcceptedHandler,
+          this.drawRejectedHandler,
         ]);
         this.webSocketApi.connect();
       }

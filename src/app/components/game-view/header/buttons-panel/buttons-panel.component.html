@@ -1,4 +1,8 @@
-<button class="btn btn-secondary" [ngbPopover]="popoverContent" placement="bottom-right">
+<button
+  class="btn btn-secondary"
+  [ngbPopover]="popoverContent"
+  placement="bottom-right"
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
@@ -13,7 +17,34 @@
 
 <ng-template #popoverContent>
   <div class="buttons-container">
-    <button (click)="onSurrenderClick()" class="btn-danger">Surrender</button>
-    <button class="btn-warning">Offer a draw</button>
+    <button
+      (click)="onSurrenderClick()"
+      [disabled]="drawState === 'IMPOSSIBLE'"
+      [ngClass]="drawState === 'IMPOSSIBLE' ? 'btn-secondary' : 'btn-danger'"
+    >
+      Surrender
+    </button>
+    <button
+      *ngIf="drawState !== 'REQUESTED'"
+      (click)="onDrawClick()"
+      [ngClass]="drawState === 'IMPOSSIBLE' ? 'btn-secondary' : 'btn-warning'"
+      [disabled]="drawState === 'IMPOSSIBLE'"
+    >
+      Offer a draw
+    </button>
+    <button
+      *ngIf="drawState === 'REQUESTED'"
+      (click)="onCancelDrawClick()"
+      class="btn-warning"
+    >
+      Cancel draw
+    </button>
+    <button
+      *ngIf="drawState === 'IMPOSSIBLE'"
+      (click)="onBackToMenu()"
+      class="btn-primary"
+    >
+      Back to menu
+    </button>
   </div>
 </ng-template>
