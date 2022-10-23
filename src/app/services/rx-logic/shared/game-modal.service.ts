@@ -8,6 +8,7 @@ export type ModalType =
   | 'LAB'
   | 'RESOLUTION'
   | 'CONFIRM'
+  | 'ACCEPT'
   | 'NO_ACTIONS';
 
 @Injectable({

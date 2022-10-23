@@ -12,11 +12,14 @@
   </button>
 </div>
 <div class="modal-body">
-  <h5 *ngIf="hasPlayerWon">
+  <h5 *ngIf="state === 'WIN'">
     It took you {{ gameTurn }} turns to break your opponent!
   </h5>
-  <h5 *ngIf="!hasPlayerWon">
+  <h5 *ngIf="state === 'LOOSE'">
     It took your opponent {{ gameTurn }} turns to break you!
+  </h5>
+  <h5 *ngIf="state === 'DRAW'">
+    It took your two {{ gameTurn }} turns to agree on that!
   </h5>
 
   <br />

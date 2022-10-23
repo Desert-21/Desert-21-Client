@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Player } from 'src/app/models/game-models';
-import { GameContext } from 'src/app/models/game-utility-models';
 import {
   NotificationHandler,
   SurrenderNotification,
 } from 'src/app/models/notification-models';
 import { UserInfoService } from '../http/user-info.service';
-import { GameContextService } from '../rx-logic/shared/game-context.service';
 import { GameModalService } from '../rx-logic/shared/game-modal.service';
-import { HasPLayerWonService } from '../rx-logic/shared/has-player-won.service';
-import { HasWonBySurrenderService } from '../rx-logic/shared/has-won-by-surrender.service';
+import { GameResultService } from '../rx-logic/shared/game-result.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +16,11 @@ export class SurrenderHandlerService
   playersId = '';
 
   constructor(
-    private gameWinnerService: HasPLayerWonService,
     private userInfoService: UserInfoService,
     private gameModalService: GameModalService,
-    private hasWonBySurrenderService: HasWonBySurrenderService
+    private gameResultService: GameResultService
   ) {
-    this.userInfoService.getStateUpdates()
-    .subscribe((resp) => {
+    this.userInfoService.getStateUpdates().subscribe((resp) => {
       this.playersId = resp.id;
     });
   }
@@ -34,8 +28,11 @@ export class SurrenderHandlerService
 
   handle(arg: SurrenderNotification): void {
     const hasWon = this.playersId !== arg.playerId;
-    this.gameWinnerService.set(hasWon);
-    this.hasWonBySurrenderService.set(true);
+    const state = hasWon ? 'WIN' : 'LOOSE';
+    this.gameResultService.set({
+      state,
+      bySurrender: true,
+    });
     this.gameModalService.openModal('GAME_END');
   }
 }

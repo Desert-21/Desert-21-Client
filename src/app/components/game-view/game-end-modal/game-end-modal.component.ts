@@ -2,8 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
-import { HasPLayerWonService } from 'src/app/services/rx-logic/shared/has-player-won.service';
-import { HasWonBySurrenderService } from 'src/app/services/rx-logic/shared/has-won-by-surrender.service';
+import { GameResultService, WinLooseDraw } from 'src/app/services/rx-logic/shared/game-result.service';
 
 @Component({
   selector: 'app-game-end-modal',
@@ -13,7 +12,7 @@ import { HasWonBySurrenderService } from 'src/app/services/rx-logic/shared/has-w
 export class GameEndModalComponent implements OnInit, OnDestroy {
   @Input() modal: any;
 
-  hasPlayerWon = false;
+  state: WinLooseDraw = 'NEUTRAL';
   hasOpponentSurrenderedText = '';
   modalTitle = '';
   modalTitleClass = '';
@@ -23,39 +22,44 @@ export class GameEndModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private gameContextService: GameContextService,
-    private gameWinnerService: HasPLayerWonService,
-    private router: Router,
-    private hasWonBySurrenderService: HasWonBySurrenderService
+    private gameResultService: GameResultService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.gameContextService.getStateUpdates(),
-      this.gameWinnerService.getStateUpdates(),
-      this.hasWonBySurrenderService.getStateUpdates()
-    ]).subscribe(([context, hasWon, bySurrender]) => {
-      if (!hasWon) {
-        this.modalTitle = 'You lost!';
-        this.modalTitleClass = 'text-danger';
-        this.hasPlayerWon = false;
-        this.hasOpponentSurrenderedText = '';
-      } else {
-        this.modalTitle = 'You won!';
-        this.modalTitleClass = 'text-success';
-        this.hasPlayerWon = true;
-        this.hasOpponentSurrenderedText = bySurrender ? 'You opponent has surrendered.' : '';
+      this.gameResultService.getStateUpdates(),
+    ]).subscribe(([context, { state, bySurrender }]) => {
+      this.state = state;
+      switch (state) {
+        case 'DRAW':
+          this.modalTitle = 'Draw!';
+          this.modalTitleClass = 'text-warning';
+          this.hasOpponentSurrenderedText = '';
+          break;
+        case 'LOOSE':
+          this.modalTitle = 'You lost!';
+          this.modalTitleClass = 'text-danger';
+          this.hasOpponentSurrenderedText = '';
+          break;
+        case 'WIN':
+          this.modalTitle = 'You won!';
+          this.modalTitleClass = 'text-success';
+          this.hasOpponentSurrenderedText = bySurrender
+            ? 'You opponent has surrendered.'
+            : '';
+          break;
       }
       this.gameTurn = context.game.stateManager.turnCounter;
     });
     this.gameContextService.requestState();
-    this.gameWinnerService.requestState();
-    this.hasWonBySurrenderService.requestState();
+    this.gameResultService.requestState();
   }
 
   redirectToMainMenu(): void {
     this.modal.close('');
     this.router.navigate(['menu']);
-
   }
 
   ngOnDestroy(): void {

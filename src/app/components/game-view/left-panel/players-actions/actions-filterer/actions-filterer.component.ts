@@ -15,10 +15,10 @@ import {
   attackStrategy,
   moveUnitsStrategy,
 } from 'src/app/services/rx-logic/double-field-selection/drag-and-drop/shortest-path-startegies';
-import { ActionClearingNotificationService } from 'src/app/services/rx-logic/resolution-phase/action-clearing-notification.service';
 import { AvailableResourcesService } from 'src/app/services/rx-logic/shared/available-resources.service';
 import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
+import { ToastsService } from 'src/app/services/rx-logic/shared/toasts.service';
 import {
   getFrozenUnitsAtLocation,
   getSlowestUnitsSpeed,
@@ -41,7 +41,7 @@ export class ActionsFiltererComponent implements OnInit {
     private contextService: GameContextService,
     private availableResourcesResvice: AvailableResourcesService,
     private currentActionsService: CurrentActionsService,
-    private actionClearingNotificationService: ActionClearingNotificationService
+    private toastsService: ToastsService
   ) {}
 
   lastTotalInvalidActions = 0;
@@ -70,7 +70,12 @@ export class ActionsFiltererComponent implements OnInit {
       const shouldRemoveAllActions = totalInvalidActions > 0;
       if (shouldRemoveAllActions) {
         this.currentActionsService.clearActions();
-        this.actionClearingNotificationService.set(1);
+        this.toastsService.add({
+          title: 'Your pre-moved actions have been removed!',
+          description:
+            "This happened because at least one of them could not be executed anymore after opponents turn. Next time make sure that you pre-move only the actions that won't be interrupted by enemy attacks!",
+          theme: 'DANGER',
+        });
       }
     });
   }

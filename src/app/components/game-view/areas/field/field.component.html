@@ -18,6 +18,7 @@
     src="/assets/buildInProgress.png"
     class="unfocusable img-fluid unselectable"
   />
+  <img *ngIf="rank" [src]="rank" class="rank" />
 
   <app-unit-circles [fieldLocation]="{ row: row, col: col }"></app-unit-circles>
 </div>

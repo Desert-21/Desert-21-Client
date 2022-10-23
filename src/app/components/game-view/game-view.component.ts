@@ -5,6 +5,8 @@ import { GameIdService } from 'src/app/services/game-id.service';
 import { GameBalanceService } from 'src/app/services/http/game-balance.service';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { GameResultService } from 'src/app/services/rx-logic/shared/game-result.service';
+import { IsDrawRequestedService } from 'src/app/services/rx-logic/shared/is-draw-requested.service';
 import { MaxPowerService } from 'src/app/services/rx-logic/shared/max-power.service';
 
 @Component({
@@ -21,7 +23,9 @@ export class GameViewComponent implements OnInit, OnDestroy {
     private gameIdService: GameIdService,
     private gameStateService: GameStateService,
     private gameBalanceService: GameBalanceService,
-    private maxPowerService: MaxPowerService
+    private maxPowerService: MaxPowerService,
+    private gameResultService: GameResultService,
+    private drawRequestedService: IsDrawRequestedService
   ) // private gameModalService: GameModalService
   {}
 
@@ -42,5 +46,7 @@ export class GameViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
+    this.drawRequestedService.set(false);
+    this.gameResultService.set({ state: 'NEUTRAL', bySurrender: false });
   }
 }

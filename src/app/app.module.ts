@@ -17,7 +17,7 @@ import { FieldComponent } from './components/game-view/areas/field/field.compone
 import { GameEndModalComponent } from './components/game-view/game-end-modal/game-end-modal.component';
 import { GameViewComponent } from './components/game-view/game-view.component';
 import { ButtonsPanelComponent } from './components/game-view/header/buttons-panel/buttons-panel.component';
-import { ConfirmModalComponent } from './components/game-view/header/buttons-panel/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from './components/common/confirm-modal/confirm-modal.component';
 import { HeaderComponent } from './components/game-view/header/header.component';
 import { PlayersNicknamesComponent } from './components/game-view/header/players-nicknames/players-nicknames.component';
 import { ResourcesComponent } from './components/game-view/header/resources/resources.component';
@@ -40,7 +40,6 @@ import { LabActionDetailsComponent } from './components/game-view/left-panel/pla
 import { TrainActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/train-action-details/train-action-details.component';
 import { UpgradeActionDetailsComponent } from './components/game-view/left-panel/players-actions/action-entry/upgrade-action-details/upgrade-action-details.component';
 import { ActionsFiltererComponent } from './components/game-view/left-panel/players-actions/actions-filterer/actions-filterer.component';
-import { ClearActionsToastComponent } from './components/game-view/left-panel/players-actions/actions-filterer/clear-actions-toast/clear-actions-toast.component';
 import { PlayersActionsComponent } from './components/game-view/left-panel/players-actions/players-actions.component';
 import { AttackComponent } from './components/game-view/movement-modal/attack/attack.component';
 import { BattleSimulationComponent } from './components/game-view/movement-modal/attack/battle-simulation/battle-simulation.component';
@@ -104,6 +103,8 @@ import { AuthorizationErrorInterceptor } from './interceptors/authorization-erro
 import { ServerErrorInterceptor } from './interceptors/server-error-interceptor';
 import { NoActionsModalComponent } from './components/game-view/areas/no-actions-modal/no-actions-modal.component';
 import { UnitCirclesComponent } from './components/game-view/areas/unit-circles/unit-circles.component';
+import { AcceptModalComponent } from './components/common/accept-modal/accept-modal.component';
+import { ToastsComponent } from './components/common/toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -189,7 +190,6 @@ import { UnitCirclesComponent } from './components/game-view/areas/unit-circles/
     FireRocketActionDetailsComponent,
     ActionFieldsSelectorDirective,
     ActionsFiltererComponent,
-    ClearActionsToastComponent,
     GameEndModalComponent,
     ConfirmModalComponent,
     BuildingQueueComponent,
@@ -197,6 +197,8 @@ import { UnitCirclesComponent } from './components/game-view/areas/unit-circles/
     ErrorModalComponent,
     NoActionsModalComponent,
     UnitCirclesComponent,
+    AcceptModalComponent,
+    ToastsComponent,
   ],
   imports: [
     BrowserModule,

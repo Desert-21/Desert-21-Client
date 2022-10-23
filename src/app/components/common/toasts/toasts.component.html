@@ -1,0 +1,10 @@
+<div class="toasts-wrapper">
+  <ngb-toast *ngFor="let toast of activeToasts"
+    [header]="toast.title"
+    [autohide]="false"
+    [class]="'toast-position ' + toast?.classes"
+    (hidden)="close(toast)"
+  >
+    {{ toast.description }}
+  </ngb-toast>
+</div>

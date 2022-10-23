@@ -33,6 +33,9 @@ export class GameModalComponent implements OnInit, OnDestroy {
   @ViewChild('confirm', { read: TemplateRef })
   confirm: TemplateRef<any>;
 
+  @ViewChild('accept', { read: TemplateRef })
+  accept: TemplateRef<any>;
+
   @ViewChild('noActions', { read: TemplateRef })
   noActions: TemplateRef<any>;
 
@@ -76,6 +79,8 @@ export class GameModalComponent implements OnInit, OnDestroy {
         return this.confirm;
       case 'NO_ACTIONS':
         return this.noActions;
+      case 'ACCEPT':
+        return this.accept;
     }
   }
 
@@ -86,6 +91,7 @@ export class GameModalComponent implements OnInit, OnDestroy {
       case 'RESOLUTION':
       case 'CONFIRM':
       case 'NO_ACTIONS':
+      case 'ACCEPT':
         return 'dark-modal';
       case 'LAB':
         return 'big-dark-modal';
@@ -101,6 +107,7 @@ export class GameModalComponent implements OnInit, OnDestroy {
       case 'LAB':
         return 'xl';
       case 'CONFIRM':
+      case 'ACCEPT':
       case 'NO_ACTIONS':
         return 'sm';
     }
