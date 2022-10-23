@@ -255,7 +255,7 @@ export const getArrivingBackupAtLocation = (
     .filter((a) => areLocationsEqual(a.to, location))
     .map((a) => a.army)
     .reduce(sumArmies, { droids: 0, tanks: 0, cannons: 0 });
-}
+};
 
 export const getOnlyArmyMovementFrozenUnitsAtLocation = (
   location: BoardLocation,

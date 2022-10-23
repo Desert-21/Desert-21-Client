@@ -11,7 +11,7 @@ import { PlayGameComponent } from './components/menu/play-game/play-game.compone
 import { RegistrationComponent } from './components/registration/registration.component';
 
 const routes: Routes = [
-  // { path: '/', redirectTo: 'game'},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'activate-code/:email/:activationCode', component: ActivateCodeComponent },
