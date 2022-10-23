@@ -33,7 +33,6 @@ export const getLeveledValueByLevel = (
   }
 };
 
-// todo: finish when graphics are there
 export const getBuildingImage = (buildingType: BuildingType, level: number) => {
   switch (buildingType) {
     case 'METAL_FACTORY':
@@ -45,10 +44,12 @@ export const getBuildingImage = (buildingType: BuildingType, level: number) => {
     case 'TOWER':
       return '/assets/buildings/tower.png';
     case 'HOME_BASE':
-      return '/assets/buildings/tower.png';
+      return '/assets/buildings/home.png';
     case 'ROCKET_LAUNCHER':
       return '/assets/buildings/rocket.png';
+    case 'EMPTY_FIELD':
+      return '/assets/buildings/empty.png';
     default:
       return '/assets/buildings/unknownBuilding.png';
   }
-}
+};

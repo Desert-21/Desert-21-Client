@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { BuildingType } from 'src/app/models/game-models';
 import { FieldSelection } from 'src/app/models/game-utility-models';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
+import { getBuildingImage } from 'src/app/utils/building-utils';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
 
 @Component({
@@ -86,21 +88,6 @@ export class BuildingPreviewComponent implements OnInit, OnDestroy {
   }
 
   private getBuildingImageSource(type: string): string {
-    switch (type) {
-      case 'METAL_FACTORY':
-        return 'assets/buildings/metal.png';
-      case 'BUILDING_MATERIALS_FACTORY':
-        return 'assets/buildings/buildingMaterials.png';
-      case 'ELECTRICITY_FACTORY':
-        return 'assets/buildings/electricity.png';
-      case 'TOWER':
-        return 'assets/buildings/tower.png';
-      case 'HOME_BASE':
-        return 'assets/buildings/tower.png';
-      case 'ROCKET_LAUNCHER':
-        return 'assets/buildings/rocket.png';
-      default:
-        return 'assets/buildings/unknownBuilding.png';
-    }
+    return getBuildingImage(type as BuildingType, 1);
   }
 }

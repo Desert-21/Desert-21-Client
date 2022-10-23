@@ -1,0 +1,98 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 700;
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper-SELECTION {
+  @extend .wrapper;
+  background-color: rgba(0, 0, 255, 0.4);
+  border: 2px solid rgb(0, 0, 255);
+}
+
+.wrapper-SOURCE {
+ @extend .wrapper;
+ background-color: rgba(255, 255, 0, 0.4);
+  border: 2px solid rgb(255, 255, 0);
+}
+
+.wrapper-DESTINATION {
+  @extend .wrapper;
+  background-color: rgba(255, 0, 0, 0.4);
+  border: 2px solid rgb(255, 0, 0);
+}
+
+.l-25 {
+  left: 25%;
+}
+
+.l-50 {
+  left: 50%;
+}
+
+.l-75 {
+  left: 75%;
+}
+
+.vertical-separator-base {
+  position: absolute;
+  z-index: 701;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: rgba(0, 0, 255, 0.4);
+}
+
+.vertical-separator-SELECTION {
+  @extend .vertical-separator-base;
+  background-color: rgba(0, 0, 255, 0.4);
+}
+
+.vertical-separator-SOURCE {
+  @extend .vertical-separator-base;
+  background-color: rgba(255, 255, 0, 0.4);
+}
+
+.vertical-separator-DESTINATION {
+  @extend .vertical-separator-base;
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+
+.t-25 {
+  top: 25%;
+}
+
+.t-50 {
+  top: 50%;
+}
+
+.t-75 {
+  top: 75%;
+}
+
+.horizontal-separator-base {
+  position: absolute;
+  z-index: 701;
+  left: 0;
+  height: 2px;
+  width: 100%;
+}
+
+.horizontal-separator-SELECTION {
+  @extend .horizontal-separator-base;
+  background-color: rgba(0, 0, 255, 0.4);
+}
+
+.horizontal-separator-SOURCE {
+  @extend .horizontal-separator-base;
+  background-color: rgba(255, 255, 0, 0.4);
+}
+
+.horizontal-separator-DESTINATION {
+  @extend .horizontal-separator-base;
+  background-color: rgba(255, 0, 0, 0.4);
+}
