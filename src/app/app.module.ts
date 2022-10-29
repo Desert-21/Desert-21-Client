@@ -88,7 +88,6 @@ import { ActionFieldsSelectorDirective } from './directives/action-fields-select
 import { DragAndDropCancelableDirective } from './directives/drag-and-drop-cancelable.directive';
 import { DragAndDropSelectionDirective } from './directives/drag-and-drop-selection.directive';
 import { EnlighterDirective } from './directives/enlighter.directive';
-import { FieldStylingDirective } from './directives/field-styling.directive';
 import { HttpAddressInterceptor } from './interceptors/http-address-interceptor';
 import { HttpTokenInterceptor } from './interceptors/token-interceptor';
 import { BearerTokenService } from './services/bearer-token.service';
@@ -129,7 +128,6 @@ import { FieldMarkerComponent } from './components/game-view/areas/field-marker/
     HomeComponent,
     HowToPlayComponent,
     AccountComponent,
-    FieldStylingDirective,
     FieldComponent,
     EnlighterDirective,
     RightPanelComponent,
