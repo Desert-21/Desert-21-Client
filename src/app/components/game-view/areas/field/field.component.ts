@@ -136,19 +136,19 @@ export class FieldComponent implements OnInit, OnDestroy {
     const type = field?.building?.type;
     switch (type) {
       case 'METAL_FACTORY':
-        return '/assets/metal.png';
+        return '/assets/buildings/metal.png';
       case 'BUILDING_MATERIALS_FACTORY':
-        return '/assets/buildingMaterials.png';
+        return '/assets/buildings/buildingMaterials.png';
       case 'ELECTRICITY_FACTORY':
-        return '/assets/electricity.png';
+        return '/assets/buildings/electricity.png';
       case 'HOME_BASE':
-        return '/assets/home.png';
+        return '/assets/buildings/home.png';
       case 'ROCKET_LAUNCHER':
-        return '/assets/rocket.png';
+        return '/assets/buildings/rocket.png';
       case 'TOWER':
-        return '/assets/tower.png';
+        return '/assets/buildings/tower.png';
     }
-    return '/assets/blank.png';
+    return '/assets/buildings/empty.png';
   }
 
   onFieldSelect(): void {

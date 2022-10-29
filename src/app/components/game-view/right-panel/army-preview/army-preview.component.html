@@ -17,7 +17,14 @@
     </h5>
     <div class="content-wrapper">
       <div class="images-wrapper">
-        <div *ngIf="shouldShowImages[0]" class="image-wrapper">
+        <div
+          *ngIf="shouldShowImages[0]"
+          class="image-wrapper"
+          [ngbPopover]="droidsDescription"
+          [openDelay]="200"
+          triggers="mouseenter:mouseleave"
+          placement="left"
+        >
           <img
             class="img-fluid"
             src="/assets/mechs/droid-full.png"
@@ -30,7 +37,14 @@
             ></span
           >
         </div>
-        <div *ngIf="shouldShowImages[1]" class="image-wrapper">
+        <div
+          *ngIf="shouldShowImages[1]"
+          class="image-wrapper"
+          [ngbPopover]="tanksDescription"
+          [openDelay]="200"
+          triggers="mouseenter:mouseleave"
+          placement="left"
+        >
           <img
             class="img-fluid"
             src="/assets/mechs/tank-full.png"
@@ -43,7 +57,14 @@
             ></span
           >
         </div>
-        <div *ngIf="shouldShowImages[2]" class="image-wrapper">
+        <div
+          *ngIf="shouldShowImages[2]"
+          class="image-wrapper"
+          [ngbPopover]="cannonsDescription"
+          [openDelay]="200"
+          triggers="mouseenter:mouseleave"
+          placement="left"
+        >
           <img
             class="img-fluid"
             src="/assets/mechs/cannon-full.png"
@@ -56,7 +77,14 @@
             ></span
           >
         </div>
-        <div *ngIf="shouldShowImages[3]" class="image-wrapper">
+        <div
+          *ngIf="shouldShowImages[3]"
+          class="image-wrapper"
+          [ngbPopover]="scarabsDescription"
+          [openDelay]="200"
+          triggers="mouseenter:mouseleave"
+          placement="left"
+        >
           <img
             class="img-fluid"
             src="/assets/mechs/desertbot-full.png"
@@ -81,9 +109,37 @@
         <app-train-army-section></app-train-army-section>
       </div>
     </div>
-    </div>
+  </div>
   <div *ngIf="fieldSelectionEmpty" class="empty-game-panel desert21-font">
     Select a field on the board to view here some details about its army!
     <img src="/assets/buildings/unknownBuilding.png" />
   </div>
 </div>
+
+<ng-template #droidsDescription>
+  <app-unit-preview
+    [unitType]="'DROID'"
+    [stats]="unitStats.droids"
+  ></app-unit-preview>
+</ng-template>
+
+<ng-template #tanksDescription>
+  <app-unit-preview
+    [unitType]="'TANK'"
+    [stats]="unitStats.tanks"
+  ></app-unit-preview>
+</ng-template>
+
+<ng-template #cannonsDescription>
+  <app-unit-preview
+    [unitType]="'CANNON'"
+    [stats]="unitStats.cannons"
+  ></app-unit-preview>
+</ng-template>
+
+<ng-template #scarabsDescription>
+  <app-unit-preview
+    [unitType]="'SCARAB'"
+    [stats]="unitStats.scarabs"
+  ></app-unit-preview>
+</ng-template>

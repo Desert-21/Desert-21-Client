@@ -54,6 +54,7 @@ export class ActionsPersisterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
+    localStorage.removeItem(ACTIONS_CACHE_LOCATION);
   }
 
   private checkCurrentCache(context: GameContext): boolean {

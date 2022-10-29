@@ -5,6 +5,7 @@ import { GameIdService } from 'src/app/services/game-id.service';
 import { GameBalanceService } from 'src/app/services/http/game-balance.service';
 import { GameStateService } from 'src/app/services/http/game-state.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameResultService } from 'src/app/services/rx-logic/shared/game-result.service';
 import { IsDrawRequestedService } from 'src/app/services/rx-logic/shared/is-draw-requested.service';
 import { MaxPowerService } from 'src/app/services/rx-logic/shared/max-power.service';
@@ -25,7 +26,8 @@ export class GameViewComponent implements OnInit, OnDestroy {
     private gameBalanceService: GameBalanceService,
     private maxPowerService: MaxPowerService,
     private gameResultService: GameResultService,
-    private drawRequestedService: IsDrawRequestedService
+    private drawRequestedService: IsDrawRequestedService,
+    private currentActionsService: CurrentActionsService
   ) // private gameModalService: GameModalService
   {}
 
@@ -48,5 +50,6 @@ export class GameViewComponent implements OnInit, OnDestroy {
     this.sub1.unsubscribe();
     this.drawRequestedService.set(false);
     this.gameResultService.set({ state: 'NEUTRAL', bySurrender: false });
+    this.currentActionsService.clearActions();
   }
 }

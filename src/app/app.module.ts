@@ -88,7 +88,6 @@ import { ActionFieldsSelectorDirective } from './directives/action-fields-select
 import { DragAndDropCancelableDirective } from './directives/drag-and-drop-cancelable.directive';
 import { DragAndDropSelectionDirective } from './directives/drag-and-drop-selection.directive';
 import { EnlighterDirective } from './directives/enlighter.directive';
-import { FieldStylingDirective } from './directives/field-styling.directive';
 import { HttpAddressInterceptor } from './interceptors/http-address-interceptor';
 import { HttpTokenInterceptor } from './interceptors/token-interceptor';
 import { BearerTokenService } from './services/bearer-token.service';
@@ -105,6 +104,8 @@ import { NoActionsModalComponent } from './components/game-view/areas/no-actions
 import { UnitCirclesComponent } from './components/game-view/areas/unit-circles/unit-circles.component';
 import { AcceptModalComponent } from './components/common/accept-modal/accept-modal.component';
 import { ToastsComponent } from './components/common/toasts/toasts.component';
+import { FieldMarkerComponent } from './components/game-view/areas/field-marker/field-marker.component';
+import { UnitPreviewComponent } from './components/game-view/right-panel/army-preview/unit-preview/unit-preview.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,6 @@ import { ToastsComponent } from './components/common/toasts/toasts.component';
     HomeComponent,
     HowToPlayComponent,
     AccountComponent,
-    FieldStylingDirective,
     FieldComponent,
     EnlighterDirective,
     RightPanelComponent,
@@ -199,6 +199,8 @@ import { ToastsComponent } from './components/common/toasts/toasts.component';
     UnitCirclesComponent,
     AcceptModalComponent,
     ToastsComponent,
+    FieldMarkerComponent,
+    UnitPreviewComponent,
   ],
   imports: [
     BrowserModule,

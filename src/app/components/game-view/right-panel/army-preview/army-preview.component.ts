@@ -5,6 +5,7 @@ import { CurrentScarabsGenerationService } from 'src/app/services/rx-logic/share
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
 import { AvailableUnitsService } from 'src/app/services/rx-logic/single-field-selection/available-units.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
+import { defaultUnitStats, UnitStats, UnitStatsService } from 'src/app/services/rx-logic/single-field-selection/unit-stats.service';
 import { ScarabsRange } from 'src/app/utils/army-utils';
 import {
   EnemyArmyPreviewState,
@@ -37,21 +38,25 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
 
   currentScarabsGeneration: ScarabsRange = { min: 0, avg: 0, max: 0 };
 
+  unitStats: UnitStats = defaultUnitStats;
+
   private sub1: Subscription;
   private sub2: Subscription;
+  private sub3: Subscription;
 
   constructor(
     private selectedFieldService: SelectedFieldService,
     private gameContextService: GameContextService,
     private scarabsGenerationService: CurrentScarabsGenerationService,
-    private availableUnitsService: AvailableUnitsService
+    private availableUnitsService: AvailableUnitsService,
+    private unitStatsService: UnitStatsService
   ) {}
 
   ngOnInit(): void {
     this.sub1 = combineLatest([
       this.selectedFieldService.getStateUpdates(),
       this.gameContextService.getStateUpdates(),
-      this.availableUnitsService.getStateUpdates()
+      this.availableUnitsService.getStateUpdates(),
     ]).subscribe((data) => {
       const [fieldSelection, context, availableUnits] = data;
       if (fieldSelection === null) {
@@ -93,11 +98,15 @@ export class ArmyPreviewComponent implements OnInit, OnDestroy {
       .subscribe((range) => {
         this.currentScarabsGeneration = range;
       });
+    this.sub3 = this.unitStatsService.getStateUpdates().subscribe((stats) => {
+      this.unitStats = stats;
+    });
   }
 
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
     this.sub2.unsubscribe();
+    this.sub3.unsubscribe();
   }
 
   getCurrentState(fieldSelection: FieldSelection): ArmyPreviewState {

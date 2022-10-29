@@ -1,0 +1,22 @@
+<div class="wrapper">
+  <div class="top-wrapper">
+    <img [src]="imagePath" />
+    <span class="description"
+      >{{ description }}</span
+    >
+  </div>
+
+  <div *ngFor="let metric of metrics" class="metric-wrapper">
+    <div class="text-metric-part-wrapper">
+      <div>
+        {{ metric.name }}
+      </div>
+      <div>{{ metric.amount }} {{ metric.unit }}</div>
+    </div>
+    <div class="bar-metric-part-wrapper">
+      <div class="bar-metric-outer">
+        <div class="bar-metric-inner" [ngStyle]="{width: metric.relativeAmount}"></div>
+      </div>
+    </div>
+  </div>
+</div>

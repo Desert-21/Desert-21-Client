@@ -3,7 +3,6 @@
   class="bordered cell unselectable"
   [ngClass]="currentClasses"
   appEnlighter
-  appFieldStyling
   appDragAndDropSelection
   [row]="row"
   [col]="col"
@@ -19,6 +18,8 @@
     class="unfocusable img-fluid unselectable"
   />
   <img *ngIf="rank" [src]="rank" class="rank" />
+
+  <app-field-marker [fieldLocation]="{ row: row, col: col }"></app-field-marker>
 
   <app-unit-circles [fieldLocation]="{ row: row, col: col }"></app-unit-circles>
 </div>
