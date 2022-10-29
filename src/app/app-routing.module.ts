@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ActivateCodeComponent } from './components/activate-code/activate-code.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { GameViewComponent } from './components/game-view/game-view.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccountComponent } from './components/menu/account/account.component';
@@ -9,12 +10,15 @@ import { HowToPlayComponent } from './components/menu/how-to-play/how-to-play.co
 import { MenuComponent } from './components/menu/menu.component';
 import { PlayGameComponent } from './components/menu/play-game/play-game.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'activate-code/:email/:activationCode', component: ActivateCodeComponent },
+  { path: 'reset-password/:linkId/:linkCode/:email', component: ResetPasswordComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'menu', component: MenuComponent, children: [
     { path: 'home', component: HomeComponent },
     { path: 'how-to-play', component: HowToPlayComponent },
