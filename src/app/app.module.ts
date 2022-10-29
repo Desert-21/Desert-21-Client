@@ -106,6 +106,8 @@ import { AcceptModalComponent } from './components/common/accept-modal/accept-mo
 import { ToastsComponent } from './components/common/toasts/toasts.component';
 import { FieldMarkerComponent } from './components/game-view/areas/field-marker/field-marker.component';
 import { UnitPreviewComponent } from './components/game-view/right-panel/army-preview/unit-preview/unit-preview.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -201,6 +203,8 @@ import { UnitPreviewComponent } from './components/game-view/right-panel/army-pr
     ToastsComponent,
     FieldMarkerComponent,
     UnitPreviewComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
