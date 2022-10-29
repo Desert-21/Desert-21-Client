@@ -105,6 +105,7 @@ import { UnitCirclesComponent } from './components/game-view/areas/unit-circles/
 import { AcceptModalComponent } from './components/common/accept-modal/accept-modal.component';
 import { ToastsComponent } from './components/common/toasts/toasts.component';
 import { FieldMarkerComponent } from './components/game-view/areas/field-marker/field-marker.component';
+import { UnitPreviewComponent } from './components/game-view/right-panel/army-preview/unit-preview/unit-preview.component';
 
 @NgModule({
   declarations: [
@@ -199,6 +200,7 @@ import { FieldMarkerComponent } from './components/game-view/areas/field-marker/
     AcceptModalComponent,
     ToastsComponent,
     FieldMarkerComponent,
+    UnitPreviewComponent,
   ],
   imports: [
     BrowserModule,

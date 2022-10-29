@@ -1,3 +1,13 @@
+:host ::ng-deep .popover {
+  background-color: black;
+}
+
+:host ::ng-deep .arrow::after {
+  background-color: transparent !important;
+  border-left-color: black;
+  color: black !important;
+}
+
 h5 {
   font-size: 2vh;
 }

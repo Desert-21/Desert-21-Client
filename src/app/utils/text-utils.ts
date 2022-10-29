@@ -43,3 +43,11 @@ export const capitalize = (s: string) => {
 export const underscoreToKebabCase = (s: string) => {
   return s.toLowerCase().replace(/_/, '-');
 };
+
+export const camelCaseToCapsLock = (s: string) => {
+  return s
+    .replace(/\.?([A-Z])/g, (x, y) => '_' + y.toLowerCase())
+    .replace(/^_/, '')
+    .replace('_', ' ')
+    .toUpperCase();
+};
