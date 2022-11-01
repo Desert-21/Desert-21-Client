@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverApiUrl: 'https://app.dev.desert21.com/api'
+  serverApiUrl: 'https://play.dev.desert21.com/api'
 };
