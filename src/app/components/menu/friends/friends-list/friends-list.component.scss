@@ -1,0 +1,63 @@
+.wrapper {
+  height: 52vh;
+  overflow-y: auto;
+}
+
+.friends-entry {
+  border: 2px solid rgba(100, 100, 100, 0.3);
+  background-color: rgba(100, 100, 100, 0.3);
+  padding: 0.5vh;
+  margin-bottom: 1vh;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1vh;
+}
+
+h5, h6 {
+  color: white;
+}
+
+.small-button {
+  font-size: 1.2vh;
+}
+
+.bordered-circle {
+  border-radius: 50%;
+  border: 3px solid rgb(37, 37, 37);
+  height: 2vh;
+  width: 2vh;
+}
+
+.status-IN_GAME {
+  background-color: red;
+}
+
+.status-ACTIVE {
+  background-color: rgb(59, 207, 0);
+}
+
+.status-INACTIVE {
+  background-color: rgb(255, 208, 0);
+}
+
+.nickname-status-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nickname {
+  font-size: 1.7vh;
+  color: white;
+  font-weight: bold;
+  padding-bottom: 0.5vh;
+}
+
+.my-friends {
+  font-size: 2vh;
+  color: white;
+  font-weight: bold;
+}
