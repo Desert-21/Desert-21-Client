@@ -17,3 +17,20 @@
   left: 20px;
   color: yellowgreen;
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  margin-top: 3vh;
+}
+
+.main-panel {
+  width: 85%;
+}
+
+.friends-panel {
+  width: 15%;
+}

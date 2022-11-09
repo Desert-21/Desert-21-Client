@@ -1,0 +1,16 @@
+<h6 class="add-friend">Add friend</h6>
+
+<div class="wrapper">
+    <input [(ngModel)]="playersId" type="text" placeholder="Players Nick" />
+    <button
+      [class.btn-success]="!isButtonDisabled()"
+      [class.btn-secondary]="isButtonDisabled()"
+      [disabled]="isButtonDisabled()"
+      (click)="onInviteClick()"
+    >
+      <div *ngIf="!isLoading">Invite</div>
+      <div *ngIf="isLoading" class="spinner-border text-primary spinner-size" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </button>
+</div>

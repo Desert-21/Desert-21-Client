@@ -108,6 +108,9 @@ import { FieldMarkerComponent } from './components/game-view/areas/field-marker/
 import { UnitPreviewComponent } from './components/game-view/right-panel/army-preview/unit-preview/unit-preview.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { FriendsComponent } from './components/menu/friends/friends.component';
+import { AddFriendComponent } from './components/menu/friends/add-friend/add-friend.component';
+import { FriendsListComponent } from './components/menu/friends/friends-list/friends-list.component';
 
 @NgModule({
   declarations: [
@@ -205,6 +208,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     UnitPreviewComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    FriendsComponent,
+    AddFriendComponent,
+    FriendsListComponent,
   ],
   imports: [
     BrowserModule,

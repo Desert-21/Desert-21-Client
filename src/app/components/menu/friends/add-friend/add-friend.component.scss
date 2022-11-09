@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+input {
+  width: 70%;
+  font-size: 1.7vh;
+}
+
+button {
+  width: 30%;
+  font-size: min(2.4vh, 1vw);
+}
+
+h6 {
+  color: white;
+}
+
+.spinner-size {
+  width: 2vh;
+  height: 2vh;
+}
+
+.add-friend {
+  font-size: 2vh;
+  color: white;
+  font-weight: bold;
+}

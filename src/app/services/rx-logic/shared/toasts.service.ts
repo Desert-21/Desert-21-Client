@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModifiableResource } from '../templates/modifiable-resource';
 
-export type ToastTheme = 'DANGER' | 'WARNING';
+export type ToastTheme = 'DANGER' | 'WARNING' | 'PRIMARY' | 'SUCCESS';
 
 export type ToastRequest = {
   theme: ToastTheme;
@@ -44,6 +44,10 @@ export class ToastsService extends ModifiableResource<Array<ToastEntry>> {
         return 'bg-danger text-light';
       case 'WARNING':
         return 'bg-warning text-secondary';
+      case 'PRIMARY':
+        return 'bg-primary text-light';
+      case 'SUCCESS':
+        return 'bg-success text-light';
     }
   }
 
