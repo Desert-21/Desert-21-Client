@@ -10,7 +10,15 @@
       <div class="ml-2 nickname">{{ friend.nickname }}</div>
     </div>
     <div class="buttons-wrapper">
-      <button class="btn-primary small-button" disabled>Play Against</button>
+      <button
+        (click)="onInvitePlayerClick(friend)"
+        [class.btn-primary]="friend.status === 'ACTIVE'"
+        [class.btn-secondary]="friend.status !== 'ACTIVE'"
+        class="small-button"
+        [disabled]="friend.status !== 'ACTIVE'"
+      >
+        Play Against
+      </button>
       <button (click)="onRemoveClick(friend)" class="btn-danger small-button">
         Remove
       </button>

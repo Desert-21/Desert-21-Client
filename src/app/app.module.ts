@@ -111,6 +111,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { FriendsComponent } from './components/menu/friends/friends.component';
 import { AddFriendComponent } from './components/menu/friends/add-friend/add-friend.component';
 import { FriendsListComponent } from './components/menu/friends/friends-list/friends-list.component';
+import { PlayerInvitedModalComponent } from './components/menu/friends/player-invited-modal/player-invited-modal.component';
+import { WaitingForGameReadinessModalComponent } from './components/menu/friends/waiting-for-game-readiness-modal/waiting-for-game-readiness-modal.component';
 
 @NgModule({
   declarations: [
@@ -211,6 +213,8 @@ import { FriendsListComponent } from './components/menu/friends/friends-list/fri
     FriendsComponent,
     AddFriendComponent,
     FriendsListComponent,
+    PlayerInvitedModalComponent,
+    WaitingForGameReadinessModalComponent,
   ],
   imports: [
     BrowserModule,

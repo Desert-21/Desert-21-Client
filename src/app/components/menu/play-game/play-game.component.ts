@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { delay, Subscription } from 'rxjs';
 import { ErrorService } from 'src/app/services/error.service';
 import { StartGameHandlerService } from 'src/app/services/notification-handlers/start-game-handler.service';
 import {

@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserInfoService } from 'src/app/services/http/user-info.service';
-import { FriendsStatus } from 'src/app/services/rx-logic/menu/friends-activity.service';
+import { PlayerInvitedService } from 'src/app/services/rx-logic/menu/player-invited.service';
 import {
   ProcessedFriendEntry,
   ProcessedFriendsService,
 } from 'src/app/services/rx-logic/menu/processed-friends.service';
-import {
-  ConfirmModalAction,
-  ConfirmModalActionService,
-} from 'src/app/services/rx-logic/shared/confirm-modal-action.service';
+import { ConfirmModalActionService } from 'src/app/services/rx-logic/shared/confirm-modal-action.service';
 import { GameModalService } from 'src/app/services/rx-logic/shared/game-modal.service';
 import { ToastsService } from 'src/app/services/rx-logic/shared/toasts.service';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
+
+type InvitationIdJson = { invitationId: string };
 
 @Component({
   selector: 'app-friends-list',
@@ -31,7 +30,8 @@ export class FriendsListComponent implements OnInit, OnDestroy {
     private confirmModalService: ConfirmModalActionService,
     private gameModalService: GameModalService,
     private toastService: ToastsService,
-    private userInfoService: UserInfoService
+    private userInfoService: UserInfoService,
+    private playerInvitedService: PlayerInvitedService
   ) {}
 
   ngOnInit(): void {
@@ -90,5 +90,20 @@ export class FriendsListComponent implements OnInit, OnDestroy {
 
   getLightDescription(friend: ProcessedFriendEntry): string {
     return underscoreToRegular(friend.status);
+  }
+
+  onInvitePlayerClick(player: ProcessedFriendEntry): void {
+    this.http
+      .post<InvitationIdJson>(
+        `/gameInvitations/invite/${player.playerId}`,
+        null
+      )
+      .subscribe(({ invitationId }) => {
+        this.playerInvitedService.set({
+          opponentsNickname: player.nickname,
+          invitationId,
+        });
+        this.gameModalService.openModal('PLAYER_INVITED');
+      });
   }
 }

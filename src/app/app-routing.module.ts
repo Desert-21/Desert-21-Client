@@ -16,20 +16,35 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'activate-code/:email/:activationCode', component: ActivateCodeComponent },
-  { path: 'reset-password/:linkId/:linkCode/:email', component: ResetPasswordComponent },
+  {
+    path: 'activate-code/:email/:activationCode',
+    component: ActivateCodeComponent,
+  },
+  {
+    path: 'reset-password/:linkId/:linkCode/:email',
+    component: ResetPasswordComponent,
+  },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'menu', component: MenuComponent, children: [
-    { path: 'home', component: HomeComponent },
-    { path: 'how-to-play', component: HowToPlayComponent },
-    { path: 'play-game', component: PlayGameComponent },
-    { path: 'account', component: AccountComponent }
-  ]},
-  { path: 'game/:gameId', component: GameViewComponent }
+  {
+    path: 'menu',
+    component: MenuComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      { path: 'home', component: HomeComponent },
+      { path: 'how-to-play', component: HowToPlayComponent },
+      { path: 'play-game', component: PlayGameComponent },
+      { path: 'account', component: AccountComponent },
+    ],
+  },
+  { path: 'game/:gameId', component: GameViewComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
