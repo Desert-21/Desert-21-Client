@@ -1,6 +1,20 @@
 <div class="wrapper">
-  <h4>My Friends</h4>
+  <div class="header-wrapper">
+    <h4>My Friends</h4>
+    <svg
+      appEnlighter
+      xmlns="http://www.w3.org/2000/svg"
+      width="3vh"
+      height="3vh"
+      fill="currentColor"
+      class="bi bi-info-circle-fill"
+      viewBox="0 0 16 16"
+      class="refresh"
+      (click)="onRefreshClick()"
+    >
+      <use xlink:href="#refresh" />
+    </svg>
+  </div>
   <app-add-friend></app-add-friend>
   <app-friends-list></app-friends-list>
 </div>
-

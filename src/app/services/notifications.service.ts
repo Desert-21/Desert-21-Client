@@ -8,6 +8,10 @@ import { FriendActiveHandlerService } from './notification-handlers/friend-activ
 import { FriendRequestReceivedHandlerService } from './notification-handlers/friend-request-received-handler.service';
 import { FriendsListUpdatedHandlerService } from './notification-handlers/friends-list-updated-handler.service';
 import { GameEndNotificationHandlerService } from './notification-handlers/game-end-notification-handler.service';
+import { GameInvitationAcceptedHandlerService } from './notification-handlers/game-invitation-accepted-handler.service';
+import { GameInvitationCancelledHandlerService } from './notification-handlers/game-invitation-cancelled-handler.service';
+import { GameInvitationReceivedHandlerService } from './notification-handlers/game-invitation-received-handler.service';
+import { GameInvitationRejectedHandlerService } from './notification-handlers/game-invitation-rejected-handler.service';
 import { NextTurnHandlerService } from './notification-handlers/next-turn-handler.service';
 import { PingRequestedHandlerService } from './notification-handlers/ping-requested-handler.service';
 import { RemovedFromFriendsHandlerService } from './notification-handlers/removed-from-friends-handler.service';
@@ -35,7 +39,11 @@ export class NotificationsService {
     private pingRequestedHandlerService: PingRequestedHandlerService,
     private friendActiveHandlerService: FriendActiveHandlerService,
     private friendListUpdatedHandler: FriendsListUpdatedHandlerService,
-    private removedFromFriendListHandler: RemovedFromFriendsHandlerService
+    private removedFromFriendListHandler: RemovedFromFriendsHandlerService,
+    private gameInvitationReceivedHandler: GameInvitationReceivedHandlerService,
+    private gameInvitationCancelledHandler: GameInvitationCancelledHandlerService,
+    private gameInvitationAcceptedHandler: GameInvitationAcceptedHandlerService,
+    private gameInvitationRejectedHandler: GameInvitationRejectedHandlerService
   ) {}
 
   webSocketApi: WebSocketAPI | null = null;
@@ -61,6 +69,10 @@ export class NotificationsService {
           this.friendActiveHandlerService,
           this.friendListUpdatedHandler,
           this.removedFromFriendListHandler,
+          this.gameInvitationReceivedHandler,
+          this.gameInvitationCancelledHandler,
+          this.gameInvitationAcceptedHandler,
+          this.gameInvitationRejectedHandler,
         ]);
         this.webSocketApi.connect();
       }

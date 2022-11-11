@@ -21,4 +21,8 @@ export abstract class ModifiableResource<ResourceType>
     this.current = resource;
     this.sub.next(this.current);
   }
+
+  reset(): void {
+    this.set(this.initialize());
+  }
 }

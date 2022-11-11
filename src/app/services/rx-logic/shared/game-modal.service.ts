@@ -9,7 +9,9 @@ export type ModalType =
   | 'RESOLUTION'
   | 'CONFIRM'
   | 'ACCEPT'
-  | 'NO_ACTIONS';
+  | 'NO_ACTIONS'
+  | 'PLAYER_INVITED'
+  | 'WAITING_FOR_GAME_READINESS';
 
 @Injectable({
   providedIn: 'root',

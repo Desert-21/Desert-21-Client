@@ -1,19 +1,33 @@
 <h6 class="mt-4 my-friends">My friends</h6>
 <div class="wrapper">
-  <div *ngFor="let friend of friends" class="friends-entry">
-    <div class="nickname-status-wrapper">
-      <div
-        [ngbTooltip]="getLightDescription(friend)"
-        placement="left"
-        [class]="'bordered-circle status-' + friend.status"
-      ></div>
-      <div class="ml-2 nickname">{{ friend.nickname }}</div>
+  <div *ngIf="friends.length !== 0">
+    <div *ngFor="let friend of friends" class="friends-entry">
+      <div class="nickname-status-wrapper">
+        <div
+          [ngbTooltip]="getLightDescription(friend)"
+          placement="left"
+          [class]="'bordered-circle status-' + friend.status"
+        ></div>
+        <div class="ml-2 nickname">{{ friend.nickname }}</div>
+      </div>
+      <div class="buttons-wrapper">
+        <button
+          (click)="onInvitePlayerClick(friend)"
+          [class.btn-primary]="friend.status === 'ACTIVE'"
+          [class.btn-secondary]="friend.status !== 'ACTIVE'"
+          class="small-button"
+          [disabled]="friend.status !== 'ACTIVE'"
+        >
+          Play Against
+        </button>
+        <button (click)="onRemoveClick(friend)" class="btn-danger small-button">
+          Remove
+        </button>
+      </div>
     </div>
-    <div class="buttons-wrapper">
-      <button class="btn-primary small-button" disabled>Play Against</button>
-      <button (click)="onRemoveClick(friend)" class="btn-danger small-button">
-        Remove
-      </button>
-    </div>
+  </div>
+
+  <div *ngIf="friends.length === 0" class="no-friends">
+    You don't have any friends yet. Add them above, if you know their nicks!
   </div>
 </div>
