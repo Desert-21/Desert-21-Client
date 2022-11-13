@@ -1,0 +1,49 @@
+h2 {
+  color: white;
+  text-align: center;
+  padding-top: 3vh;
+}
+
+.wrapper {
+  height: 100%;
+}
+
+table {
+  color: white;
+  width: 100%;
+  border: 2px solid white;
+  font-size: 2vh;
+}
+
+tr {
+  display: flex;
+  border-bottom: 1px solid white;
+  padding-top: 0.3vh;
+  padding-bottom: 0.3vh;
+}
+
+th {
+  background-color: rgb(105, 105, 105);
+}
+
+th, td {
+  width: 33.3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-wrapper {
+  width: calc(100% - 8vh);
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+  height: 70vh;
+  margin-left: 4vh;
+  margin-right: 4vh;
+}
+
+.players-entry {
+  font-weight: bold;
+  color: yellowgreen;
+}

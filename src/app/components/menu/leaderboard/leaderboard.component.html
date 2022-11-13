@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <h2>Leaderboard</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th>Player</th>
+        <th>Ranking</th>
+        <th>Invite</th>
+      </tr>
+      <tr *ngFor="let entry of ranking">
+        <td [class.players-entry]="entry.isPlayer">
+          {{ entry.nickname }}{{ entry.isPlayer ? " (You)" : "" }}
+        </td>
+        <td [class.players-entry]="entry.isPlayer">{{ entry.ranking }}</td>
+        <td>
+          <div
+            [ngbTooltip]="getTooltipValue(entry)"
+            placement="left"
+          >
+            <button
+              class="btn"
+              [class.btn-success]="!entry.isPlayer && !entry.isFriends"
+              [class.btn-secondary]="entry.isPlayer || entry.isFriends"
+              [disabled]="entry.isPlayer || entry.isFriends"
+              (click)="onInvitePlayerClick(entry)"
+            >
+              Invite to Friends
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

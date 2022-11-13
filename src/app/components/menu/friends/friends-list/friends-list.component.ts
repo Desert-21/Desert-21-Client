@@ -11,7 +11,7 @@ import { GameModalService } from 'src/app/services/rx-logic/shared/game-modal.se
 import { ToastsService } from 'src/app/services/rx-logic/shared/toasts.service';
 import { underscoreToRegular } from 'src/app/utils/text-utils';
 
-type InvitationIdJson = { invitationId: string };
+export type InvitationIdJson = { invitationId: string };
 
 @Component({
   selector: 'app-friends-list',
