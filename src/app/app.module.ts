@@ -77,7 +77,6 @@ import { TowerTooltipComponent } from './components/game-view/right-panel/buildi
 import { UpgradeTooltipComponent } from './components/game-view/right-panel/building-preview/upgrade-building-button/upgrade-tooltip/upgrade-tooltip.component';
 import { RightPanelComponent } from './components/game-view/right-panel/right-panel.component';
 import { LoginComponent } from './components/login/login.component';
-import { AccountComponent } from './components/menu/account/account.component';
 import { HomeComponent } from './components/menu/home/home.component';
 import { HowToPlayComponent } from './components/menu/how-to-play/how-to-play.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -113,6 +112,7 @@ import { AddFriendComponent } from './components/menu/friends/add-friend/add-fri
 import { FriendsListComponent } from './components/menu/friends/friends-list/friends-list.component';
 import { PlayerInvitedModalComponent } from './components/menu/friends/player-invited-modal/player-invited-modal.component';
 import { WaitingForGameReadinessModalComponent } from './components/menu/friends/waiting-for-game-readiness-modal/waiting-for-game-readiness-modal.component';
+import { LeaderboardComponent } from './components/menu/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +135,6 @@ import { WaitingForGameReadinessModalComponent } from './components/menu/friends
     PlayGameComponent,
     HomeComponent,
     HowToPlayComponent,
-    AccountComponent,
     FieldComponent,
     EnlighterDirective,
     RightPanelComponent,
@@ -215,6 +214,7 @@ import { WaitingForGameReadinessModalComponent } from './components/menu/friends
     FriendsListComponent,
     PlayerInvitedModalComponent,
     WaitingForGameReadinessModalComponent,
+    LeaderboardComponent,
   ],
   imports: [
     BrowserModule,

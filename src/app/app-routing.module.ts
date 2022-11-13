@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ActivateCodeComponent } from './components/activate-code/activate-code.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { GameViewComponent } from './components/game-view/game-view.component';
 import { LoginComponent } from './components/login/login.component';
-import { AccountComponent } from './components/menu/account/account.component';
 import { HomeComponent } from './components/menu/home/home.component';
 import { HowToPlayComponent } from './components/menu/how-to-play/how-to-play.component';
+import { LeaderboardComponent } from './components/menu/leaderboard/leaderboard.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { PlayGameComponent } from './components/menu/play-game/play-game.component';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -37,7 +37,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'how-to-play', component: HowToPlayComponent },
       { path: 'play-game', component: PlayGameComponent },
-      { path: 'account', component: AccountComponent },
+      { path: 'leaderboard', component: LeaderboardComponent },
     ],
   },
   { path: 'game/:gameId', component: GameViewComponent },
