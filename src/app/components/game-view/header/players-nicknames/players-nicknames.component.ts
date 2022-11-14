@@ -12,6 +12,8 @@ export class PlayersNicknamesComponent implements OnInit, OnDestroy {
 
   ownedNickname: string = null;
 
+  rating1 = 300;
+  rating2 = 300;
   nickname1 = '';
   nickname2 = '';
 
@@ -25,6 +27,8 @@ export class PlayersNicknamesComponent implements OnInit, OnDestroy {
         .map((n) => (n === player.nickname ? `${n} (You)` : n));
       this.nickname1 = nicknames[0];
       this.nickname2 = nicknames[1];
+      this.rating1 = game.players[0].rating;
+      this.rating2 = game.players[1].rating;
     });
     this.gameContextService.requestState();
   }
