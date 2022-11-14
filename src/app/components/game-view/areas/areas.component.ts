@@ -80,25 +80,6 @@ export class AreasComponent implements OnInit, OnDestroy {
     this.sub2.unsubscribe();
   }
 
-  fieldToImagePath(field: Field): string {
-    const type = field.building.type;
-    switch (type) {
-      case 'METAL_FACTORY':
-        return '/assets/metal.png';
-      case 'BUILDING_MATERIALS_FACTORY':
-        return '/assets/buildingMaterials.png';
-      case 'ELECTRICITY_FACTORY':
-        return '/assets/electricity.png';
-      case 'HOME_BASE':
-        return '/assets/home.png';
-      case 'ROCKET_LAUNCHER':
-        return '/assets/rocket.png';
-      case 'TOWER':
-        return '/assets/tower.png';
-    }
-    return '/assets/blank.png';
-  }
-
   isLinkableVertically(row, col): boolean {
     return row < 10;
   }
@@ -107,47 +88,8 @@ export class AreasComponent implements OnInit, OnDestroy {
     return col < 10;
   }
 
-  // isSomethingThere(row: number, col:number){
-  //   return this.infoService.areaUnits[row][col].MAIN_BUILDING != null;
-  // }
-
   getBackground(): string {
-    return 'url(\'assets/game-graphics/game-background.jpg\')';
-  }
-
-  // getSource(row: number, col: number){
-  //   let label = this.getLabel(row, col);
-  //   return this.translator.getBoardIconSource(label);
-  // }
-
-  // getLabel(row: number, col: number){
-  //   let areaUnit = this.infoService.areaUnits[row][col];
-  //   let mainBuilding = areaUnit.MAIN_BUILDING;
-  //   if (mainBuilding == null){
-  //     return ""
-  //   }
-  //   else {
-  //     return mainBuilding.LABEL;
-  //   }
-  // }
-
-  transformLabel(label: string): string {
-    switch (label) {
-      case 'TOWER':
-        return '<button type = "button">aa</button>';
-      case 'MAIN_TOWER':
-        return 'H';
-      case 'ROCKET':
-        return 'R';
-      case 'BIG_METAL':
-        return 'M';
-      case 'BIG_BUILDING_MATERIALS':
-        return 'B';
-      case 'BIG_ELECTRICITY':
-        return 'E';
-      default:
-        return '?';
-    }
+    return 'url(\'assets/game-graphics/backgrounds/game-background.jpg\')';
   }
 
   trackBy(index: any, item: any): number {

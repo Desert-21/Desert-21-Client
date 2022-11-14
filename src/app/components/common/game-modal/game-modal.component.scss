@@ -1,14 +1,14 @@
 ::ng-deep .dark-modal {
   color: white;
   .modal-content {
-    background-image: url('/assets/popupBackground.png');
+    background-image: url('/assets/backgrounds/popup-background.png');
   }
 }
 
 ::ng-deep .big-dark-modal {
   color: white;
   .modal-content {
-    background-image: url('/assets/popupBackground.png');
+    background-image: url('/assets/backgrounds/popup-background.png');
     min-width: 70vh;
   }
 }

@@ -39,7 +39,7 @@ $board-size: 90vh;
 $max-board-size: 60vw;
 
 .board-background {
-  background-image: url("/assets/game-background.jpg");
+  background-image: url("/assets/backgrounds/game-background.jpg");
   width: $board-size;
   height: $board-size;
   max-height: $max-board-size;

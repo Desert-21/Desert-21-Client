@@ -7,6 +7,7 @@ import { PostMovementsArmyMapService } from 'src/app/services/rx-logic/double-fi
 import { BuildingsBuiltMapService } from 'src/app/services/rx-logic/shared/buildings-built-map.service';
 import { LocationSelectionService } from 'src/app/services/rx-logic/single-field-selection/location-selection.service';
 import { SelectedFieldService } from 'src/app/services/rx-logic/single-field-selection/selected-field.service';
+import { getBuildingImageWithDefault } from 'src/app/utils/building-utils';
 import { findByFieldLocation } from 'src/app/utils/location-utils';
 
 @Component({
@@ -46,7 +47,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     this.sub1 = combineLatest([
       this.gameStateService.getStateUpdates(),
       this.userInfoService.getStateUpdates(),
-      this.buildingsBuiltMapService.getStateUpdates()
+      this.buildingsBuiltMapService.getStateUpdates(),
     ]).subscribe(([game, usersData, buildingsBuiltMap]) => {
       this.usersId = usersData.id;
       this.fields = game.fields;
@@ -55,13 +56,15 @@ export class FieldComponent implements OnInit, OnDestroy {
       this.shouldShowBuildInProgress = buildingsBuiltMap[this.row][this.col];
       this.rank = this.getRankImageSource(this.field);
     });
-    this.sub2 = this.selectedFieldService.getStateUpdates().subscribe((field) => {
-      if (field === null) {
-        this.isSelected = false;
-      } else {
-        this.isSelected = this.row === field.row && this.col === field.col;
-      }
-    });
+    this.sub2 = this.selectedFieldService
+      .getStateUpdates()
+      .subscribe((field) => {
+        if (field === null) {
+          this.isSelected = false;
+        } else {
+          this.isSelected = this.row === field.row && this.col === field.col;
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -134,21 +137,7 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   fieldToImagePath(field: Field): string {
     const type = field?.building?.type;
-    switch (type) {
-      case 'METAL_FACTORY':
-        return '/assets/buildings/metal.png';
-      case 'BUILDING_MATERIALS_FACTORY':
-        return '/assets/buildings/buildingMaterials.png';
-      case 'ELECTRICITY_FACTORY':
-        return '/assets/buildings/electricity.png';
-      case 'HOME_BASE':
-        return '/assets/buildings/home.png';
-      case 'ROCKET_LAUNCHER':
-        return '/assets/buildings/rocket.png';
-      case 'TOWER':
-        return '/assets/buildings/tower.png';
-    }
-    return '/assets/buildings/empty.png';
+    return getBuildingImageWithDefault(type, 1, '/assets/buildings/empty.png');
   }
 
   onFieldSelect(): void {

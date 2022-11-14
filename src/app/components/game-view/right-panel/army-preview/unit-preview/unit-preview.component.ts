@@ -28,7 +28,7 @@ export class UnitPreviewComponent implements OnInit {
   metrics: Array<Metric> = [];
 
   description = '';
-  imagePath = '/assets/mechs/droid-full.png';
+  imagePath = '/assets/mechs/droid.png';
 
   constructor() {}
 
