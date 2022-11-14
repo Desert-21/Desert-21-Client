@@ -16,8 +16,5 @@ export const isBranchContainingUpgrade = (
 };
 
 export const labUpgradeToImagePath = (labUpgrade: LabUpgrade): string => {
-  if (labUpgrade === 'PRODUCTION_AI') {
-    return '/assets/buildings/resources/electricity.png';
-  }
   return `/assets/upgrades/${underscoreToKebabCase(labUpgrade)}.jpg`;
 };

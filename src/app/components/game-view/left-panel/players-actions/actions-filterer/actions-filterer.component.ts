@@ -4,6 +4,7 @@ import {
   AttackAction,
   BombardAction,
   BuildBuildingAction,
+  FireRocketAction,
   MoveUnitsAction,
   PlayersAction,
   TrainAction,
@@ -15,6 +16,7 @@ import {
   attackStrategy,
   moveUnitsStrategy,
 } from 'src/app/services/rx-logic/double-field-selection/drag-and-drop/shortest-path-startegies';
+import { RocketStrikeCostService } from 'src/app/services/rx-logic/double-field-selection/rocket-strike-cost.service';
 import { AvailableResourcesService } from 'src/app/services/rx-logic/shared/available-resources.service';
 import { CurrentActionsService } from 'src/app/services/rx-logic/shared/current-actions.service';
 import { GameContextService } from 'src/app/services/rx-logic/shared/game-context.service';
@@ -41,7 +43,8 @@ export class ActionsFiltererComponent implements OnInit {
     private contextService: GameContextService,
     private availableResourcesResvice: AvailableResourcesService,
     private currentActionsService: CurrentActionsService,
-    private toastsService: ToastsService
+    private toastsService: ToastsService,
+    private rocketCostCalculator: RocketStrikeCostService
   ) {}
 
   lastTotalInvalidActions = 0;
@@ -50,8 +53,16 @@ export class ActionsFiltererComponent implements OnInit {
     combineLatest([
       this.contextService.getStateUpdates(),
       this.availableResourcesResvice.getStateUpdates(),
-    ]).subscribe(([context, availableResources]) => {
+      this.rocketCostCalculator.getStateUpdates(),
+    ]).subscribe(([context, availableResources, rocketStrikeCost]) => {
       const actions = context.currentActions;
+      // rocket cost revalidation first
+      const actionsUpdate = this.updateRocketActions(context.currentActions, rocketStrikeCost.current);
+      if (actionsUpdate.updatedAmount > 0) {
+        this.currentActionsService.setActions(actionsUpdate.actions);
+        return;
+      }
+
       const selfValidatedInvalidActions = actions.filter(
         (a) => !this.isActionValid(a, context, availableResources)
       );
@@ -78,6 +89,26 @@ export class ActionsFiltererComponent implements OnInit {
         });
       }
     });
+  }
+
+  // in case of rocket strikes being able to be just shifted from conquered to remaining one
+  private updateRocketActions(
+    actions: Array<PlayersAction<any>>,
+    rocketStrikeCost: number,
+  ): { actions: Array<PlayersAction<any>>, updatedAmount: number } {
+    let updatedAmount = 0;
+    for (const action of actions) {
+      if (action.getType() !== 'FIRE_ROCKET') {
+        continue;
+      }
+      const parsed = action as FireRocketAction;
+      if (parsed.getCost().electricity === rocketStrikeCost) {
+        continue;
+      }
+      updatedAmount++;
+      parsed.electricityCost = rocketStrikeCost;
+    }
+    return { actions, updatedAmount };
   }
 
   private validateActionsFromUnitsAvailabilityPerspective(
