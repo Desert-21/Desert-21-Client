@@ -31,21 +31,21 @@ export class ResourcesComponent implements OnInit, OnDestroy {
       availableAmount: '???',
       description:
         'Metal is used to build your army. The more you have, the more units you are able to produce!',
-      imageSource: '/assets/metal2.png',
+      imageSource: '/assets/resources/metal.png',
       nextTurnAmount: '???',
     },
     {
       availableAmount: '???',
       description:
         'Building materials are used to upgrade your buildings and make them produce more resources, train more types of units and more!',
-      imageSource: '/assets/buildingMaterials2.png',
+      imageSource: '/assets/resources/building-materials.png',
       nextTurnAmount: '???',
     },
     {
       availableAmount: '???',
       description:
         'Electricity is a resource used in the lab to give you overall extra bonuses. It may be also used to fire rocket strikes at your opponents!',
-      imageSource: '/assets/electricity2.png',
+      imageSource: '/assets/resources/electricity.png',
       nextTurnAmount: '???',
     },
   ];
@@ -78,21 +78,21 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         availableAmount: availableResources?.metal?.toString() || '???',
         description:
           'Metal is used to build your army. The more you have, the more units you are able to produce!',
-        imageSource: '/assets/metal2.png',
+        imageSource: '/assets/resources/metal.png',
         nextTurnAmount: nextTurnResources?.metal?.toString() || '???',
       },
       {
         availableAmount: availableResources?.buildingMaterials?.toString() || '???',
         description:
           'Building materials are used to upgrade your buildings and make them produce more resources, train more types of units and more!',
-        imageSource: '/assets/buildingMaterials2.png',
+        imageSource: '/assets/resources/building-materials.png',
         nextTurnAmount: nextTurnResources?.buildingMaterials?.toString() || '???',
       },
       {
         availableAmount: availableResources.electricity?.toString() || '???',
         description:
           'Electricity is a resource used in the lab to give you overall extra bonuses. It may be also used to fire rocket strikes at your opponents!',
-        imageSource: '/assets/electricity2.png',
+        imageSource: '/assets/resources/electricity.png',
         nextTurnAmount: nextTurnResources.electricity?.toString() || '???',
       },
     ];

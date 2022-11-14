@@ -10,6 +10,7 @@ import {
   FieldSelection,
   GameContext,
 } from 'src/app/models/game-utility-models';
+import { getBuildingImage } from 'src/app/utils/building-utils';
 import { areLocationsEqual } from 'src/app/utils/location-utils';
 import {
   ExplainedAvailability,
@@ -88,7 +89,7 @@ export class BuildBuildingOptionsService extends ResourceProcessor<
   ): EnrichedBuildingOption {
     return {
       buildingType,
-      imageSource: this.getBuildingImageSource(buildingType),
+      imageSource: getBuildingImage(buildingType, 1),
       buildingMaterialsCost: this.getBuildingCost(
         buildingType,
         context.balance.buildings
@@ -100,19 +101,6 @@ export class BuildBuildingOptionsService extends ResourceProcessor<
         availableResources
       ),
     };
-  }
-
-  private getBuildingImageSource(buildingType: BuildingType): string {
-    switch (buildingType) {
-      case 'METAL_FACTORY':
-        return '/assets/buildings/metal.png';
-      case 'BUILDING_MATERIALS_FACTORY':
-        return '/assets/buildings/buildingMaterials.png';
-      case 'ELECTRICITY_FACTORY':
-        return '/assets/buildings/electricity.png';
-      default:
-        return '/assets/buildings/tower.png';
-    }
   }
 
   private getBuildingCost(

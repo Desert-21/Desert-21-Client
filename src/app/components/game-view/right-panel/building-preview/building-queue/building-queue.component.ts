@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BuildingType } from 'src/app/models/game-models';
 import { CurrentlyBuiltBuildingService } from 'src/app/services/rx-logic/single-field-selection/currently-built-building.service';
+import { getBuildingImage } from 'src/app/utils/building-utils';
 
 @Component({
   selector: 'app-building-queue',
@@ -11,7 +12,7 @@ import { CurrentlyBuiltBuildingService } from 'src/app/services/rx-logic/single-
 export class BuildingQueueComponent implements OnInit, OnDestroy {
   shouldShowTheQueue = false;
 
-  imageSource = '/assets/metal.png';
+  imageSource = '/assets/resources/metal.png';
 
   private sub1: Subscription;
 
@@ -24,24 +25,9 @@ export class BuildingQueueComponent implements OnInit, OnDestroy {
       .getStateUpdates()
       .subscribe((resp) => {
         this.shouldShowTheQueue = resp !== null;
-        this.imageSource = this.getImageSource(resp);
+        this.imageSource = getBuildingImage(resp, 1);
       });
     this.currentlyBuiltBuildingService.requestState();
-  }
-
-  private getImageSource(buildingType: BuildingType): string {
-    const base = '/assets/';
-    switch (buildingType) {
-      case 'METAL_FACTORY':
-        return `${base}metal.png`;
-      case 'BUILDING_MATERIALS_FACTORY':
-        return `${base}buildingMaterials.png`;
-      case 'ELECTRICITY_FACTORY':
-        return `${base}electricity.png`;
-      case 'TOWER':
-        return `${base}tower.png`;
-      default: return '';
-    }
   }
 
   ngOnDestroy(): void {

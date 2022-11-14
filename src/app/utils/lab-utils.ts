@@ -1,5 +1,6 @@
 import { LabUpgrade } from '../models/game-models';
 import { LabBranch } from '../models/lab';
+import { underscoreToKebabCase } from './text-utils';
 
 export const isBranchContainingUpgrade = (
   currentBranch: LabBranch,
@@ -15,20 +16,8 @@ export const isBranchContainingUpgrade = (
 };
 
 export const labUpgradeToImagePath = (labUpgrade: LabUpgrade): string => {
-  switch (labUpgrade) {
-    case 'FACTORY_TURRET':
-      return '/assets/upgrades/factory-turret.jpg';
-    case 'REUSABLE_PARTS':
-      return '/assets/upgrades/reusable-parts.jpg';
-    case 'MEDIUM_PRODUCTION':
-      return '/assets/upgrades/medium-production.jpg';
-    case 'MASS_PRODUCTION':
-      return '/assets/upgrades/mass-production.jpg';
-    case 'ADVANCED_TACTICS':
-      return '/assets/upgrades/advanced-tactics.jpg';
-    case 'FACTORY_BUILDERS':
-      return '/assets/upgrades/factory-builders.jpg';
-    default:
-      return '/assets/buildings/electricity.png';
+  if (labUpgrade === 'PRODUCTION_AI') {
+    return '/assets/buildings/resources/electricity.png';
   }
+  return `/assets/upgrades/${underscoreToKebabCase(labUpgrade)}.jpg`;
 };

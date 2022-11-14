@@ -43,7 +43,7 @@ export class LabModalComponent implements OnInit, OnDestroy {
     isCurrentlyUpgrading: false,
     isTierLocked: false,
     title: '',
-    imagePath: '/assets/buildings/electricity.png',
+    imagePath: '/assets/buildings/resources/electricity.png',
     cost: 0,
     logicalName: 'ADVANCED_TACTICS',
   };

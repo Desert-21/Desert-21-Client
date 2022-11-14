@@ -34,22 +34,27 @@ export const getLeveledValueByLevel = (
 };
 
 export const getBuildingImage = (buildingType: BuildingType, level: number) => {
+  return getBuildingImageWithDefault(buildingType, level, '/assets/buildings/unknown-building.png');
+};
+
+export const getBuildingImageWithDefault = (buildingType: BuildingType, level: number, ifNothingFound: string) => {
   switch (buildingType) {
     case 'METAL_FACTORY':
-      return '/assets/buildings/metal.png';
+      return '/assets/buildings/metal-factory.png';
     case 'BUILDING_MATERIALS_FACTORY':
-      return '/assets/buildings/buildingMaterials.png';
+      return '/assets/buildings/building-materials-factory.png';
     case 'ELECTRICITY_FACTORY':
-      return '/assets/buildings/electricity.png';
+      return '/assets/buildings/electricity-factory.png';
     case 'TOWER':
       return '/assets/buildings/tower.png';
     case 'HOME_BASE':
-      return '/assets/buildings/home.png';
+      return '/assets/buildings/home-base.png';
     case 'ROCKET_LAUNCHER':
-      return '/assets/buildings/rocket.png';
+      return '/assets/buildings/rocket-launcher.png';
     case 'EMPTY_FIELD':
       return '/assets/buildings/empty.png';
     default:
-      return '/assets/buildings/unknownBuilding.png';
+      return ifNothingFound;
   }
 };
+

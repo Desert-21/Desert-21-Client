@@ -34,13 +34,13 @@ export type AllUnitTypes = UnitType | 'SCARAB';
 export const getUnitImage = (unitType: AllUnitTypes): string => {
   switch (unitType) {
     case 'DROID':
-      return '/assets/mechs/droid-full.png';
+      return '/assets/mechs/droid.png';
     case 'TANK':
-      return '/assets/mechs/tank-full.png';
+      return '/assets/mechs/tank.png';
     case 'CANNON':
-      return '/assets/mechs/cannon-full.png';
+      return '/assets/mechs/cannon.png';
     case 'SCARAB':
-      return '/assets/mechs/desertbot-full.png';
+      return '/assets/mechs/scarab.png';
   }
 };
 

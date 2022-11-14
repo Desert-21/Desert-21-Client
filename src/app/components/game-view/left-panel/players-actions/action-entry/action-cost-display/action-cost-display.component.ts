@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlayersAction } from 'src/app/models/actions';
 import { ResourceSet } from 'src/app/models/game-models';
+import { camelCaseToCapsLock, camelCaseToKebabCase } from 'src/app/utils/text-utils';
 
 type Resource = keyof ResourceSet;
 
@@ -24,7 +25,7 @@ export class ActionCostDisplayComponent implements OnInit {
     this.actionSubject.subscribe((action) => {
       const cost = action.getCost();
       this.enrichResourceAndAmount(cost);
-      this.imageSource = `/assets/${this.resource}2.png`;
+      this.imageSource = `/assets/resources/${camelCaseToKebabCase(this.resource)}.png`;
     });
   }
 
