@@ -54,6 +54,7 @@ export type Player = {
   builtFactories: number;
   builtTowers: number;
   ai: ProductionAI;
+  rating: number;
 };
 
 export type ProductionAI = {
