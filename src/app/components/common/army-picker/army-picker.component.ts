@@ -65,6 +65,16 @@ export class ArmyPickerComponent implements OnInit, OnDestroy {
     }
   }
 
+  onKeyPress(event: KeyboardEvent, fieldName: keyof Army): boolean {
+    const eventNum = Number(event.key);
+    const newNum = this[fieldName] * 10 + eventNum;
+    if (newNum > this.maxArmy[fieldName]) {
+      this[fieldName] = this.maxArmy[fieldName];
+      return false;
+    }
+    return event.code.includes('Digit');
+  }
+
   get droids(): number {
     return this.droidsField;
   }
