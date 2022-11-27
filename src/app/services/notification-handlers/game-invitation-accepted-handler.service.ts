@@ -16,7 +16,7 @@ export class GameInvitationAcceptedHandlerService
 
   handle(notification: GameInvitationNotification): void {
     this.http
-      .post(`/gameInvitations/confirm/${notification.invitationId}`, null)
+      .post(`/game-invitations/confirm/${notification.invitationId}`, null)
       .subscribe(() => {});
   }
 }

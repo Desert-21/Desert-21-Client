@@ -103,7 +103,7 @@ export class TurnTimerButtonComponent implements OnInit, OnDestroy {
 
   notifyAboutGameReadiness(): void {
     this.hasNotifiedAboutGameReadiness.next(true);
-    this.http.post('/gameReadiness', this.gameId).subscribe({
+    this.http.post('/game-readiness', this.gameId).subscribe({
       next: (resp) => {},
       error: (err) => {
         this.hasNotifiedAboutGameReadiness.next(false);

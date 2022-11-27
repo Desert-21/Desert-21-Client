@@ -95,7 +95,7 @@ export class FriendsListComponent implements OnInit, OnDestroy {
   onInvitePlayerClick(player: ProcessedFriendEntry): void {
     this.http
       .post<InvitationIdJson>(
-        `/gameInvitations/invite/${player.playerId}`,
+        `/game-invitations/invite/${player.playerId}`,
         null
       )
       .subscribe(({ invitationId }) => {

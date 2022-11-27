@@ -59,7 +59,7 @@ export class PlayerInvitedModalComponent implements OnInit, OnDestroy {
 
   onCanceInvitationClick(): void {
     this.http
-      .post(`/gameInvitations/cancel/${this.invitationId}`, null)
+      .post(`/game-invitations/cancel/${this.invitationId}`, null)
       .subscribe(() => {});
     this.modal.close('');
   }

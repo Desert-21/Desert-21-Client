@@ -30,7 +30,7 @@ export class GameInvitationReceivedHandlerService
       text: `Player ${invitationInfo.playersNickname} invites you to a game. Do you accept?`,
       onAccept: () => {
         this.http
-          .post(`/gameInvitations/accept/${invitationInfo.invitationId}`, null)
+          .post(`/game-invitations/accept/${invitationInfo.invitationId}`, null)
           .subscribe(() => {});
         this.invitationInfoService.set({
           opponentsNickname: invitationInfo.playersNickname,
@@ -40,7 +40,7 @@ export class GameInvitationReceivedHandlerService
       },
       onReject: () => {
         this.http
-          .post(`/gameInvitations/reject/${invitationInfo.invitationId}`, null)
+          .post(`/game-invitations/reject/${invitationInfo.invitationId}`, null)
           .subscribe(() => {
             // todo...
           });
