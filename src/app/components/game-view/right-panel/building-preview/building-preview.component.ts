@@ -81,7 +81,7 @@ export class BuildingPreviewComponent implements OnInit, OnDestroy {
       case 'HOME_BASE':
         return 'Home bases allow for producing army and offer protection for defenders just like towers do, but they also produce small fixed amount of metal, building materials and electricity.';
       case 'ROCKET_LAUNCHER':
-        return 'Rocket launchers allow for firing rockets at opponent and cousing serious damage to their army.';
+        return 'Rocket launchers allow for firing rockets at opponent and causing serious damage to their army.';
       default:
         return 'Empty fields contain no buildings. They still produce very little amount of resources and after finishing some lab research, new buildings can be built there.';
     }

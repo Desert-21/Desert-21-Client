@@ -24,7 +24,8 @@
         class="w-100"
         type="number"
         [disabled]="!unitsAvailability[0]"
-        onkeydown="return false"
+        step="1"
+        (keypress)="onKeyPress($event, 'droids')"
       />
     </div>
   </div>
@@ -53,7 +54,8 @@
         class="w-100"
         type="number"
         [disabled]="!unitsAvailability[1]"
-        onkeydown="return false"
+        step="1"
+        (keypress)="onKeyPress($event, 'tanks')"
       />
     </div>
   </div>
@@ -82,7 +84,8 @@
         class="w-100"
         type="number"
         [disabled]="!unitsAvailability[2]"
-        onkeydown="return false"
+        step="1"
+        (keypress)="onKeyPress($event, 'cannons')"
       />
     </div>
   </div>
