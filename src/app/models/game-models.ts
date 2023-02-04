@@ -55,6 +55,7 @@ export type Player = {
   builtTowers: number;
   ai: ProductionAI;
   rating: number;
+  isNextRocketFree: boolean;
 };
 
 export type ProductionAI = {

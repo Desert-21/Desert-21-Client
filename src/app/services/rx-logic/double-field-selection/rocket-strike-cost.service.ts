@@ -32,6 +32,14 @@ export class RocketStrikeCostService extends ResourceProcessor<RocketStrikeCostD
     );
     const costDiff = context.balance.general.rocketStrikePricePerUsage;
     const next = current + costDiff;
+
+    const isRocketFree = context.player.isNextRocketFree;
+    if (isRocketFree) {
+      return {
+        current: 0,
+        next: current,
+      };
+    }
     return {
       current,
       next,
