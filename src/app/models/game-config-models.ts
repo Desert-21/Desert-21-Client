@@ -29,8 +29,7 @@ export type CombatBranch = Branch & {
 };
 
 export type CombatBranchConfig = {
-  advancedTacticsPowerBonusPerReferencePower: number;
-  advancedTacticsReferencePower: number;
+  advancedTacticsTowerBonusesDecrease: number;
   improvedCannonsBombardingPowerFraction: number;
   improvedDroidsBaseAtTowerDefenceBonus: number;
   improvedDroidsBaseDefenceBonus: number;

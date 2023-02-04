@@ -30,11 +30,10 @@
   power.
 </p>
 <p *ngIf="upgrade === 'ADVANCED_TACTICS'">
-  Make your army improve it's tactics in large combats and gain additional crazy
-  {{ combat.advancedTacticsPowerBonusPerReferencePower | percent: "1.0" }} power
-  per each
-  {{ combat.advancedTacticsReferencePower }}
-  power it has.
+  Make your army improve it's tactics against enemy defensive buildings and
+  factory turrets. Decrease all their defensive bonuses by a devastating
+  {{ combat.advancedTacticsTowerBonusesDecrease | percent: "2.0" }}
+  if attacking with all unit types, meaning at least one droid, tank and cannon.
 </p>
 
 <p *ngIf="upgrade === 'SCARAB_SCANNERS'">

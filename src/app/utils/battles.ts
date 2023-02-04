@@ -93,7 +93,8 @@ export const performBattle = (
     balance,
     defendingPlayer,
     attackingPlayer,
-    building
+    building,
+    attackers
   );
   const attackerHaveWon = attackersPower > defendersPower;
   const winnersPower = attackerHaveWon ? attackersPower : defendersPower;
