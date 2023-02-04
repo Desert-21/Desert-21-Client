@@ -1,3 +1,4 @@
+import { AttachSession } from 'protractor/built/driverProviders';
 import { FightingArmy } from '../models/army-ranges';
 import { GameBalanceConfig, TowerConfig } from '../models/game-config-models';
 import { Army, Building, Player, UnitType } from '../models/game-models';
@@ -34,6 +35,7 @@ export const calculateDefendingFightingArmyPower = (
   defender: Player, // mainly for upgrades, but who knows...
   attacker: Player,
   building: Building, // for tower bonuses, etc.
+  attackerArmy: Army = { droids: 0, tanks: 0, cannons: 0 },
 ): number => {
   return calculateDefendingArmyPower(
     army,
@@ -41,7 +43,8 @@ export const calculateDefendingFightingArmyPower = (
     balance,
     defender,
     attacker,
-    building
+    building,
+    attackerArmy
   );
 };
 
@@ -56,18 +59,11 @@ export const calculateAttackingArmyPower = (
     balance,
     attacker
   );
-  const totalPreAdvancedTacticsArmyPower =
+  return Math.round(
     postImprovedTanksPower.droids +
     postImprovedTanksPower.tanks +
     postImprovedTanksPower.cannons +
-    postImprovedTanksPower.constant;
-  return Math.round(
-    getOptionalAdvancedTacticsPower(
-      totalPreAdvancedTacticsArmyPower,
-      balance,
-      attacker
-    )
-  );
+    postImprovedTanksPower.constant);
 };
 
 export const calculateDefendingArmyPower = (
@@ -76,19 +72,24 @@ export const calculateDefendingArmyPower = (
   balance: GameBalanceConfig, // reference to balance
   defender: Player, // mainly for upgrades, but who knows...
   attacker: Player,
-  building: Building // for tower bonuses, etc.
+  building: Building, // for tower bonuses, etc.,
+  attackingArmy: Army = { droids: 0, tanks: 0, cannons: 0 }
 ): number => {
   const basePower = getArmyBasePower(army, balance);
   const postTowerPower = getOptionalTowerPowerBonuses(
     basePower,
     building,
-    balance
+    balance,
+    attacker,
+    attackingArmy
   );
   const postFactoryTurretPower = getOptionalFactoryPowerBonuses(
     postTowerPower,
     building,
     balance,
-    defender
+    defender,
+    attacker,
+    attackingArmy
   );
   const postImprovedDroidsPower = getOptionalImprovedDroidsPower(
     postFactoryTurretPower,
@@ -101,18 +102,14 @@ export const calculateDefendingArmyPower = (
     balance,
     defender
   );
-  const totalPreAdvancedTacticsArmyPower =
+  const totalBasicArmyPower =
     postImprovedTanksPower.droids +
     postImprovedTanksPower.tanks +
     postImprovedTanksPower.cannons +
     postImprovedTanksPower.constant;
-  const postAdvancedTacticsPower = getOptionalAdvancedTacticsPower(
-    totalPreAdvancedTacticsArmyPower,
-    balance,
-    defender
-  );
+
   return Math.round(getOptionalScarabsPowerBonuses(
-    postAdvancedTacticsPower,
+    totalBasicArmyPower,
     scarabs,
     balance,
     attacker
@@ -132,17 +129,27 @@ const getOptionalScarabsPowerBonuses = (
 const getOptionalTowerPowerBonuses = (
   power: Power,
   building: Building,
-  balance: GameBalanceConfig
+  balance: GameBalanceConfig,
+  attacker: Player,
+  attackerArmy: Army
 ): Power => {
   if (!isDefensive(building)) {
     return power;
   }
   const config = buildingToConfig(balance.buildings, building) as TowerConfig;
-  const baseProtection = getLeveledValueByLevel(
+  let baseProtection = getLeveledValueByLevel(
     config.baseProtection,
     building.level
   );
-  const unitBonus = getLeveledValueByLevel(config.unitBonus, building.level);
+  let unitBonus = getLeveledValueByLevel(config.unitBonus, building.level);
+
+  // Advanced tactics
+  if (isAdvancedTacticsApplicable(attacker, attackerArmy)) {
+    const advancedTacticsPenalty = balance.upgrades.combat.balanceConfig.advancedTacticsTowerBonusesDecrease;
+    baseProtection = Math.round(baseProtection - (baseProtection * advancedTacticsPenalty));
+    unitBonus = Math.round(unitBonus - (unitBonus * advancedTacticsPenalty));
+  }
+
   const { droids, tanks, cannons, constant } = power;
   return {
     droids: droids + droids * unitBonus,
@@ -156,22 +163,32 @@ const getOptionalFactoryPowerBonuses = (
   power: Power,
   building: Building,
   balance: GameBalanceConfig,
-  player: Player
+  defender: Player,
+  attacker: Player,
+  attackerArmy: Army
 ): Power => {
   if (!isFactory(building)) {
     return power;
   }
-  if (!player.upgrades.includes('FACTORY_TURRET')) {
+  if (!defender.upgrades.includes('FACTORY_TURRET')) {
     return power;
   }
   const towerConfig = balance.buildings.tower;
   const towerLevel =
     balance.upgrades.control.balanceConfig.factoryTurretTowerLevel;
-  const baseProtection = getLeveledValueByLevel(
+  let baseProtection = getLeveledValueByLevel(
     towerConfig.baseProtection,
     towerLevel
   );
-  const unitBonus = getLeveledValueByLevel(towerConfig.unitBonus, towerLevel);
+  let unitBonus = getLeveledValueByLevel(towerConfig.unitBonus, towerLevel);
+
+  // Advanced tactics
+  if (isAdvancedTacticsApplicable(attacker, attackerArmy)) {
+    const advancedTacticsPenalty = balance.upgrades.combat.balanceConfig.advancedTacticsTowerBonusesDecrease;
+    baseProtection = Math.round(baseProtection - (baseProtection * advancedTacticsPenalty));
+    unitBonus = Math.round(unitBonus - (unitBonus * advancedTacticsPenalty));
+  }
+
   const { droids, tanks, cannons, constant } = power;
   return {
     droids: droids + droids * unitBonus,
@@ -217,22 +234,6 @@ const getOptionalImprovedTanksPower = (
   };
 };
 
-const getOptionalAdvancedTacticsPower = (
-  totalPower: number,
-  balance: GameBalanceConfig,
-  player: Player
-): number => {
-  if (!player.upgrades.includes('ADVANCED_TACTICS')) {
-    return totalPower;
-  }
-  const combatConfig = balance.upgrades.combat.balanceConfig;
-  const step = combatConfig.advancedTacticsReferencePower;
-  const bonusPerStep = combatConfig.advancedTacticsPowerBonusPerReferencePower;
-  const totalSteps = Math.floor(totalPower / step);
-  const totalBonusRatio = totalSteps * bonusPerStep;
-  return totalPower + totalPower * totalBonusRatio;
-};
-
 const getArmyBasePower = (army: Army, balance: GameBalanceConfig): Power => {
   return {
     droids: getUnitsBasePower(army.droids, 'DROID', balance),
@@ -271,3 +272,9 @@ export const calculateScarabsPower = (
   const scarabsPowerRatio = 1 - scarabScannersBonus;
   return Math.round(scarabsPower * scarabsPowerRatio);
 };
+
+const isAdvancedTacticsApplicable = (attacker: Player, attackingArmy: Army) =>
+  attacker.upgrades.includes('ADVANCED_TACTICS')
+  && attackingArmy.droids > 0
+  && attackingArmy.tanks > 0
+  && attackingArmy.cannons > 0;

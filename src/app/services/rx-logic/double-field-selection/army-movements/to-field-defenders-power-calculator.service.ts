@@ -14,6 +14,8 @@ import {
 import { ToFieldPostBombardingDefendersService } from './to-field-post-bombarding-defenders.service';
 import { FightingArmy } from '../../../../models/army-ranges';
 import { getScarabsRange } from 'src/app/utils/army-utils';
+import { ToFieldTotalAttackersService } from './to-field-total-attackers.service';
+import { Army } from 'src/app/models/game-models';
 
 export class PowerRange {
   min: number;
@@ -40,17 +42,20 @@ export class ToFieldDefendersPowerCalculatorService extends ResourceProcessor<Po
   constructor(
     private estimatedDefendersService: ToFieldPostBombardingDefendersService,
     private contextService: GameContextService,
-    private fieldSelectionService: DoubleFieldSelectionService
+    private fieldSelectionService: DoubleFieldSelectionService,
+    private toFieldAttackersService: ToFieldTotalAttackersService
   ) {
-    super([estimatedDefendersService, contextService, fieldSelectionService]);
+    super([
+      estimatedDefendersService,
+      contextService,
+      fieldSelectionService,
+      toFieldAttackersService,
+    ]);
   }
 
   protected processData(dataElements: any[]): PowerRange {
-    const [estimatedDefenders, context, fieldSelection] = dataElements as [
-      EstimatedArmy,
-      GameContext,
-      DoubleFieldSelection
-    ];
+    const [estimatedDefenders, context, fieldSelection, attackerArmy] =
+      dataElements as [EstimatedArmy, GameContext, DoubleFieldSelection, Army];
     if (fieldSelection === null) {
       return new PowerRange(0, 0, 0);
     }
@@ -80,7 +85,8 @@ export class ToFieldDefendersPowerCalculatorService extends ResourceProcessor<Po
         balance,
         defender,
         attacker,
-        building
+        building,
+        attackerArmy,
       );
     };
     const min = calculateByArmy(worstCase);
