@@ -13,6 +13,7 @@ import {
   getArrivingBackupAtLocation,
   getOnlyArmyMovementFrozenUnitsAtLocation,
   getScarabsRange,
+  ScarabsRange,
   subtractArmies,
   sumArmies,
 } from 'src/app/utils/army-utils';
@@ -91,6 +92,10 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
       armyIncludingMovementsFreeze,
       arrivingBackup
     );
+    const opponentHasAdvancedTactics =
+      gameContext.opponent.upgrades.includes('ADVANCED_TACTICS');
+    const playerHasKingOfDesert =
+      gameContext.player.upgrades.includes('KING_OF_DESERT');
     const defendingPowerDefault = calculateDefendingArmyPower(
       armyIncludingMovementsFreezeAndArrivingBackup,
       0,
@@ -100,18 +105,26 @@ export const OwnedArmyPreviewState: ArmyPreviewState = {
       selectedFieldInfo.field.building
     );
     let defendingPowerString = defendingPowerDefault.toString();
-    if (gameContext.player.upgrades.includes('KING_OF_DESERT')) {
-      const scarabsRange = getScarabsRange(
-        gameContext.game.stateManager.turnCounter,
-        gameContext.balance.combat.scarabs
-      );
+    if (playerHasKingOfDesert || opponentHasAdvancedTactics) {
+      const scarabsRange: ScarabsRange = playerHasKingOfDesert
+        ? getScarabsRange(
+            gameContext.game.stateManager.turnCounter,
+            gameContext.balance.combat.scarabs
+          )
+        : { min: 0, avg: 0, max: 0 };
+
+      const minLevelAttackingArmy: Army = opponentHasAdvancedTactics
+        ? { droids: 1, tanks: 1, cannons: 1 }
+        : { droids: 0, tanks: 0, cannons: 0 };
+
       const defendingPowerMin = calculateDefendingArmyPower(
         armyIncludingMovementsFreezeAndArrivingBackup,
         scarabsRange.min,
         gameContext.balance,
         gameContext.player,
         gameContext.opponent,
-        selectedFieldInfo.field.building
+        selectedFieldInfo.field.building,
+        minLevelAttackingArmy
       );
       const defendingPowerMax = calculateDefendingArmyPower(
         armyIncludingMovementsFreezeAndArrivingBackup,
@@ -246,13 +259,19 @@ export const EnemyArmyPreviewState: ArmyPreviewState = {
       minScarabs = scarabsRange.min;
       maxScarabs = scarabsRange.max;
     }
+    const advancedTacticsMinAttackersArmyToConsider: Army =
+      gameContext.player.upgrades.includes('ADVANCED_TACTICS')
+        ? { droids: 1, tanks: 1, cannons: 1 }
+        : { droids: 0, tanks: 0, cannons: 0 };
+
     const minDefendingArmyPower = calculateDefendingArmyPower(
       minArmy,
       minScarabs,
       gameContext.balance,
       gameContext.opponent,
       gameContext.player,
-      selectedFieldInfo.field.building
+      selectedFieldInfo.field.building,
+      advancedTacticsMinAttackersArmyToConsider,
     );
     const maxDefendingArmyPower = calculateDefendingArmyPower(
       maxArmy,
